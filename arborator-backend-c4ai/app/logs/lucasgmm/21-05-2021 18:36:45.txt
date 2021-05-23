@@ -1,0 +1,158 @@
+(21-05-2021 18:36:45) Logged in
+
+(21-05-2021 18:41:32) Saved the following changes in the sentence of id "1", project "Lyrics":
+   - Defined the part of speech of "move" (2) as "NOUN"
+   - Defined the part of speech of "," (3) as "NOUN"
+
+(21-05-2021 18:46:43) Saved the following changes in the sentence of id "1", project "Lyrics":
+   - Defined the part of speech of "move" (2) as "NUM"
+
+(21-05-2021 18:47:30) Saved the following changes in the sentence of id "2", project "Lyrics":
+   - Checked the sentence
+
+(21-05-2021 19:15:31) Saved the following changes in the sentence of id "2", project "Lyrics":
+   - Defined the lemma of "And" (1) as "16/08/1999"
+
+(21-05-2021 19:15:49) Saved the following changes in the sentence of id "2", project "Lyrics":
+   - Removed the ROOT (0) ---> "find" (5) dependency relation
+
+(21-05-2021 19:16:06) Saved the following changes in the sentence of id "2", project "Lyrics":
+   - Defined "And" (1) as the head of "ca" (3)
+   - Defined "aux" as the dependency relation of "And" (1) ---> "ca" (3)
+
+(21-05-2021 19:16:35) Saved the following changes in the sentence of id "1", project "Lyrics":
+   - Unchecked sentence
+
+(21-05-2021 19:16:35) Saved the following changes in the sentence of id "2", project "Lyrics":
+   - Unchecked sentence
+
+(21-05-2021 19:18:25) Saved the following changes in the sentence of id "1", project "Lyrics":
+   - Removed the "move" (2) ---> "Nobody" (1) dependency relation
+   - Defined the part of speech of "Nobody" (1) as "_"
+   - Defined the lemma of "Nobody" (1) as "_"
+   - Removed the following universal feature of "Nobody" (1): "Number"
+   - Removed the following miscellaneous feature of "Nobody" (1): "TokenRange"
+   - Removed the ROOT (0) ---> "move" (2) dependency relation
+   - Defined the part of speech of "move" (2) as "_"
+   - Defined the lemma of "move" (2) as "_"
+   - Removed the following universal feature of "move" (2): "Mood"
+   - Removed the following universal feature of "move" (2): "Tense"
+   - Removed the following universal feature of "move" (2): "VerbForm"
+   - Removed the following miscellaneous feature of "move" (2): "SpaceAfter"
+   - Removed the following miscellaneous feature of "move" (2): "TokenRange"
+   - Removed the "'s" (5) ---> "," (3) dependency relation
+   - Defined the part of speech of "," (3) as "_"
+   - Defined the lemma of "," (3) as "_"
+   - Removed the following miscellaneous feature of "," (3): "TokenRange"
+   - Removed the "'s" (5) ---> "there" (4) dependency relation
+   - Defined the part of speech of "there" (4) as "_"
+   - Defined the lemma of "there" (4) as "_"
+   - Removed the following miscellaneous feature of "there" (4): "SpaceAfter"
+   - Removed the following miscellaneous feature of "there" (4): "TokenRange"
+   - Removed the "move" (2) ---> "'s" (5) dependency relation
+   - Defined the part of speech of "'s" (5) as "_"
+   - Defined the lemma of "'s" (5) as "_"
+   - Removed the following universal feature of "'s" (5): "Mood"
+   - Removed the following universal feature of "'s" (5): "Number"
+   - Removed the following universal feature of "'s" (5): "Person"
+   - Removed the following universal feature of "'s" (5): "Tense"
+   - Removed the following universal feature of "'s" (5): "VerbForm"
+   - Removed the following miscellaneous feature of "'s" (5): "TokenRange"
+   - Removed the "'s" (5) ---> "blood" (6) dependency relation
+   - Defined the part of speech of "blood" (6) as "_"
+   - Defined the lemma of "blood" (6) as "_"
+   - Removed the following universal feature of "blood" (6): "Number"
+   - Removed the following miscellaneous feature of "blood" (6): "TokenRange"
+   - Removed the "floor" (9) ---> "on" (7) dependency relation
+   - Defined the part of speech of "on" (7) as "_"
+   - Defined the lemma of "on" (7) as "_"
+   - Removed the following miscellaneous feature of "on" (7): "TokenRange"
+   - Removed the "floor" (9) ---> "the" (8) dependency relation
+   - Defined the part of speech of "the" (8) as "_"
+   - Defined the lemma of "the" (8) as "_"
+   - Removed the following universal feature of "the" (8): "Definite"
+   - Removed the following universal feature of "the" (8): "PronType"
+   - Removed the following miscellaneous feature of "the" (8): "TokenRange"
+   - Removed the "'s" (5) ---> "floor" (9) dependency relation
+   - Defined the part of speech of "floor" (9) as "_"
+   - Defined the lemma of "floor" (9) as "_"
+   - Removed the following universal feature of "floor" (9): "Number"
+   - Removed the following miscellaneous feature of "floor" (9): "SpaceAfter"
+   - Removed the following miscellaneous feature of "floor" (9): "TokenRange"
+   - Removed the "move" (2) ---> "." (10) dependency relation
+   - Defined the part of speech of "." (10) as "_"
+   - Defined the lemma of "." (10) as "_"
+   - Removed the following miscellaneous feature of "." (10): "SpacesAfter"
+   - Removed the following miscellaneous feature of "." (10): "TokenRange"
+
+(21-05-2021 19:18:29) Saved the following changes in the sentence of id "1", project "Lyrics":
+   - Defined "move" (2) as the head of "Nobody" (1)
+   - Defined "nsubj" as the dependency relation of "move" (2) ---> "Nobody" (1)
+   - Defined the part of speech of "Nobody" (1) as "NOUN"
+   - Defined the lemma of "Nobody" (1) as "nobody"
+   - Created the following universal feature of "Nobody" (1): "Number" with the value of "Sing"
+   - Created the following miscellaneous feature of "Nobody" (1): "TokenRange" with the value of "0:6"
+   - Defined ROOT (0) as the head of "move" (2)
+   - Defined "root" as the dependency relation of ROOT (0) ---> "move" (2)
+   - Defined the part of speech of "move" (2) as "NUM"
+   - Defined the lemma of "move" (2) as "move"
+   - Created the following universal feature of "move" (2): "Mood" with the value of "Ind"
+   - Created the following universal feature of "move" (2): "Tense" with the value of "Pres"
+   - Created the following universal feature of "move" (2): "VerbForm" with the value of "Fin"
+   - Created the following miscellaneous feature of "move" (2): "SpaceAfter" with the value of "No"
+   - Created the following miscellaneous feature of "move" (2): "TokenRange" with the value of "7:11"
+   - Defined "'s" (5) as the head of "," (3)
+   - Defined "punct" as the dependency relation of "'s" (5) ---> "," (3)
+   - Defined the part of speech of "," (3) as "NOUN"
+   - Defined the lemma of "," (3) as ","
+   - Created the following miscellaneous feature of "," (3): "TokenRange" with the value of "11:12"
+   - Defined "'s" (5) as the head of "there" (4)
+   - Defined "expl" as the dependency relation of "'s" (5) ---> "there" (4)
+   - Defined the part of speech of "there" (4) as "PRON"
+   - Defined the lemma of "there" (4) as "there"
+   - Created the following miscellaneous feature of "there" (4): "SpaceAfter" with the value of "No"
+   - Created the following miscellaneous feature of "there" (4): "TokenRange" with the value of "13:18"
+   - Defined "move" (2) as the head of "'s" (5)
+   - Defined "parataxis" as the dependency relation of "move" (2) ---> "'s" (5)
+   - Defined the part of speech of "'s" (5) as "VERB"
+   - Defined the lemma of "'s" (5) as "be"
+   - Created the following universal feature of "'s" (5): "Mood" with the value of "Ind"
+   - Created the following universal feature of "'s" (5): "Number" with the value of "Sing"
+   - Created the following universal feature of "'s" (5): "Person" with the value of "3"
+   - Created the following universal feature of "'s" (5): "Tense" with the value of "Pres"
+   - Created the following universal feature of "'s" (5): "VerbForm" with the value of "Fin"
+   - Created the following miscellaneous feature of "'s" (5): "TokenRange" with the value of "18:20"
+   - Defined "'s" (5) as the head of "blood" (6)
+   - Defined "nsubj" as the dependency relation of "'s" (5) ---> "blood" (6)
+   - Defined the part of speech of "blood" (6) as "NOUN"
+   - Defined the lemma of "blood" (6) as "blood"
+   - Created the following universal feature of "blood" (6): "Number" with the value of "Sing"
+   - Created the following miscellaneous feature of "blood" (6): "TokenRange" with the value of "21:26"
+   - Defined "floor" (9) as the head of "on" (7)
+   - Defined "case" as the dependency relation of "floor" (9) ---> "on" (7)
+   - Defined the part of speech of "on" (7) as "ADP"
+   - Defined the lemma of "on" (7) as "on"
+   - Created the following miscellaneous feature of "on" (7): "TokenRange" with the value of "27:29"
+   - Defined "floor" (9) as the head of "the" (8)
+   - Defined "det" as the dependency relation of "floor" (9) ---> "the" (8)
+   - Defined the part of speech of "the" (8) as "DET"
+   - Defined the lemma of "the" (8) as "the"
+   - Created the following universal feature of "the" (8): "Definite" with the value of "Def"
+   - Created the following universal feature of "the" (8): "PronType" with the value of "Art"
+   - Created the following miscellaneous feature of "the" (8): "TokenRange" with the value of "30:33"
+   - Defined "'s" (5) as the head of "floor" (9)
+   - Defined "obl" as the dependency relation of "'s" (5) ---> "floor" (9)
+   - Defined the part of speech of "floor" (9) as "NOUN"
+   - Defined the lemma of "floor" (9) as "floor"
+   - Created the following universal feature of "floor" (9): "Number" with the value of "Sing"
+   - Created the following miscellaneous feature of "floor" (9): "SpaceAfter" with the value of "No"
+   - Created the following miscellaneous feature of "floor" (9): "TokenRange" with the value of "34:39"
+   - Defined "move" (2) as the head of "." (10)
+   - Defined "punct" as the dependency relation of "move" (2) ---> "." (10)
+   - Defined the part of speech of "." (10) as "PUNCT"
+   - Defined the lemma of "." (10) as "."
+   - Created the following miscellaneous feature of "." (10): "SpacesAfter" with the value of "\n"
+   - Created the following miscellaneous feature of "." (10): "TokenRange" with the value of "39:40"
+
+(21-05-2021 19:40:19) Logged out
+

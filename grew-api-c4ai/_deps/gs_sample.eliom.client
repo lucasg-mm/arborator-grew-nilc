@@ -1,0 +1,4 @@
+_client/gs_sample.cmo :
+_client/gs_sample.cmx :
+_client/gs_sample.cmo : _server/gs_sample.type_mli
+_client/gs_sample.cmx : _server/gs_sample.type_mli

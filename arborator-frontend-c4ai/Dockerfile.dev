@@ -1,0 +1,14 @@
+# specify a base image
+FROM node:14
+
+# defines a working directory
+WORKDIR /usr/app
+
+# install dependencies
+COPY ./package.json ./
+RUN npm install -g @quasar/cli
+RUN npm install
+COPY ./ ./
+
+# default command: runs in development mode
+CMD ["quasar", "dev"]

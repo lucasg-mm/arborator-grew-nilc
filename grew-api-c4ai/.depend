@@ -1,0 +1,62 @@
+_server/grew_server.cmo : _server/gs_utils.cmo _server/gs_main.cmo
+_server/grew_server.cmx : _server/gs_utils.cmx _server/gs_main.cmx
+_server/grew_server.type_mli : _server/gs_utils.cmo _server/gs_main.cmo
+_server/grew_server.cmo : _server/grew_server.type_mli
+_server/grew_server.cmx : _server/grew_server.type_mli
+_server/gs_cluster_output.cmo : _server/gs_utils.cmo
+_server/gs_cluster_output.cmx : _server/gs_utils.cmx
+_server/gs_cluster_output.type_mli : _server/gs_utils.cmo
+_server/gs_cluster_output.cmo : _server/gs_cluster_output.type_mli
+_server/gs_cluster_output.cmx : _server/gs_cluster_output.type_mli
+_server/gs_main.cmo : _server/gs_utils.cmo _server/gs_sentence.cmo _server/gs_sample.cmo _server/gs_project.cmo _server/gs_cluster_output.cmo
+_server/gs_main.cmx : _server/gs_utils.cmx _server/gs_sentence.cmx _server/gs_sample.cmx _server/gs_project.cmx _server/gs_cluster_output.cmx
+_server/gs_main.type_mli : _server/gs_utils.cmo _server/gs_sentence.cmo _server/gs_sample.cmo _server/gs_project.cmo _server/gs_cluster_output.cmo
+_server/gs_main.cmo : _server/gs_main.type_mli
+_server/gs_main.cmx : _server/gs_main.type_mli
+_server/gs_project.cmo : _server/gs_utils.cmo _server/gs_sample.cmo
+_server/gs_project.cmx : _server/gs_utils.cmx _server/gs_sample.cmx
+_server/gs_project.type_mli : _server/gs_utils.cmo _server/gs_sample.cmo
+_server/gs_project.cmo : _server/gs_project.type_mli
+_server/gs_project.cmx : _server/gs_project.type_mli
+_server/gs_sample.cmo : _server/gs_utils.cmo _server/gs_sentence.cmo
+_server/gs_sample.cmx : _server/gs_utils.cmx _server/gs_sentence.cmx
+_server/gs_sample.type_mli : _server/gs_utils.cmo _server/gs_sentence.cmo
+_server/gs_sample.cmo : _server/gs_sample.type_mli
+_server/gs_sample.cmx : _server/gs_sample.type_mli
+_server/gs_sentence.cmo : _server/gs_utils.cmo
+_server/gs_sentence.cmx : _server/gs_utils.cmx
+_server/gs_sentence.type_mli : _server/gs_utils.cmo
+_server/gs_sentence.cmo : _server/gs_sentence.type_mli
+_server/gs_sentence.cmx : _server/gs_sentence.type_mli
+_server/gs_utils.cmo :
+_server/gs_utils.cmx :
+_server/gs_utils.cmo : _server/gs_utils.type_mli
+_server/gs_utils.cmx : _server/gs_utils.type_mli
+_client/grew_server.cmo :
+_client/grew_server.cmx :
+_client/grew_server.cmo : _server/grew_server.type_mli
+_client/grew_server.cmx : _server/grew_server.type_mli
+_client/gs_cluster_output.cmo :
+_client/gs_cluster_output.cmx :
+_client/gs_cluster_output.cmo : _server/gs_cluster_output.type_mli
+_client/gs_cluster_output.cmx : _server/gs_cluster_output.type_mli
+_client/gs_main.cmo :
+_client/gs_main.cmx :
+_client/gs_main.cmo : _server/gs_main.type_mli
+_client/gs_main.cmx : _server/gs_main.type_mli
+_client/gs_project.cmo :
+_client/gs_project.cmx :
+_client/gs_project.cmo : _server/gs_project.type_mli
+_client/gs_project.cmx : _server/gs_project.type_mli
+_client/gs_sample.cmo :
+_client/gs_sample.cmx :
+_client/gs_sample.cmo : _server/gs_sample.type_mli
+_client/gs_sample.cmx : _server/gs_sample.type_mli
+_client/gs_sentence.cmo :
+_client/gs_sentence.cmx :
+_client/gs_sentence.cmo : _server/gs_sentence.type_mli
+_client/gs_sentence.cmx : _server/gs_sentence.type_mli
+_client/gs_utils.cmo :
+_client/gs_utils.cmx :
+_client/gs_utils.cmo : _server/gs_utils.type_mli
+_client/gs_utils.cmx : _server/gs_utils.type_mli

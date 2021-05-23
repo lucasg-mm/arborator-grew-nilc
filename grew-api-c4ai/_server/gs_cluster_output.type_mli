@@ -1,0 +1,14 @@
+val __eliom__compilation_unit_id__gKPuni : string
+module Cluster_output :
+  sig
+    type t = L of Yojson.Basic.t list | C of t Gs_utils.String_opt_map.t
+    val init : 'a list -> t
+    val to_json :
+      t ->
+      ([> `Assoc of (string * 'a) list | `List of Yojson.Basic.t list ] as 'a)
+    val insert :
+      (string * Yojson.Basic.t) list ->
+      string list ->
+      Libgrew.Pattern.t ->
+      Grew_graph.G_graph.t -> Libgrew.Matching.t -> t -> t
+  end

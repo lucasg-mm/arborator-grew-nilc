@@ -1,0 +1,17 @@
+# base image
+FROM python:3
+
+# defines a working directory
+WORKDIR /usr/app
+
+# install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -U flask-cors
+COPY . .
+
+# seeds database
+RUN echo "y" | python3 manage.py seed_db
+
+# default command: run in development mode
+CMD ["flask", "run", "--cert=adhoc"]

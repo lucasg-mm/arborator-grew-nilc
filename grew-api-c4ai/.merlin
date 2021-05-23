@@ -1,0 +1,16 @@
+PKG ocsigenserver
+PKG ocsigen-toolkit
+
+PKG eliom
+PKG eliom.client
+
+PKG ppx_deriving
+PKG eliom.ppx
+PKG eliom.ppx.server
+PKG eliom.ppx.client
+
+S _client
+S _server
+
+B _client
+B _server

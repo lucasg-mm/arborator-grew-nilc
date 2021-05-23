@@ -1,0 +1,161 @@
+val __eliom__compilation_unit_id__67i1XX : string
+val delay : int
+val refresh_frequency : int
+val time : unit -> int
+type state =
+    Disk of Gs_project.Project.size
+  | Mem of (Gs_project.Project.t * int)
+val current_projects : state Gs_utils.String_map.t ref
+val load_project : string -> Gs_project.Project.t
+val get_project : Gs_utils.String_map.key -> Gs_project.Project.t
+val update_project : Gs_utils.String_map.key -> Gs_project.Project.t -> unit
+val free_project : Gs_utils.String_map.key -> unit
+val free_outdated : unit -> unit
+val refresh : unit -> unit
+val load_from_storage : unit -> unit
+val get_sample :
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> Gs_sample.Sample.t
+val get_project_sample :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> Gs_project.Project.t * Gs_sample.Sample.t
+val get_sentence :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> Gs_sentence.Sentence.t
+val save_sample : Gs_utils.String_map.key -> Gs_utils.String_map.key -> unit
+val safe_set_meta : string -> string -> Libgrew.Graph.t -> Libgrew.Graph.t
+val update_conll_data :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> Conllx.Conllx.t -> unit
+val parse_meta : string list -> (string * string) list
+exception Skip
+val save_conll_filename :
+  Gs_utils.String_map.key ->
+  ?sample_id:Gs_utils.String_map.key ->
+  ?sent_id:Gs_utils.String_map.key ->
+  ?user_id:Gs_utils.String_map.key -> string -> unit
+val new_project : Gs_utils.String_map.key -> [> `Null ]
+val get_projects :
+  unit ->
+  [> `List of
+       [> `Assoc of
+            (string * [> `Int of int | `String of Gs_utils.String_map.key ])
+            list ]
+       list ]
+val erase_project : Gs_utils.String_map.key -> [> `Null ]
+val rename_project :
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> [> `Null ]
+val get_project_config : Gs_utils.String_map.key -> Yojson.Basic.t
+val update_project_config : Gs_utils.String_map.key -> string -> [> `Null ]
+val new_sample :
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> [> `Null ]
+val get_samples :
+  Gs_utils.String_map.key ->
+  [> `List of
+       [> `Assoc of
+            (string *
+             [> `Int of int
+              | `List of [> `String of Gs_utils.String_set.elt ] list
+              | `String of Gs_utils.String_map.key ])
+            list ]
+       list ]
+val erase_sample :
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> [> `Null ]
+val rename_sample :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> [> `Null ]
+val __swap_sample :
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> [> `Null ]
+val erase_sentence :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> [> `Null ]
+val erase_graph :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> [> `Null ]
+val get_conll__user :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> [> `String of string ]
+val get_conll__sent_id :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  [> `Assoc of (Gs_utils.String_map.key * [> `String of string ]) list ]
+val get_conll__sample :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  [> `Assoc of
+       (Gs_utils.String_map.key *
+        [> `Assoc of (Gs_utils.String_map.key * [> `String of string ]) list
+        ])
+       list ]
+val get_users__project :
+  Gs_utils.String_map.key ->
+  [> `List of [> `String of Gs_utils.String_set.elt ] list ]
+val get_users__sample :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  [> `List of [> `String of Gs_utils.String_set.elt ] list ]
+val get_users__sentence :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  [> `List of [> `String of Gs_utils.String_set.elt ] list ]
+val get_sent_ids__project :
+  Gs_utils.String_map.key -> [> `List of [> `String of string ] list ]
+val get_sent_ids__sample :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> [> `List of [> `String of string ] list ]
+val save_conll :
+  Gs_utils.String_map.key ->
+  ?sample_id:Gs_utils.String_map.key ->
+  ?sent_id:Gs_utils.String_map.key ->
+  ?user_id:Gs_utils.String_map.key ->
+  Ocsigen_extensions.file_info -> [> `Null ]
+val save_graph :
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key ->
+  Gs_utils.String_map.key -> Gs_utils.String_map.key -> string -> [> `Null ]
+val search_pattern_in_graphs :
+  Gs_utils.String_map.key ->
+  string ->
+  string list ->
+  ([> `Assoc of (string * 'a) list | `List of Yojson.Basic.t list ] as 'a)
+val pack : string -> Libgrew.Grs.t
+val try_rules :
+  Gs_utils.String_map.key ->
+  ?sample_id:Gs_utils.String_map.key ->
+  ?user_id:Gs_utils.String_map.key ->
+  string ->
+  [> `List of
+       [> `Assoc of (string * [> `String of Gs_utils.String_map.key ]) list ]
+       list ]
+val try_rule :
+  Gs_utils.String_map.key ->
+  ?sample_id:Gs_utils.String_map.key ->
+  ?user_id:Gs_utils.String_map.key ->
+  string ->
+  string ->
+  [> `List of
+       [> `Assoc of (string * [> `String of Gs_utils.String_map.key ]) list ]
+       list ]
+val apply_rules :
+  Gs_utils.String_map.key ->
+  ?sample_id:Gs_utils.String_map.key ->
+  ?user_id:Gs_utils.String_map.key ->
+  string -> [> `Assoc of (string * [> `Int of int ]) list ]
+val apply_rule :
+  Gs_utils.String_map.key ->
+  ?sample_id:Gs_utils.String_map.key ->
+  ?user_id:Gs_utils.String_map.key ->
+  string -> string -> [> `Assoc of (string * [> `Int of int ]) list ]
+val export_project_to_tempfile :
+  Gs_utils.String_map.key -> Gs_utils.String_map.key list -> string
+val export_project :
+  Gs_utils.String_map.key -> string -> [> `String of string ]
+val get_lexicon :
+  ?features:string -> Gs_utils.String_map.key -> string -> Yojson.Basic.t

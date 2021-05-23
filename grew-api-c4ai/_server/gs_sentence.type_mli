@@ -1,0 +1,26 @@
+val __eliom__compilation_unit_id__j5NEI9 : string
+module Sentence :
+  sig
+    type t = Libgrew.Graph.t Gs_utils.String_map.t
+    val empty : 'a Gs_utils.String_map.t
+    val add_graph :
+      Gs_utils.String_map.key ->
+      'a -> 'a Gs_utils.String_map.t -> 'a Gs_utils.String_map.t
+    val remove_graph :
+      Gs_utils.String_map.key ->
+      'a Gs_utils.String_map.t -> 'a Gs_utils.String_map.t
+    val get_users : 'a Gs_utils.String_map.t -> Gs_utils.String_set.t
+    val find_opt :
+      Gs_utils.String_map.key -> 'a Gs_utils.String_map.t -> 'a option
+    val fold :
+      (Gs_utils.String_map.key -> 'a -> 'b -> 'b) ->
+      'a Gs_utils.String_map.t -> 'b -> 'b
+    val map :
+      ('a -> 'b) -> 'a Gs_utils.String_map.t -> 'b Gs_utils.String_map.t
+    val mapi :
+      (Gs_utils.String_map.key -> 'a -> 'b) ->
+      'a Gs_utils.String_map.t -> 'b Gs_utils.String_map.t
+    val most_recent :
+      Libgrew.Graph.t Gs_utils.String_map.t -> Libgrew.Graph.t option
+    val save : out_channel -> Libgrew.Graph.t Gs_utils.String_map.t -> unit
+  end

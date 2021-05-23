@@ -1,0 +1,3 @@
+# ignore dependencies in the repository
+arborator-frontend-c4ai/node_modules
+arborator-backend-c4ai/venv

@@ -1,0 +1,25 @@
+val __eliom__compilation_unit_id__2QjpA7 : string
+module Sample :
+  sig
+    type t = {
+      rev_order : string list;
+      data : Gs_sentence.Sentence.t Gs_utils.String_map.t;
+    }
+    val insert :
+      Gs_utils.String_map.key ->
+      Gs_utils.String_map.key -> Libgrew.Graph.t -> t -> t
+    val empty : t
+    val swap : t -> t
+    val users : t -> Gs_utils.String_set.t
+    type size = {
+      number_sentences : int;
+      number_tokens : int;
+      number_trees : int;
+    }
+    val get_size : t -> size
+    val sent_ids : t -> string list
+    val save : out_channel -> t -> unit
+    val list_remove_item : 'a -> 'a list -> 'a list
+    val remove_sent : Gs_utils.String_map.key -> t -> t
+    val map : (Gs_sentence.Sentence.t -> Gs_sentence.Sentence.t) -> t -> t
+  end

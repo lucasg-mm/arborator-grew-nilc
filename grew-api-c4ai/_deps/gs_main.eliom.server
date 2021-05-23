@@ -1,0 +1,5 @@
+_server/gs_main.cmo : _server/gs_utils.cmo _server/gs_sentence.cmo _server/gs_sample.cmo _server/gs_project.cmo _server/gs_cluster_output.cmo
+_server/gs_main.cmx : _server/gs_utils.cmx _server/gs_sentence.cmx _server/gs_sample.cmx _server/gs_project.cmx _server/gs_cluster_output.cmx
+_server/gs_main.type_mli : _server/gs_utils.cmo _server/gs_sentence.cmo _server/gs_sample.cmo _server/gs_project.cmo _server/gs_cluster_output.cmo
+_server/gs_main.cmo : _server/gs_main.type_mli
+_server/gs_main.cmx : _server/gs_main.type_mli

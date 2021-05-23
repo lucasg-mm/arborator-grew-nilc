@@ -1,0 +1,33 @@
+version: "3"
+services:
+  backend:
+    image: "arborator-backend"
+    build:
+      dockerfile: Dockerfile.dev
+      context: "./arborator-backend-c4ai"
+    volumes:
+      - "./arborator-backend-c4ai/venv"
+      - "./arborator-backend-c4ai:/usr/app"
+    environment:
+      - FLASK_ENV=dev
+    expose:
+      - "5000"
+  frontend:
+    image: "arborator-frontend"
+    build:
+      dockerfile: Dockerfile.dev
+      context: "./arborator-frontend-c4ai"
+    volumes:
+      - "./arborator-frontend-c4ai/node_modules"
+      - "./arborator-frontend-c4ai:/usr/app"
+    ports:
+      - "8080:8080"
+  api:
+    image: "grew-api"
+    build:
+      dockerfile: Dockerfile.dev
+      context: "./grew-api-c4ai"
+    volumes:
+      - "./grew-api-c4ai:/usr/app"
+    expose:
+      - "3000"
