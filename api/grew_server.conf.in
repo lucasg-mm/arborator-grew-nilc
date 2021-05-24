@@ -25,7 +25,7 @@
       <static dir="%%STATICDIR%%" />
       <static dir="%%ELIOMSTATICDIR%%" />
       <eliommodule module="%%LIBDIR%%/%%PROJECT_NAME%%.cma" >
-        <base_url>http://localhost:3000</base_url>
+        <base_url>http://0.0.0.0:3000</base_url>
         <storage>./storage</storage>
         <log>./log</log>
         <extern>./extern</extern>

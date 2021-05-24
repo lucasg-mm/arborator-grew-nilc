@@ -19,8 +19,5 @@ RUN opam remote add grew "http://opam.grew.fr"
 RUN opam install grew grewpy
 RUN opam install fileutils
 
-# creates directories needes to run
-RUN mkdir ./upload ./storage ./log ./extern ./static/export
-
 # default command
 CMD ["make", "test.byte"]
