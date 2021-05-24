@@ -13,4 +13,4 @@ mkdir ./backend/keys
 mkdir ./backend/logs
 mkdir ./backend/tmp
 mkdir ./backend/tmp/data
-mv ./backend/.flaskenv.template ./backend/.flaskenv
+cp ./backend/.flaskenv.template ./backend/.flaskenv
