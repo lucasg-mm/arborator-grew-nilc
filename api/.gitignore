@@ -1,0 +1,14 @@
+.vscode
+local
+_client
+_deps
+_server
+local
+.depend
+grew_server_*.log
+__pycache__
+storage/*
+log/*
+extern/*
+static/export/*
+upload/*
