@@ -202,7 +202,7 @@ def checkfirstsuper():
     flash(message)
     # redirect to the login page
     # TODO : fix this ugly thing, redirecting to url_for('auth.home_page') goes to the bad port
-    return redirect("https://127.0.0.1:8080")
+    return redirect("https://frontend:8080")
 
 
 @auth.route("/", methods=["GET"])

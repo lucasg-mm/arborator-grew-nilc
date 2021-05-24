@@ -21,7 +21,7 @@
     <extension findlib-package="eliom.server"/>
     %%% This will include the packages defined as SERVER_PACKAGES in your Makefile:
     %%PACKAGES%%
-    <host defaulthostname="localhost" hostfilter="*">
+    <host defaulthostname="0.0.0.0" hostfilter="*">
       <static dir="%%STATICDIR%%" />
       <static dir="%%ELIOMSTATICDIR%%" />
       <eliommodule module="%%LIBDIR%%/%%PROJECT_NAME%%.cma" >
