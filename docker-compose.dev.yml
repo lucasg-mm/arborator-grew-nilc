@@ -9,6 +9,7 @@ services:
       - "./backend:/usr/app"
     environment:
       - FLASK_ENV=dev
+      - FLASK_APP=wsgi.py
     ports:
       - "5000:5000"
   frontend:

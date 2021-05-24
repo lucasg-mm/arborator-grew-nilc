@@ -146,3 +146,7 @@ migrations/
 
 # users activity logs
 app/logs/*
+
+# >> keep <<
+!app/logs/.gitkeep
+!app/tmp/data/.gitkeep
