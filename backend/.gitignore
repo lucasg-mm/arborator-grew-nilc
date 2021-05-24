@@ -3,7 +3,6 @@
 
 # security
 keys/
-auth_config.py
 
 # scrap
 z_sandbox/
