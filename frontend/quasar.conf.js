@@ -2,7 +2,6 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
 const source = "https://backend:5000";
-// const source = "https://arboratorgrew.elizia.net:8888";
 
 module.exports = function(ctx) {
   return {
@@ -132,8 +131,7 @@ module.exports = function(ctx) {
           }
         : {
             // and on build (production):
-            // API: JSON.stringify("https://arboratorgrew.elizia.net:8888"),
-            API: JSON.stringify("https://arboratorgrew.elizia.net"),
+            API: JSON.stringify(source),
           },
       scopeHoisting: true,
       devtool: "source-map",
@@ -147,7 +145,6 @@ module.exports = function(ctx) {
 
     devServer: {
       https: true,
-      // port: 8080,
       // open: true, // opens browser window automatically
       proxy: {
         "/api": {

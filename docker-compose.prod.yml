@@ -2,27 +2,24 @@ version: "3"
 services:
   backend:
     restart: always
-    image: "arborator-backend"
     build:
       dockerfile: Dockerfile
-      context: "./arborator-backend-c4ai"
+      context: "./backend"
     environment:
       - FLASK_ENV=prod
     expose:
       - "5000"
   frontend:
     restart: always
-    image: "arborator-frontend"
     build:
       dockerfile: Dockerfile
-      context: "./arborator-frontend-c4ai"
+      context: "./frontend"
     ports:
       - "8080:80"
   api:
     restart: always
-    image: "grew-api"
     build:
       dockerfile: Dockerfile
-      context: "./grew-api-c4ai"
+      context: "./api"
     expose:
       - "3000"
