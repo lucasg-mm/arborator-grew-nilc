@@ -1,4 +1,0 @@
-_client/gs_sentence.cmo :
-_client/gs_sentence.cmx :
-_client/gs_sentence.cmo : _server/gs_sentence.type_mli
-_client/gs_sentence.cmx : _server/gs_sentence.type_mli

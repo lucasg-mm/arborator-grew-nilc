@@ -1,10 +1,143 @@
-# ignore installed dependencies
-frontend/node_modules
-backend/venv
-api/local
-
-# ignore .vscode files
+# >> ignores for the .vscode files <<
 .vscode
 frontend/.vscode
 backend/.vscode
 api/.vscode
+
+# >> ignores for the frontend <<
+frontend/node_modules
+frontend/dist
+frontend/.quasar
+frontend/src-pwa
+
+# >> ignores for the backend <<
+backend/venv
+backend/app/logs/*
+# security
+backend/keys/
+backend/auth_config.py
+# scrap
+backend/z_sandbox/
+# databases
+backend/app/*.sqlite
+backend/app/klang/data_dev/
+backend/app/klang/data_prod/
+backend/app/public/tmp/*
+backend/app/public/tmp/*
+backend/.idea/
+backend/*.pyc
+backend/py3/
+backend/data/
+backend/build/
+backend/dist/
+backend/.pytest_cache/
+backend/.vscode/
+# Byte-compiled / optimized / DLL files
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+# C extensions
+backend/*.so
+# Distribution / packaging
+backend/.Python
+backend/build/
+backend/develop-eggs/
+backend/dist/
+backend/downloads/
+backend/eggs/
+backend/.eggs/
+backend/lib/
+backend/lib64/
+backend/parts/
+backend/sdist/
+backend/var/
+backend/wheels/
+backend/*.egg-info/
+backend/.installed.cfg
+backend/*.egg
+backend/MANIFEST
+backend/*.pkl
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+backend/*.manifest
+backend/*.spec
+# Installer logs
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
+# Unit test / coverage reports
+backend/htmlcov/
+backend/.tox/
+backend/.coverage
+backend/.coverage.*
+backend/.cache
+backend/nosetests.xml
+backend/coverage.xml
+backend/*.cover
+backend/.hypothesis/
+backend/.pytest_cache/
+# Translations
+backend/*.mo
+backend/*.pot
+# Django stuff:
+backend/*.log
+backend/local_settings.py
+backend/db.sqlite3
+# Flask stuff:
+backend/instance/
+backend/.webassets-cache
+# Scrapy stuff:
+backend/.scrapy
+# Sphinx documentation
+backend/docs/_build/
+# PyBuilder
+backend/target/
+# Jupyter Notebook
+backend/.ipynb_checkpoints
+# pyenv
+backend/.python-version
+# celery beat schedule file
+backend/celerybeat-schedule
+# SageMath parsed files
+backend/*.sage.py
+# Environments
+backend/.flaskenv 
+backend/.env
+backend/.venv
+backend/env/
+backend/venv/
+backend/ENV/
+backend/env.bak/
+backend/venv.bak/
+# Spyder project settings
+backend/.spyderproject
+backend/.spyproject
+# Rope project settings
+backend/.ropeproject
+# mkdocs documentation
+backend/site
+# mypy
+backend/.mypy_cache/
+backend/.idea
+backend/*.pptx
+backend/misc/
+backend/.Rproj.user
+backend/app/app-test.db
+backend/migrations/*
+backend/migrations/
+
+
+# >> ignores for the api <<
+api/local
+api/_client
+api/_deps
+api/_server
+api/local
+api/.depend
+api/grew_server_*.log
+api/__pycache__
+api/storage/*
+api/log/*
+api/extern/*
+api/static/export/*
+api/upload/*

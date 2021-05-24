@@ -1,5 +1,0 @@
-_server/grew_server.cmo : _server/gs_utils.cmo _server/gs_main.cmo
-_server/grew_server.cmx : _server/gs_utils.cmx _server/gs_main.cmx
-_server/grew_server.type_mli : _server/gs_utils.cmo _server/gs_main.cmo
-_server/grew_server.cmo : _server/grew_server.type_mli
-_server/grew_server.cmx : _server/grew_server.type_mli

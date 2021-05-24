@@ -1,4 +1,0 @@
-_client/gs_project.cmo :
-_client/gs_project.cmx :
-_client/gs_project.cmo : _server/gs_project.type_mli
-_client/gs_project.cmx : _server/gs_project.type_mli

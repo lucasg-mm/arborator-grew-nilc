@@ -1,4 +1,0 @@
-_client/gs_utils.cmo :
-_client/gs_utils.cmx :
-_client/gs_utils.cmo : _server/gs_utils.type_mli
-_client/gs_utils.cmx : _server/gs_utils.type_mli

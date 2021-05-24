@@ -1,4 +1,0 @@
-_client/gs_cluster_output.cmo :
-_client/gs_cluster_output.cmx :
-_client/gs_cluster_output.cmo : _server/gs_cluster_output.type_mli
-_client/gs_cluster_output.cmx : _server/gs_cluster_output.type_mli
