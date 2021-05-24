@@ -10,8 +10,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install -U flask-cors
 COPY . .
 
-# seeds database
-RUN echo "y" | python3 manage.py seed_db
-
 # default command: run in development mode
 CMD ["flask", "run", "--host=0.0.0.0", "--cert=adhoc"]
