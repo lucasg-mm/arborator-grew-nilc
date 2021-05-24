@@ -13,5 +13,10 @@ COPY . .
 # seeds database
 RUN echo "y" | python3 manage.py seed_db
 
+# creates needed directories
+RUN mkdir ./app/logs
+RUN mkdir ./app/tmp
+RUN mkdir ./app/tmp/data
+
 # default command: run in development mode
 CMD ["flask", "run", "--host=0.0.0.0", "--cert=adhoc"]

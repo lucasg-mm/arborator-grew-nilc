@@ -13,10 +13,3 @@ log/*
 extern/*
 static/export/*
 upload/*
-
-# >> keep <<
-!storage/.gitkeep
-!log/.gitkeep
-!extern/.gitkeep
-!static/export/.gitkeep
-!upload/.gitkeep
