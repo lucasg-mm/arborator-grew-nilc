@@ -11,6 +11,6 @@ mkdir ./api/static/export
 # >> prep work for the backend <<
 mkdir ./backend/keys
 mkdir ./backend/logs
-mkdir ./backend/tmp
-mkdir ./backend/tmp/data
+mkdir ./backend/app/tmp
+mkdir ./backend/app/tmp/data
 cp ./backend/.flaskenv.template ./backend/.flaskenv
