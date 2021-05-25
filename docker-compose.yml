@@ -6,8 +6,10 @@ services:
       dockerfile: Dockerfile
       context: "./backend"
     volumes:
-      - "/var/www/app/venv"
-      - "./backend:/var/www/app"
+      - "/usr/app/venv"
+      - "./backend:/usr/app"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     environment:
       - FLASK_ENV=prod
       - FLASK_APP=wsgi.py
@@ -19,7 +21,7 @@ services:
       dockerfile: Dockerfile
       context: "./frontend"
     ports:
-      - "8000:80"
+      - "8080:80"
   api:
     restart: always
     build:

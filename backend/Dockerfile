@@ -1,18 +1,13 @@
 # base image
 FROM ubuntu:focal
 
-# >> dealing with Nginx <<
-# installs nginx
+#>> dealing with the os <<
+# updates package manager
 RUN apt-get update
-RUN echo "y" | apt-get install nginx
-
-# allows HTTP traffic
-RUN echo "y" | apt-get install ufw
-RUN ufw allow 'Nginx HTTP'
 
 # >> dealing with the app <<
 # defines a working directory to install the app
-WORKDIR /var/www/app
+WORKDIR /usr/app
 
 # install dependencies
 RUN echo "Y" | apt-get install python3
