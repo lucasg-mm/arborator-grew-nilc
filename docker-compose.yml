@@ -21,14 +21,13 @@ services:
       dockerfile: Dockerfile
       context: "./frontend"
     ports:
-      - "8080:80"
+      - "80:80"
   api:
     restart: always
     build:
       dockerfile: Dockerfile
       context: "./api"
     volumes:
-      - "/usr/app/local"
       - "./api:/usr/app"
     expose:
       - "3000"
