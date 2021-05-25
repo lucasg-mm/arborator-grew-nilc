@@ -9,7 +9,6 @@ export default {
     return API.get(provider);
   },
   logout() {
-    console.log(process.env.DEV);
     return ROOT_API.get("/logout");
   },
 

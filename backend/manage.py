@@ -1,3 +1,4 @@
+from sqlalchemy import MetaData, Table, Column, Integer, String
 import os
 from flask_script import Manager
 
@@ -7,7 +8,6 @@ from commands.seed_command import SeedCommand
 
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=".flaskenv", verbose=True)
-from sqlalchemy import MetaData, Table, Column, Integer, String
 
 env = os.getenv("FLASK_ENV") or "test"
 print(f"Active environment: * {env} *")
@@ -20,7 +20,10 @@ manager.add_command("seed_db", SeedCommand)
 
 @manager.command
 def run():
-    app.run()
+    if env == "dev":
+        app.run(debug=True)
+    else:
+        app.run()
 
 
 @manager.command
@@ -42,7 +45,7 @@ def add_super_admin(username):
     user = UserService.get_by_username(username=username)
     UserService.change_super_admin(user, True)
 
-    
+
 @manager.option('--username', help='username of the super_admin to be removed')
 def remove_super_admin(username):
     from app.user.service import UserService

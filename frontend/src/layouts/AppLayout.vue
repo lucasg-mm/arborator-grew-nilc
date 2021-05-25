@@ -7,19 +7,26 @@
         <q-btn flat @click="drawerLeft = !drawerLeft" round icon="menu" />
         <q-btn flat to="/" :ripple="false" type="a">
           <div
-            class="q-btn__content text-center col items-center q-anchor--skip row"
+            class="
+              q-btn__content
+              text-center
+              col
+              items-center
+              q-anchor--skip
+              row
+            "
           >
             <img
               v-if="$q.dark.isActive"
               alt="Arborator"
               src="../statics/svg/arborator.grew.white.svg"
-              style="height: 2.3vw;"
+              style="height: 2.3vw"
             />
             <img
               v-else
               alt="Arborator"
               src="../statics/svg/arborator.grew.svg"
-              style="height: 2.3vw;"
+              style="height: 2.3vw"
             />
           </div>
         </q-btn>
@@ -28,9 +35,9 @@
           :active-color="$q.dark.isActive ? 'white' : 'primary'"
           :class="
             ($q.dark.isActive ? 'text-grey' : 'text-black') +
-              ' mobile-hide native-mobile-hide within-iframe-hide gt-xs'
+            ' mobile-hide native-mobile-hide within-iframe-hide gt-xs'
           "
-          style="max-height:20px;max-width:70vh;overflow:y;"
+          style="max-height: 20px; max-width: 70vh; overflow: y"
         >
           <q-breadcrumbs-el v-if="notHome" icon="home" to="/" />
           <q-breadcrumbs-el
@@ -47,15 +54,15 @@
           <q-breadcrumbs-el
             v-if="
               $route.params.samplename != null &&
-                $route.params.projectname != null
+              $route.params.projectname != null
             "
             :label="$route.params.samplename"
             icon="assignment"
             :to="
               '/projects/' +
-                $route.params.projectname +
-                '/' +
-                $route.params.samplename
+              $route.params.projectname +
+              '/' +
+              $route.params.samplename
             "
           />
           <q-breadcrumbs-el
@@ -77,9 +84,7 @@
         <q-space />
         <div class="q-gutter-sm row items-center no-wrap" size="4rem">
           <q-icon name="admin_panel_settings" v-show="isProjectAdmin">
-            <q-tooltip>
-              You are admin of this project
-            </q-tooltip>
+            <q-tooltip> You are admin of this project </q-tooltip>
           </q-icon>
           <q-select
             v-model="lang"
@@ -113,7 +118,7 @@
               <q-item
                 clickable
                 v-close-popup
-                @click="tologin(store.getters.getSource + '/login/google')"
+                @click="tologin(store.getters.getURL + '/login/google')"
               >
                 <q-item-section avatar>
                   <q-icon name="fab fa-google" />
@@ -126,7 +131,7 @@
               <q-item
                 clickable
                 v-close-popup
-                @click="tologin(store.getters.getSource + '/login/github')"
+                @click="tologin(store.getters.getURL + '/login/github')"
               >
                 <q-item-section avatar>
                   <q-icon name="fab fa-github" />
@@ -235,7 +240,12 @@
         {{ $t("footer")[0] }}
         <q-icon
           name="favorite"
-          style="font-size:22px;color: #dd137b;height:18px;vertical-align:text-bottom"
+          style="
+            font-size: 22px;
+            color: #dd137b;
+            height: 18px;
+            vertical-align: text-bottom;
+          "
         />
         {{ $t("footer")[1] }}
         <img
@@ -243,7 +253,7 @@
           role="presentation"
           src="../statics/svg/paris.svg"
           class=""
-          style="color: #dd137b;height:18px;"
+          style="color: #dd137b; height: 18px"
         />
         {{ $t("footer")[2] }}
         <a href="https://team.inria.fr/almanach" target="_blank">
@@ -252,7 +262,7 @@
             role="presentation"
             src="../statics/svg/almanachInria.svg"
             class=""
-            style="height:18px;"
+            style="height: 18px"
           />
         </a>
         v1.0 beta (20200515)</q-item-label
@@ -269,7 +279,7 @@
       mini-to-overlay
       bordered
     >
-      <q-scroll-area style="height: calc(100% - 0px); margin-top: 0px; ">
+      <q-scroll-area style="height: calc(100% - 0px); margin-top: 0px">
         <q-list padding>
           <div v-for="(menuItem, index) in menuList" :key="index">
             <q-item

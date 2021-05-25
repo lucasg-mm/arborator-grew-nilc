@@ -18,6 +18,7 @@ import { i18n } from "src/boot/i18n";
 
 export default new Vuex.Store({
   state: {
+    URL: process.env.APP_URL,
     source: process.env.API,
     lastGrewQuery: "",
     lastGrewCommand: "",
@@ -104,6 +105,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    getURL: (state) => state.URL,
     getSource: (state) => state.source,
     getLastGrewQuery: (state) => state.lastGrewQuery,
     getLastGrewCommand: (state) => state.lastGrewCommand,

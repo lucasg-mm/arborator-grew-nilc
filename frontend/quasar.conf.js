@@ -2,8 +2,10 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
 const source = "https://backend:5000";
+const devURL = "https://localhost:8080";
+const prodURL = "https://fw.nilc.icmc.usp.br:23680";
 
-module.exports = function(ctx) {
+module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -128,10 +130,12 @@ module.exports = function(ctx) {
         ? {
             // so on dev we'll have
             API: JSON.stringify(source),
+            APP_URL: JSON.stringify(devURL),
           }
         : {
             // and on build (production):
             API: JSON.stringify(source),
+            APP_URL: JSON.stringify(prodURL),
           },
       scopeHoisting: true,
       devtool: "source-map",
@@ -144,6 +148,7 @@ module.exports = function(ctx) {
     },
 
     devServer: {
+      host: "0.0.0.0",
       https: true,
       // open: true, // opens browser window automatically
       proxy: {

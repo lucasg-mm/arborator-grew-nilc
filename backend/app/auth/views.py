@@ -149,13 +149,14 @@ def login(provider_name) -> Response:
             resp = Response(userJson, status=200, mimetype="application/json")
 
             if current_app.config["ENV"] == "dev":
-                print(resp)
                 return make_response(
-                    render_template("auth/redirect_dev.html", response=resp)
+                    render_template("auth/redirect_dev.html",
+                                    response=resp, host_url=request.host_url)
                 )
             elif current_app.config["ENV"] == "prod":
                 return make_response(
-                    render_template("auth/redirect_prod.html", response=resp)
+                    render_template("auth/redirect_prod.html",
+                                    response=resp, host_url=request.host_url)
                 )
 
     return response
