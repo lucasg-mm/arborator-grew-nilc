@@ -6,11 +6,11 @@ import sys
 import requests
 
 if (len(sys.argv) > 1 and sys.argv[1] == "prod"):
-    server = 'http://frontend:8080'
+    server = 'https://frontend:8080'
 elif (len(sys.argv) > 1 and sys.argv[1] == "dev"):
-    server = 'http://frontend:8080'
+    server = 'https://frontend:8080'
 else:
-    server = 'http://frontend:8080'
+    server = 'https://frontend:8080'
 
 
 def send_request(fct_name, data={}, files={}):
