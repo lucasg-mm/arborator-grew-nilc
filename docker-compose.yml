@@ -5,6 +5,9 @@ services:
     build:
       dockerfile: Dockerfile
       context: "./backend"
+    volumes:
+      - "/var/www/app/venv"
+      - "./backend:/var/www/app"
     environment:
       - FLASK_ENV=prod
       - FLASK_APP=wsgi.py
@@ -16,11 +19,14 @@ services:
       dockerfile: Dockerfile
       context: "./frontend"
     ports:
-      - "8080:80"
+      - "8000:80"
   api:
     restart: always
     build:
       dockerfile: Dockerfile
       context: "./api"
+    volumes:
+      - "/usr/app/local"
+      - "./api:/usr/app"
     expose:
       - "3000"

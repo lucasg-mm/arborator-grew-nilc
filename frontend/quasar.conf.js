@@ -1,9 +1,11 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
+const urls = require("./urls");
+
 const source = "https://backend:5000";
-const devURL = "https://localhost:8080";
-const prodURL = "https://fw.nilc.icmc.usp.br:23680";
+const devURL = urls.devUrl;
+const prodURL = urls.prodUrl;
 
 module.exports = function (ctx) {
   return {
@@ -131,11 +133,13 @@ module.exports = function (ctx) {
             // so on dev we'll have
             API: JSON.stringify(source),
             APP_URL: JSON.stringify(devURL),
+            DEV_MODE: "1",
           }
         : {
             // and on build (production):
             API: JSON.stringify(source),
             APP_URL: JSON.stringify(prodURL),
+            DEV_MODE: "0",
           },
       scopeHoisting: true,
       devtool: "source-map",

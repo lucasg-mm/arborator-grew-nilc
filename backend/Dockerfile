@@ -22,8 +22,5 @@ RUN pip3 install -r requirements.txt
 RUN pip3 install -U flask-cors
 COPY . .
 
-# seeds database
-RUN echo "y" | python3 manage.py seed_db
-
 # default command: run in production mode
-CMD ["flask", "run"]
+CMD ["flask", "run", "--host=0.0.0.0", "--cert=adhoc"]

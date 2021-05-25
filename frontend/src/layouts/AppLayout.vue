@@ -118,7 +118,7 @@
               <q-item
                 clickable
                 v-close-popup
-                @click="tologin(store.getters.getURL + '/login/google')"
+                @click="tologin(currentUrl + '/login/google')"
               >
                 <q-item-section avatar>
                   <q-icon name="fab fa-google" />
@@ -131,7 +131,7 @@
               <q-item
                 clickable
                 v-close-popup
-                @click="tologin(store.getters.getURL + '/login/github')"
+                @click="tologin(currentUrl + '/login/github')"
               >
                 <q-item-section avatar>
                   <q-icon name="fab fa-github" />
@@ -307,10 +307,12 @@
 import { openURL } from "quasar";
 import api from "../boot/backend-api";
 import Store from "../store/index";
+import urls from "../../urls";
 export default {
   name: "TempLayout",
   data() {
     return {
+      currentUrl: "",
       store: Store,
       drawerLeft: false, //this.$q.platform.is.mobile?false:true,
       miniState: true,
@@ -368,6 +370,15 @@ export default {
         },
       ],
     };
+  },
+  beforeMount() {
+    // defines the used url as the one in the
+    // urls.js file (the right one for the current mode)
+    if (process.env.DEV_MODE === "1") {
+      this.currentUrl = urls.devUrl;
+    } else {
+      this.currentUrl = urls.prodUrl;
+    }
   },
   watch: {
     lang(lang) {
