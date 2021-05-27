@@ -133,13 +133,13 @@ module.exports = function (ctx) {
             // so on dev we'll have
             API: JSON.stringify(source),
             APP_URL: JSON.stringify(devURL),
-            DEV_MODE: "1",
+            DEV_MODE: 1,
           }
         : {
             // and on build (production):
             API: JSON.stringify(source),
             APP_URL: JSON.stringify(prodURL),
-            DEV_MODE: "0",
+            DEV_MODE: 0,
           },
       scopeHoisting: true,
       devtool: "source-map",
