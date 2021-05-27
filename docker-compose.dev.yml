@@ -1,6 +1,7 @@
 version: "3"
 services:
   backend:
+    image: lucasgmm20/nilc-arborator-grew-backend-dev
     build:
       dockerfile: Dockerfile.dev
       context: "./backend"
@@ -13,6 +14,7 @@ services:
     ports:
       - "5000:5000"
   frontend:
+    image: lucasgmm20/nilc-arborator-grew-frontend-dev
     build:
       dockerfile: Dockerfile.dev
       context: "./frontend"
@@ -22,6 +24,7 @@ services:
     ports:
       - "8080:8080"
   api:
+    image: lucasgmm20/nilc-arborator-grew-api-dev
     build:
       dockerfile: Dockerfile.dev
       context: "./api"

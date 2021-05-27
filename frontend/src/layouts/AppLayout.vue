@@ -265,7 +265,7 @@
             style="height: 18px"
           />
         </a>
-        v1.0 beta (20200515)</q-item-label
+        v1.0-NILC beta (25/05/2021)</q-item-label
       >
     </q-footer>
     <q-drawer
