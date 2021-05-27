@@ -1,10 +1,30 @@
 <template>
   <!----------------- Start ConllDialog ------------------->
-  <q-dialog v-model="conlluDialogOpened" full-width>
+  <q-dialog
+    :maximized="maximizedToggle"
+    v-model="conlluDialogOpened"
+    full-width
+  >
     <q-layout view="Lhh lpR fff" container class="bg-white">
       <q-header class="bg-primary">
         <q-toolbar>
           <q-toolbar-title>CoNLL of TODO : sentenceId </q-toolbar-title>
+          <q-btn
+            dense
+            flat
+            icon="minimize"
+            @click="toggleSize"
+            :disable="!maximizedToggle"
+          >
+          </q-btn>
+          <q-btn
+            dense
+            flat
+            icon="crop_square"
+            @click="toggleSize"
+            :disable="maximizedToggle"
+          >
+          </q-btn>
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-header>
@@ -44,7 +64,7 @@ import { conllToJson } from "../../helpers/Conll";
 import { codemirror } from "vue-codemirror";
 import CodeMirror from "codemirror";
 
-CodeMirror.defineMode("tsv", function(_config, parserConfig) {
+CodeMirror.defineMode("tsv", function (_config, parserConfig) {
   function tokenBase(stream, state) {
     if (stream.string.match(/^#.+/)) {
       stream.skipToEnd();
@@ -71,10 +91,10 @@ CodeMirror.defineMode("tsv", function(_config, parserConfig) {
   // function tokenString(stream, state) {	}
 
   return {
-    startState: function() {
+    startState: function () {
       return { tokenize: tokenBase, commentLevel: 0 };
     },
-    token: function(stream, state) {
+    token: function (stream, state) {
       if (stream.eatSpace()) return null;
       return state.tokenize(stream, state);
     },
@@ -87,6 +107,7 @@ export default {
   props: ["sentenceBus"],
   data() {
     return {
+      maximizedToggle: true,
       conlluDialogOpened: false,
       currentConllContent: "",
       conllContent: "",
@@ -112,6 +133,13 @@ export default {
     });
   },
   methods: {
+    // -- DESCRIPTION:
+    // Blocks appropriate buttons and emit an event
+    // telling the parent to maximize/minimize de dialogue.
+    toggleSize() {
+      this.maximizedToggle = !this.maximizedToggle;
+      // this.$emit("maximizedToggle");
+    },
     codefocus(cm, ev) {
       cm.refresh();
       cm.execCommand("selectAll");

@@ -375,11 +375,8 @@ export default {
     // defines the used url as the one in the
     // urls.js file (the right one for the current mode)
     if (process.env.DEV_MODE === 1) {
-      console.log("I'm in dev mode");
       this.currentUrl = urls.devUrl;
     } else {
-      console.log("I'm in prod mode");
-      console.log(typeof process.env.DEV_MODE);
       this.currentUrl = urls.prodUrl;
     }
   },

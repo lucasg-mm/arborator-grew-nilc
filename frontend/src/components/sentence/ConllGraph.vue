@@ -309,7 +309,7 @@ import CodeMirror from "codemirror";
 // from arborator-draft-snap.js
 const arboratorDraft = new ArboratorDraft();
 
-CodeMirror.defineMode("tsv", function(_config, parserConfig) {
+CodeMirror.defineMode("tsv", function (_config, parserConfig) {
   function tokenBase(stream, state) {
     if (stream.string.match(/^#.+/)) {
       stream.skipToEnd();
@@ -336,10 +336,10 @@ CodeMirror.defineMode("tsv", function(_config, parserConfig) {
   // function tokenString(stream, state) {	}
 
   return {
-    startState: function() {
+    startState: function () {
       return { tokenize: tokenBase, commentLevel: 0 };
     },
-    token: function(stream, state) {
+    token: function (stream, state) {
       if (stream.eatSpace()) return null;
       return state.tokenize(stream, state);
     },
@@ -448,7 +448,7 @@ export default {
   //   }]
   // },
   watch: {
-    conllSavedCounter: function(val) {
+    conllSavedCounter: function (val) {
       this.start(this.conll, this.matches, this.id, this.user);
     },
   },
@@ -458,11 +458,15 @@ export default {
     this.options.shownmeta = this.$store.getters["config/shownmeta"];
     this.start(this.conll, this.matches, this.id, this.user);
     // precompute to check for changes quickly:
-    this.options.annofFEATS = this.options.annof.FEATS.reduce(function(obj, r) {
+    this.options.annofFEATS = this.options.annof.FEATS.reduce(function (
+      obj,
+      r
+    ) {
       if (r.values) obj[r.name] = r.values;
       return obj;
-    }, {});
-    this.options.annofMISC = this.options.annof.MISC.reduce(function(obj, r) {
+    },
+    {});
+    this.options.annofMISC = this.options.annof.MISC.reduce(function (obj, r) {
       if (r.values) obj[r.name] = r.values;
       return obj;
     }, {});
@@ -632,7 +636,7 @@ export default {
     onMetaDialogOk() {
       this.snap.treedata = arboratorDraft.metaChanged(
         this.snap.treedata,
-        this.snap.metal.reduce(function(obj, r) {
+        this.snap.metal.reduce(function (obj, r) {
           if (r.v) obj[r.a] = r.v;
           return obj;
         }, {})
@@ -680,15 +684,15 @@ export default {
         this.snap.treedata = arboratorDraft.featureChanged(
           this.snap.treedata,
           this.snap.depid,
-          this.featTable.lemma.reduce(function(obj, r) {
+          this.featTable.lemma.reduce(function (obj, r) {
             if (r.v) obj[r.a] = r.v;
             return obj;
           }, {})["Lemma"],
-          this.featTable.featl.reduce(function(obj, r) {
+          this.featTable.featl.reduce(function (obj, r) {
             if (r.v) obj[r.a] = r.v;
             return obj;
           }, {}),
-          this.featTable.miscl.reduce(function(obj, r) {
+          this.featTable.miscl.reduce(function (obj, r) {
             if (r.v) obj[r.a] = r.v;
             return obj;
           }, {})
