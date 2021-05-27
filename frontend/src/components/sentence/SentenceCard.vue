@@ -29,8 +29,8 @@
         <q-btn
           v-if="
             isLoggedIn &&
-              exerciseLevel <= 3 &&
-              !$store.getters['config/isTeacher']
+            exerciseLevel <= 3 &&
+            !$store.getters['config/isTeacher']
           "
           flat
           round
@@ -518,13 +518,26 @@ export default {
     // Event for saving the current tree by the defined shortcut.
     this.$root.$on("save-by-shortcut", () => {
       // saves the changes using the shortcut, if it's possible!
-      if (
-        this.tab !== "" &&
-        this.canSave &&
-        this.isLoggedIn &&
-        !this.$store.getters["config/isTeacher"]
-      ) {
+      if (this.tab !== "" && this.canSave && this.isLoggedIn) {
         this.save("");
+      }
+    });
+
+    // -- DESCRIPTION:
+    // Event for undoing the last change in the current tree.
+    this.$root.$on("undo-by-shortcut", () => {
+      // saves the changes using the shortcut, if it's possible!
+      if (this.tab !== "" && this.canUndo && this.isLoggedIn) {
+        this.undo("user");
+      }
+    });
+
+    // -- DESCRIPTION:
+    // Event for redoing the last change in the current tree.
+    this.$root.$on("redo-by-shortcut", () => {
+      // saves the changes using the shortcut, if it's possible!
+      if (this.tab !== "" && this.canRedo && this.isLoggedIn) {
+        this.redo("user");
       }
     });
   },
@@ -536,9 +549,8 @@ export default {
     this.canSave = false;
   },
   created() {
-    this.shownmetanames = this.$store.getters[
-      "config/getProjectConfig"
-    ].shownmeta;
+    this.shownmetanames =
+      this.$store.getters["config/getProjectConfig"].shownmeta;
 
     for (const [userId, conll] of Object.entries(this.sentence.conlls)) {
       const reactiveSentence = new ReactiveSentence();
@@ -614,11 +626,7 @@ export default {
     // Executes a save of the tree triggered by the save all command.
     saveBySaveAll() {
       return new Promise((resolve, reject) => {
-        if (
-          this.canSave &&
-          this.isLoggedIn &&
-          !this.$store.getters["config/isTeacher"]
-        ) {
+        if (this.canSave && this.isLoggedIn) {
           this.tab = this.userId;
           this.save("");
         }
@@ -800,9 +808,8 @@ export default {
 
           // for every token between the dep and the head...
           for (let middle = lower + 1; middle < upper; middle++) {
-            let visitedToken = this.reactiveSentencesObj[this.tab].treeJson[
-              middle
-            ].HEAD;
+            let visitedToken =
+              this.reactiveSentencesObj[this.tab].treeJson[middle].HEAD;
 
             // goes up the tree and verifies if there is a connection with a
             // successful token
@@ -811,9 +818,8 @@ export default {
               visitedToken !== 0 &&
               !success.has(visitedToken)
             ) {
-              visitedToken = this.reactiveSentencesObj[this.tab].treeJson[
-                visitedToken
-              ].HEAD;
+              visitedToken =
+                this.reactiveSentencesObj[this.tab].treeJson[visitedToken].HEAD;
             }
 
             if (
@@ -891,13 +897,14 @@ export default {
         is_done: 1, // mark as done every time the user saves
       };
 
-      const exportedConll = this.reactiveSentencesObj[
-        openedTreeUser
-      ].exportConllWithModifiedMeta(metaToReplace);
+      const exportedConll =
+        this.reactiveSentencesObj[openedTreeUser].exportConllWithModifiedMeta(
+          metaToReplace
+        );
 
       // retrieves the changes made up until this moment (after the previous save)
-      const changesToBeSaved = this.reactiveSentencesObj[openedTreeUser]
-        .changesBeforeSave;
+      const changesToBeSaved =
+        this.reactiveSentencesObj[openedTreeUser].changesBeforeSave;
 
       if (isChecking) {
         changesToBeSaved.push("Checked the sentence");
@@ -936,9 +943,8 @@ export default {
               // the user already had a tree
               this.hasPendingChanges[changedConllUser] = false;
               this.sentenceData.conlls[changedConllUser] = exportedConll;
-              this.reactiveSentencesObj[
-                changedConllUser
-              ].sentenceConll = exportedConll;
+              this.reactiveSentencesObj[changedConllUser].sentenceConll =
+                exportedConll;
             } else {
               // user still don't have a tree for this sentence, creating it.
               Vue.set(
@@ -1027,15 +1033,8 @@ export default {
     },
 
     showNotif(position, alert) {
-      const {
-        color,
-        textColor,
-        multiLine,
-        icon,
-        message,
-        avatar,
-        actions,
-      } = this.alerts[alert];
+      const { color, textColor, multiLine, icon, message, avatar, actions } =
+        this.alerts[alert];
       const buttonColor = color ? "white" : void 0;
       this.$q.notify({
         color,

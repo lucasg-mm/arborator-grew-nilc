@@ -66,6 +66,8 @@ export default {
         return {
           "shift+r": this.repeatPOS,
           "shift+s": this.saveTreeByShortcut,
+          "shift+u": this.undoChangeByShortcut,
+          "shift+i": this.redoChangeByShortcut,
         };
       } else {
         return {};
@@ -248,6 +250,22 @@ export default {
     this.manageFocus();
   },
   methods: {
+    // -- Description:
+    // Redoes the last change on the current tree. Gets triggered by
+    // the defined shortcut.
+    redoChangeByShortcut() {
+      // emits event to save
+      this.$root.$emit("redo-by-shortcut");
+    },
+
+    // -- Description:
+    // Undoes the last change on the current tree. Gets triggered by
+    // the defined shortcut.
+    undoChangeByShortcut() {
+      // emits event to save
+      this.$root.$emit("undo-by-shortcut");
+    },
+
     // -- Description:
     // Saves the current tree. Gets triggered by
     // the defined shortcut.
@@ -587,7 +605,7 @@ export default {
         const userIds = Object.keys(card);
         for (let j in userIds) {
           if (card[userIds[j]] == true) {
-            window.onbeforeunload = function(e) {
+            window.onbeforeunload = function (e) {
               return `You have some unsaved changes left,
                please save them before you leave this page`;
             };
@@ -595,7 +613,7 @@ export default {
           }
         }
       }
-      window.onbeforeunload = function(e) {
+      window.onbeforeunload = function (e) {
         delete e["returnValue"];
       };
     },
