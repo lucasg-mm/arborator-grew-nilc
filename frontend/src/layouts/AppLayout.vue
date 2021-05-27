@@ -267,7 +267,7 @@
             style="height: 18px"
           />
         </a>
-        v1.0.0-NILC (25/05/2021)</q-item-label
+        {{ $t("homepage").version }}</q-item-label
       >
     </q-footer>
     <q-drawer
