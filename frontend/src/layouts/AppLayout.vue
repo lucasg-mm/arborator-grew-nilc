@@ -247,20 +247,22 @@
             vertical-align: text-bottom;
           "
         />
-        {{ $t("footer")[1] }}
-        <img
-          aria-hidden="true"
-          role="presentation"
-          src="../statics/svg/paris.svg"
-          class=""
-          style="color: #dd137b; height: 18px"
-        />
         {{ $t("footer")[2] }}
         <a href="https://team.inria.fr/almanach" target="_blank">
           <img
             aria-hidden="true"
             role="presentation"
             src="../statics/svg/almanachInria.svg"
+            class=""
+            style="height: 18px"
+          />
+        </a>
+        {{ $t("footer")[3] }}
+        <a href="http://www.nilc.icmc.usp.br/nilc/index.php" target="_blank">
+          <img
+            aria-hidden="true"
+            role="presentation"
+            src="../statics/svg/nilc.png"
             class=""
             style="height: 18px"
           />

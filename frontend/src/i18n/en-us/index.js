@@ -13,7 +13,7 @@ export default {
   settings: "Settings",
   admin: "Admin",
   fullscreen: "Fullscreen",
-  footer: ["Made with", "in", "at"], // reaaallllll basic one, not good enough but still buggy using span and html parse
+  footer: ["Made with", "in", "at", "and at"], // reaaallllll basic one, not good enough but still buggy using span and html parse
   navhome: "Home",
   navprojects: "Projects",
   navsettings: "Settings",
@@ -160,8 +160,7 @@ export default {
       title: "Project Information",
       ifAdmin:
         "Contact these project administrators if you need access or further information:",
-      else:
-        "Contact the project administrator if you need access or further information:",
+      else: "Contact the project administrator if you need access or further information:",
     },
     tooltipExportLexicon: ["export to tsv", "export to json"],
     tooltipRuleGrewLexicon: "get the rules grew for all modifications",
