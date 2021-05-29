@@ -147,7 +147,7 @@ def login(provider_name) -> Response:
             # ... infos as a json
             userJson = UserSchema().dump(user)
             resp = Response(userJson, status=200, mimetype="application/json")
-
+            print(request.host_url, flush=True)
             if current_app.config["ENV"] == "dev":
                 return make_response(
                     render_template("auth/redirect_dev.html",
