@@ -164,12 +164,18 @@ export class SentenceSVG extends EventDispatcher {
         typeof this.usermatches !== "undefined" &&
         this.matchnodes.includes(tokenIndex)
       ) {
-        tokenSVG.snapElements.FORM.node.style.fill = "green";
-        tokenSVG.snapElements.FORM.node.style.fontWeight = "900";
-        tokenSVG.snapElements.UPOS.node.style.fill = "green";
-        tokenSVG.snapElements.LEMMA.node.style.fill = "green";
-        if (typeof this.firstOcurrance === "undefined") {
-          this.firstOcurrance = tokenSVG.snapElements.FORM.node;
+        if (this.shownFeatures.includes("FORM")) {
+          tokenSVG.snapElements.FORM.node.style.fill = "green";
+          tokenSVG.snapElements.FORM.node.style.fontWeight = "900";
+          if (typeof this.firstOcurrance === "undefined") {
+            this.firstOcurrance = tokenSVG.snapElements.FORM.node;
+          }
+        }
+        if (this.shownFeatures.includes("UPOS")) {
+          tokenSVG.snapElements.UPOS.node.style.fill = "green";
+        }
+        if (this.shownFeatures.includes("LEMMA")) {
+          tokenSVG.snapElements.LEMMA.node.style.fill = "green";
         }
       }
 
