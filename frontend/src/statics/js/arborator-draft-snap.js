@@ -1,4 +1,4 @@
-(function() {
+(function () {
   /*!
    * arborator script for dependency drawing
    * version 1.0
@@ -102,7 +102,7 @@
   svgIdIndex = 0;
 
   // public initialisation function
-  this.ArboratorDraft = function(visuMode = 0, reverse = false) {};
+  this.ArboratorDraft = function (visuMode = 0, reverse = false) {};
 
   // public functions
   // ArboratorDraft.prototype.emptyThenRefresh = function(content, reverse = false, toggle = false) {
@@ -111,7 +111,7 @@
   // 	empty().done( refresh( content ) );
   // }
 
-  ArboratorDraft.prototype.drawit = function(strConll, usermatches, id, shof) {
+  ArboratorDraft.prototype.drawit = function (strConll, usermatches, id, shof) {
     shownfeatures = shof;
     // log('usermatches', usermatches) // the one that we see
     var treedata = conllToJson(strConll.trim()); // treedata is object: {tree:tree, META:META, svg:snap-object}
@@ -119,12 +119,12 @@
     return treedata;
   };
 
-  ArboratorDraft.prototype.cleanSvgTree = function(SvgId) {
+  ArboratorDraft.prototype.cleanSvgTree = function (SvgId) {
     cleanSnap(SvgId);
   };
 
   // Kirian : does this need to be public ? I don't see anuy call to this function outside of this file
-  ArboratorDraft.prototype.getTree = function(strConll) {
+  ArboratorDraft.prototype.getTree = function (strConll) {
     return conllToJson(strConll.trim());
   };
 
@@ -134,7 +134,7 @@
   // 	log('setRel END');
   // }
 
-  ArboratorDraft.prototype.relationChanged = function(
+  ArboratorDraft.prototype.relationChanged = function (
     treedata,
     depid,
     headid,
@@ -144,11 +144,11 @@
     return relationChanged(treedata, depid, headid, relation, addasextended);
   };
 
-  ArboratorDraft.prototype.catChanged = function(treedata, depid, cat) {
+  ArboratorDraft.prototype.catChanged = function (treedata, depid, cat) {
     return catChanged(treedata, depid, cat);
   };
 
-  ArboratorDraft.prototype.featureChanged = function(
+  ArboratorDraft.prototype.featureChanged = function (
     treedata,
     depid,
     lemma,
@@ -158,23 +158,23 @@
     return featureChanged(treedata, depid, lemma, feats, misc);
   };
 
-  ArboratorDraft.prototype.metaChanged = function(treedata, metas) {
+  ArboratorDraft.prototype.metaChanged = function (treedata, metas) {
     return metaChanged(treedata, metas);
   };
 
-  ArboratorDraft.prototype.getConll = function(treedata) {
+  ArboratorDraft.prototype.getConll = function (treedata) {
     // console.log("getConll treedata", treedata)
     return treeDataToConll(treedata);
   };
 
-  ArboratorDraft.prototype.treeDataToConll = function(treedata) {
+  ArboratorDraft.prototype.treeDataToConll = function (treedata) {
     console.log("treeDataToConll treedata", treedata);
     var newconll = treeDataToConll(treedata);
     console.log("the new conll", newconll);
     return newconll;
   };
 
-  ArboratorDraft.prototype.replaceNodes = function(
+  ArboratorDraft.prototype.replaceNodes = function (
     s,
     treedata,
     idsequence,
@@ -228,7 +228,7 @@
     return idhead2level[i + "_" + gi];
   }
 
-  var startdrag = function(xx, yy, e) {
+  var startdrag = function (xx, yy, e) {
     dragclicktime = new Date().getTime();
     dragrepl = this.clone();
     dragrepl.attr({ class: "draghead" });
@@ -259,12 +259,12 @@
 
     for (let dropa of droppables) {
       if (dropa != this) {
-        dropa.mouseover(function() {
+        dropa.mouseover(function () {
           // console.log("Over the word", this.nr);
           dropa.attr({ class: "glossy" });
           draheader = this.nr;
         });
-        dropa.mouseout(function() {
+        dropa.mouseout(function () {
           // console.log("out from the word", this.nr);
           dropa.attr({ class: "FORM" });
           draheader = -1;
@@ -315,7 +315,7 @@
     }
   }
 
-  var stopdrag = function(e) {
+  var stopdrag = function (e) {
     if (new Date().getTime() < dragclicktime + dragclickthreshold) {
       // log("ccccclick",this.paper.root.treedata.tree[this.nr]) //, this.paper.root.treedata.tree);
       this.paper.root.treedata.openFeatureDialog(
@@ -332,7 +332,7 @@
       { transform: "translate(" + 0 + "," + 0 + ")" },
       300,
       mina.easein,
-      function() {
+      function () {
         this.attr({ class: "FORM" });
         dragrepl.remove();
       }
@@ -373,7 +373,7 @@
     draheader = -1;
   };
 
-  var categoryclick = function(e) {
+  var categoryclick = function (e) {
     this.attr({ class: "UPOSselected" });
     this.paper.root.treedata.openCategoryDialog(
       this.paper,
@@ -384,7 +384,7 @@
     );
   };
 
-  var relationclick = function(e) {
+  var relationclick = function (e) {
     this.attr({ class: "DEPRELselected" });
     this.paper.root.treedata.openRelationDialog(
       this.paper,
@@ -879,17 +879,14 @@
     var lastid = 0;
     var skipuntil = 0;
     var words = [];
-    nodes.forEach(function(nodeline, id) {
+    nodes.forEach(function (nodeline, id) {
       // for each conll line:
       nodeline = nodeline
         .trim()
         .replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
       if (nodeline.charAt(0) == "#") {
         // META
-        var [a, v] = nodeline
-          .substring(1)
-          .trim()
-          .split("=");
+        var [a, v] = nodeline.substring(1).trim().split("=");
         if (v != null) var [a, v] = [a.trim(), v.trim()];
         META[a] = v;
         return true;
@@ -965,7 +962,7 @@
     // if ("text" in META) return {tree:tree, META:META};
     // got to contstruct the sentence
     var sentence = [];
-    words.forEach(function(word, i) {
+    words.forEach(function (word, i) {
       sentence.push(word);
       if (
         !(
@@ -985,7 +982,7 @@
   function analyzeFeaturestring(featstr, eq, spl) {
     o = {};
     if (featstr.indexOf(eq) > -1) {
-      featstr.split(spl).forEach(function(
+      featstr.split(spl).forEach(function (
         f // for each feature:
       ) {
         var fs = f.split(eq);

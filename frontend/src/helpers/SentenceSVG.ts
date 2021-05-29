@@ -1,4 +1,4 @@
-import Snap from "snapsvg-cjs";
+import Snap, { parsePathString } from "snapsvg-cjs";
 import {
   jsonToConll,
   conllToJson,
@@ -199,7 +199,7 @@ export class SentenceSVG extends EventDispatcher {
       })
     );
     this.levelsArray = Array.apply(null, Array(headsIdArray.length)).map(
-      function() {
+      function () {
         return -1;
       }
     );
@@ -421,14 +421,9 @@ class TokenSVG {
   ylevel: number = 0;
   shownFeatures: string[] = [];
   centerX: number = 0;
-  // snap elements
-  // snapArc: ??? = ???
-  // snapArrowhead: ??? = ???
-  // snapDeprel: ??? = ???
-  // snapElements: ??[] = ???
-  // draggedForm : ??? (snap)
   snapSentence: Snap.Paper = Snap("");
   snapElements: { [key: string]: Snap.Element } = {};
+  snapElementsBoxes: { [key: string]: Snap.Element } = {};
 
   draggedForm: Snap.Element = Snap("");
   draggedFormClone: Snap.Element = Snap("");
@@ -483,10 +478,26 @@ class TokenSVG {
       } else {
         featureText = "";
       }
+
       const snapFeature = snapSentence.text(this.startX, runningY, featureText);
+
+      // add box in the same place
+      const boxSnapFeature = snapSentence.rect(
+        this.startX - 6,
+        runningY - 15,
+        snapFeature.getBBox().width + 25,
+        snapFeature.getBBox().height + 5
+      );
+
+      boxSnapFeature.attr({
+        fill: "none",
+        pointerEvents: "visible",
+      });
+
       snapFeature.addClass(feature.split(".")[0]);
 
       this.snapElements[feature] = snapFeature;
+      this.snapElementsBoxes[feature] = boxSnapFeature;
 
       // handle width properties
       const featureWidth = snapFeature.getBBox().w;
@@ -514,6 +525,15 @@ class TokenSVG {
     for (const feature of this.shownFeatures) {
       const snapFeature = this.snapElements[feature];
       const featureWidth = snapFeature.getBBox().w;
+
+      snapFeature.attr({ x: this.centerX - featureWidth / 2 });
+    }
+
+    // does the same thing, but for the boxes
+    for (const feature of this.shownFeatures) {
+      const snapFeature = this.snapElementsBoxes[feature];
+      const featureWidth = snapFeature.getBBox().w;
+
       snapFeature.attr({ x: this.centerX - featureWidth / 2 });
     }
   }
@@ -570,7 +590,22 @@ class TokenSVG {
   attachEvent(): void {
     var this_ = this;
     for (const [label, snapElement] of Object.entries(this.snapElements)) {
-      snapElement.click(function(e: Event) {
+      snapElement.click(function (e: Event) {
+        // be careful, 'this' is the element because it's normal function
+        // const event = new Event("svg-click")
+        const event = new CustomEvent("svg-click", {
+          detail: {
+            treeNode: this_,
+            targetLabel: label,
+            clicked: this_.tokenJson.ID,
+            event: e,
+          },
+        });
+        this_.sentenceSVG.dispatchEvent(event);
+      });
+    }
+    for (const [label, snapElement] of Object.entries(this.snapElementsBoxes)) {
+      snapElement.click(function (e: Event) {
         // be careful, 'this' is the element because it's normal function
         // const event = new Event("svg-click")
         const event = new CustomEvent("svg-click", {
