@@ -432,6 +432,7 @@ class TokenSVG {
   snapElementsBoxes: { [key: string]: Snap.Element } = {};
 
   draggedForm: Snap.Element = Snap("");
+  draggedFormBox: Snap.Element = Snap("");
   draggedFormClone: Snap.Element = Snap("");
 
   dragclicktime: number = 0;
@@ -641,11 +642,22 @@ class TokenSVG {
   }
 
   attachDragger(): void {
+    // handles the dragging action for the token
     this.draggedForm = this.snapElements["FORM"];
     this.draggedForm.drag(this.dragging, this.startDrag, this.stopDrag, this); // `this` act like the context. (Similar to .bind(this))
+
+    // handles the dragging action for the box behind the token
+    this.draggedFormBox = this.snapElementsBoxes["FORM"];
+    this.draggedFormBox.drag(
+      this.dragging,
+      this.startDrag,
+      this.stopDrag,
+      this
+    );
   }
 
   attachHover(): void {
+    // handles the hover action for the tokens
     this.snapElements["FORM"].mouseover(() => {
       if (
         this.sentenceSVG.dragged &&
@@ -656,6 +668,26 @@ class TokenSVG {
       }
     });
     this.snapElements["FORM"].mouseout(() => {
+      if (
+        this.sentenceSVG.dragged &&
+        this.tokenJson.ID !== this.sentenceSVG.dragged
+      ) {
+        this.snapElements["FORM"].removeClass("glossy");
+        this.sentenceSVG.hovered = 0;
+      }
+    });
+
+    // handles the hover action for the boxes behind the tokens
+    this.snapElementsBoxes["FORM"].mouseover(() => {
+      if (
+        this.sentenceSVG.dragged &&
+        this.tokenJson.ID !== this.sentenceSVG.dragged
+      ) {
+        this.snapElements["FORM"].addClass("glossy");
+        this.sentenceSVG.hovered = this.tokenJson.ID;
+      }
+    });
+    this.snapElementsBoxes["FORM"].mouseout(() => {
       if (
         this.sentenceSVG.dragged &&
         this.tokenJson.ID !== this.sentenceSVG.dragged
