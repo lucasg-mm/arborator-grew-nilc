@@ -277,7 +277,6 @@
               class="check-button"
               @click="save('', true)"
             >
-              <q-tooltip>Check this tree</q-tooltip>
             </q-btn>
             <q-btn
               outline
@@ -288,7 +287,6 @@
               class="erase-button"
               @click="openEraseDial()"
             >
-              <q-tooltip>Erase annotation on this tree</q-tooltip>
             </q-btn>
           </q-btn-group>
           <q-card flat>

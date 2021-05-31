@@ -56,7 +56,11 @@
           </q-img>
         </q-card-section>
         <q-card-section v-if="LexiconTable">
-          <LexiconTable :data="this.lexicon" :sampleId="this.table.selected" @request="getLexicon">
+          <LexiconTable
+            :data="this.lexicon"
+            :sampleId="this.table.selected"
+            @request="getLexicon"
+          >
           </LexiconTable>
         </q-card-section>
         <q-card-section>
@@ -363,7 +367,7 @@
 
                 <div>
                   <q-btn
-                    v-show="LexiconTable==false" 
+                    v-show="LexiconTable == false"
                     flat
                     color="default"
                     icon="playlist_add_check"
@@ -375,11 +379,11 @@
                     "
                   ></q-btn>
                   <q-btn
-                    v-show="LexiconTable==true" 
+                    v-show="LexiconTable == true"
                     flat
                     color="default"
                     icon="playlist_add_check"
-                    @click="LexiconTable=false"
+                    @click="LexiconTable = false"
                     :loading="table.exporting"
                     :disable="
                       (!isGuest && !isAdmin && !isSuperAdmin) ||
@@ -872,22 +876,22 @@ export default {
     getProjectSamples() {
       api.getProjectSamples(this.$route.params.projectname).then((response) => {
         this.samples = response.data;
-        this.projectTreesFrom = this.getProjectTreesFrom(this.samples)
+        this.projectTreesFrom = this.getProjectTreesFrom(this.samples);
       });
     },
     getProjectTreesFrom(samples) {
-        let projectTreesFrom = []
+      let projectTreesFrom = [];
 
-        for (const sample of this.samples) {
-          const sampleTreesFrom = sample.treesFrom
+      for (const sample of this.samples) {
+        const sampleTreesFrom = sample.treesFrom;
 
-          for (const userId of sampleTreesFrom) {
-            if (!(projectTreesFrom.includes(userId))) {
-              projectTreesFrom.push(userId)
-            }
+        for (const userId of sampleTreesFrom) {
+          if (!projectTreesFrom.includes(userId)) {
+            projectTreesFrom.push(userId);
           }
         }
-        return projectTreesFrom
+      }
+      return projectTreesFrom;
     },
     getUsers() {
       // TODO : change this function as it's downloading all users each time. It should only be users of the project
@@ -1014,6 +1018,8 @@ export default {
             "dump_" + this.$route.params.projectname + ".zip"
           );
           document.body.appendChild(link);
+          console.log(">> link: ");
+          console.log(link);
           link.click();
           document.body.removeChild(link);
           this.table.exporting = false;
@@ -1120,15 +1126,8 @@ export default {
     },
 
     showNotif(position, alert) {
-      const {
-        color,
-        textColor,
-        multiLine,
-        icon,
-        message,
-        avatar,
-        actions,
-      } = this.alerts[alert];
+      const { color, textColor, multiLine, icon, message, avatar, actions } =
+        this.alerts[alert];
       const buttonColor = color ? "white" : void 0;
       this.$q.notify({
         color,
