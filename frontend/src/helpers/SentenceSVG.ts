@@ -485,25 +485,36 @@ class TokenSVG {
         featureText = "";
       }
 
-      const snapFeature = snapSentence.text(this.startX, runningY, featureText);
-
-      // add box in the same place
+      // add a box in the same place the text will eventually be,
+      // but with a height and width of 0
       const boxSnapFeature = snapSentence.rect(
         this.startX - 6,
         runningY - 15,
-        snapFeature.getBBox().width + 25,
-        snapFeature.getBBox().height + 5
+        0,
+        0
       );
 
-      boxSnapFeature.attr({
-        fill: "none",
-        pointerEvents: "visible",
-      });
+      // add the token text in it's area
+      const snapFeature = snapSentence.text(this.startX, runningY, featureText);
 
+      // adjusts the properties of the previously placed box in order
+      // to make it surround the token
+      // some tokens have width and right defined as 0, so just do it
+      // for the ones that don't have this characteristic
+      if (snapFeature.getBBox().width !== 0) {
+        boxSnapFeature.attr({
+          width: snapFeature.getBBox().width + 25,
+          height: snapFeature.getBBox().height + 5,
+          fill: "none",
+          pointerEvents: "all",
+        });
+        this.snapElementsBoxes[feature] = boxSnapFeature;
+      }
+
+      // add a class to the text token and defines it as an
+      // object's property
       snapFeature.addClass(feature.split(".")[0]);
-
       this.snapElements[feature] = snapFeature;
-      this.snapElementsBoxes[feature] = boxSnapFeature;
 
       // handle width properties
       const featureWidth = snapFeature.getBBox().w;
@@ -538,9 +549,11 @@ class TokenSVG {
     // does the same thing, but for the boxes
     for (const feature of this.shownFeatures) {
       const snapFeature = this.snapElementsBoxes[feature];
-      const featureWidth = snapFeature.getBBox().w;
+      if (typeof snapFeature !== "undefined") {
+        const featureWidth = snapFeature.getBBox().w;
 
-      snapFeature.attr({ x: this.centerX - featureWidth / 2 });
+        snapFeature.attr({ x: this.centerX - featureWidth / 2 });
+      }
     }
   }
 
