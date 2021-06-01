@@ -1,3 +1,4 @@
+from app.shared.service import SharedService
 import json
 import re
 
@@ -64,7 +65,8 @@ class SampleResource(Resource):
         users_ids_convertor = {}
 
         for user_id_mapping in json.loads(request.form.get("usersIdsConvertor", "{}")):
-            users_ids_convertor[user_id_mapping["old"]] = user_id_mapping["new"]
+            users_ids_convertor[user_id_mapping["old"]
+                                ] = user_id_mapping["new"]
 
         if files:
             reextensions = re.compile(r"\.(conll(u|\d+)?|txt|tsv|csv)$")
@@ -107,7 +109,8 @@ class SampleRoleResource(Resource):
             SampleRoleService.create(new_attrs)
 
         if args.action == "remove":
-            SampleRoleService.delete_one(project_id, sample_name, user_id, role)
+            SampleRoleService.delete_one(
+                project_id, sample_name, user_id, role)
 
         data = {
             "roles": SampleRoleService.get_by_sample_name(project.id, sample_name),
@@ -141,21 +144,23 @@ class SampleExerciseLevelResource(Resource):
             SampleExerciseLevelService.create(new_attrs)
 
         return {"status": "success"}
-from app.shared.service import SharedService
+
 
 @api.route("/<string:project_name>/samples/<string:sample_name>/evaluation")
 class SampleEvaluationResource(Resource):
     def get(self, project_name, sample_name):
         sample_conlls = GrewService.get_sample_trees(project_name, sample_name)
         evaluations = SampleEvaluationService.evaluate_sample(sample_conlls)
-        
-        if evaluations:
-            evaluations_tsv = SampleEvaluationService.evaluations_json_to_tsv(evaluations)
 
-            uploadable_evaluations_tsv = SharedService.get_sendable_data(evaluations_tsv)
-            
+        if evaluations:
+            evaluations_tsv = SampleEvaluationService.evaluations_json_to_tsv(
+                evaluations)
+
+            uploadable_evaluations_tsv = SharedService.get_sendable_data(
+                evaluations_tsv)
+
             file_name = f"{sample_name}_evaluations.tsv"
-            return send_file(uploadable_evaluations_tsv, attachment_filename = file_name, as_attachment=True)
+            return send_file(uploadable_evaluations_tsv, attachment_filename=file_name, as_attachment=True)
         else:
             abort(404, "No user worked on this sample")
 
@@ -177,8 +182,10 @@ class ExportSampleResource(Resource):
             if reply.get("status") == "OK":
 
                 # {"sent_id_1":{"conlls":{"user_1":"conllstring"}}}
-                sample_tree = SampleExportService.servSampleTrees(reply.get("data", {}))
-                sample_content = SampleExportService.sampletree2contentfile(sample_tree)
+                sample_tree = SampleExportService.servSampleTrees(
+                    reply.get("data", {}))
+                sample_content = SampleExportService.sampletree2contentfile(
+                    sample_tree)
                 for sent_id in sample_tree:
                     last = SampleExportService.get_last_user(
                         sample_tree[sent_id]["conlls"]
@@ -218,7 +225,8 @@ class DeleteSampleResource(Resource):
         ProjectService.check_if_project_exist(project)
         GrewService.delete_sample(project_name, sample_name)
         SampleRoleService.delete_by_sample_name(project.id, sample_name)
-        SampleExerciseLevelService.delete_by_sample_name(project.id, sample_name)
+        SampleExerciseLevelService.delete_by_sample_name(
+            project.id, sample_name)
         return {
             "status": "OK",
         }

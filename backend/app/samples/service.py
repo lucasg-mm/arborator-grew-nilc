@@ -1,3 +1,4 @@
+from app.utils.conll3 import conll2tree
 from app.utils.conllup import ConllProcessor
 import io
 import json
@@ -78,7 +79,8 @@ class SampleExportService:
 
     @staticmethod
     def get_last_user(tree):
-        timestamps = [(user, get_timestamp(conll)) for (user, conll) in tree.items()]
+        timestamps = [(user, get_timestamp(conll))
+                      for (user, conll) in tree.items()]
         if len(timestamps) == 1:
             last = timestamps[0][0]
         else:
@@ -93,9 +95,13 @@ class SampleExportService:
         with zipfile.ZipFile(memory_file, "w") as zf:
             for sample_name, sample in zip(sample_names, sampletrees):
                 for fuser, filecontent in sample.items():
-                    data = zipfile.ZipInfo("{}.{}.conllu".format(sample_name, fuser))
+                    data = zipfile.ZipInfo(
+                        "{}.{}.conllu".format(sample_name, fuser))
                     data.date_time = time.localtime(time.time())[:6]
                     data.compress_type = zipfile.ZIP_DEFLATED
+                    filecontent += "\n"
+                    print("ayy!!", flush=True)
+                    print(filecontent, flush=True)
                     zf.writestr(data, filecontent)
         memory_file.seek(0)
         return memory_file
@@ -170,7 +176,8 @@ class SampleRoleService:
                 .filter(SampleRole.role == r)
                 .all()
             )
-            roles[label] = [{"key": a.username, "value": a.username} for a, b in role]
+            roles[label] = [{"key": a.username, "value": a.username}
+                            for a, b in role]
 
         return roles
 
@@ -232,9 +239,6 @@ class SampleExerciseLevelService:
         return
 
 
-from app.utils.conll3 import conll2tree
-
-
 class SampleEvaluationService:
     @staticmethod
     def evaluate_sample(sample_conlls):
@@ -252,7 +256,8 @@ class SampleEvaluationService:
                 basetree_conll = sentence_conlls.get(BASE_TREE)
                 if basetree_conll:
                     basetree_sentence_json = (
-                        ConllProcessor.sentence_conll_to_sentence_json(basetree_conll)
+                        ConllProcessor.sentence_conll_to_sentence_json(
+                            basetree_conll)
                     )
                     basetree_tree = basetree_sentence_json["tree"]
                 else:
@@ -277,7 +282,8 @@ class SampleEvaluationService:
                     if not corrects.get(user_id):
                         corrects[user_id] = {"upos": 0, "deprel": 0, "head": 0}
                     if not submitted.get(user_id):
-                        submitted[user_id] = {"upos": 0, "deprel": 0, "head": 0}
+                        submitted[user_id] = {
+                            "upos": 0, "deprel": 0, "head": 0}
 
                     user_sentence_json = ConllProcessor.sentence_conll_to_sentence_json(
                         user_conll

@@ -1018,8 +1018,6 @@ export default {
             "dump_" + this.$route.params.projectname + ".zip"
           );
           document.body.appendChild(link);
-          console.log(">> link: ");
-          console.log(link);
           link.click();
           document.body.removeChild(link);
           this.table.exporting = false;

@@ -2,7 +2,7 @@
   "name": "Arborator-Grew",
   "version": "1.0.0",
   "description": "Quasar Vue Frontend for Arborator-Grew",
-  "productName": "Arborator-Grew",
+  "productName": "Arborator-Grew NILC",
   "cordovaId": "ilpga.arborator",
   "author": "gguibon <gael.guibon@inria.fr>",
   "private": true,

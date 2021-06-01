@@ -168,18 +168,6 @@
                         </q-tooltip> </a
                       >.
                     </p>
-                    <p class="text-center text-body1">
-                      {{ $t("homepage").collaborativeCard.content[2] }}
-                      <q-btn
-                        push
-                        to="/projects/Playground/en_gum-sud-dev/665"
-                        color="primary"
-                        no-caps
-                        >{{
-                          $t("homepage").collaborativeCard.playgroundBtn
-                        }}</q-btn
-                      >
-                    </p>
                   </div>
                 </q-card-section>
               </q-card-section>
