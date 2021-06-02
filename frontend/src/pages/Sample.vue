@@ -199,12 +199,12 @@ export default {
               user_id: username,
               timestamp: Math.round(Date.now()),
               is_done: 0, // mark as done every time the user saves
+              state: "The user unchecked this sentence.",
             };
 
             // gets the ConLL-U with updated meta
-            const exportedConll = reactiveSentence.exportConllWithModifiedMeta(
-              metaToReplace
-            );
+            const exportedConll =
+              reactiveSentence.exportConllWithModifiedMeta(metaToReplace);
 
             // prepares the data to send to server
             let data = {
