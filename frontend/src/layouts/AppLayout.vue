@@ -345,22 +345,6 @@ export default {
           to: "/settings",
           bottom: true,
         },
-        {
-          icon: "music_note",
-          label: this.$t("navklang"),
-          separator: false,
-          public: true,
-          to: "/klang",
-          bottom: false,
-        },
-        // {
-        //   icon: 'vpn_key',
-        //   label: 'Admin',
-        //   separator: false,
-        //   public: false,
-        //   to: '/adminpanel',
-        //   bottom: false
-        // }
       ],
       lang: this.$i18n.locale,
       langOptions: [

@@ -40,6 +40,7 @@ class SampleUploadService:
 
         convert_users_ids(path_file, users_ids_convertor)
         add_or_keep_timestamps(path_file)
+        add_status_and_flag(path_file)
         # tmpfile = add_or_keep_timestamps(path_file)
 
         if sample_name not in existing_samples:
@@ -388,3 +389,18 @@ def add_or_keep_timestamps(path_file: str):
     return path_file
     # trees2conllFile(trees, path_tmp_file)
     # return path_tmp_file
+
+
+def add_status_and_flag(path_file: str):
+    """ 
+    Adds the is_done flag set to 0, and the appropriate status'
+    description.
+    """
+
+    trees = conllFile2trees(path_file)
+    for t in trees:
+        t.sentencefeatures["is_done"] = "0"
+        t.sentencefeatures["status"] = "The sentence was uploaded, but not edited."
+
+    trees2conllFile(trees, path_file)
+    return path_file
