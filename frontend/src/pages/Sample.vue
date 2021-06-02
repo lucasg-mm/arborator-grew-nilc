@@ -199,7 +199,7 @@ export default {
               user_id: username,
               timestamp: Math.round(Date.now()),
               is_done: 0, // mark as done every time the user saves
-              state: "The user unchecked this sentence.",
+              status: "The user unchecked this sentence.",
             };
 
             // gets the ConLL-U with updated meta

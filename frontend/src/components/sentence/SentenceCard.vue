@@ -893,7 +893,7 @@ export default {
         user_id: changedConllUser,
         timestamp: Math.round(Date.now()),
         is_done: 1, // mark as done every time the user saves
-        state: "The user checked this sentence.",
+        status: "The user checked this sentence.",
       };
 
       const exportedConll =
