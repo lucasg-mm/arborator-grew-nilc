@@ -889,11 +889,22 @@ export default {
         changedConllUser = mode;
       }
 
+      // changes the status depending if it's checking
+      // or not
+      let status;
+      if (isChecking) {
+        status =
+          "The user checked this sentence by clicking the 'check' button.";
+      } else {
+        status =
+          "The user checked this sentence by editing it and clicking the 'save' button.";
+      }
+
       let metaToReplace = {
         user_id: changedConllUser,
         timestamp: Math.round(Date.now()),
         is_done: 1, // mark as done every time the user saves
-        status: "The user checked this sentence.",
+        status: status,
       };
 
       const exportedConll =
