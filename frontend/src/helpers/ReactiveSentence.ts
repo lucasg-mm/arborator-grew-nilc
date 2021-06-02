@@ -43,6 +43,13 @@ export class ReactiveSentence extends EventDispatcher {
     // this._emitEvent({ tokenJson: this.treeJson[tokenJson.ID] });
   }
 
+  // -- DESCRIPTION:
+  // triggers an update because the highlighted UPOS
+  // changed
+  updateHighlighted(): void {
+    this._emitEvent();
+  }
+
   getToken(ID: any) {
     let token = { ...this.treeJsonTemp[ID] };
     return token;

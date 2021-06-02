@@ -159,6 +159,16 @@ export class SentenceSVG extends EventDispatcher {
         offsetY
       );
 
+      // defines a different style for UPOS of the current token pointed by
+      // the cursor
+      if (tokenIndex == this.reactiveSentence.idOfMostRecentToken) {
+        if (this.shownFeatures.includes("UPOS")) {
+          tokenSVG.snapElements.UPOS.node.style.textDecoration = "underline";
+          tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
+          tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
+        }
+      }
+
       // changes the style of tokens when they are found by search
       if (
         typeof this.usermatches !== "undefined" &&

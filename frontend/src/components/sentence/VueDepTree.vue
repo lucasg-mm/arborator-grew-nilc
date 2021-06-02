@@ -68,6 +68,8 @@ export default {
           "shift+s": this.saveTreeByShortcut,
           "shift+u": this.undoChangeByShortcut,
           "shift+d": this.redoChangeByShortcut,
+          "shift+n": this.setsNextHighlightedUPOS,
+          "shift+p": this.setsPreviousHighlightedUPOS,
         };
       } else {
         return {};
@@ -83,6 +85,11 @@ export default {
     ) {
       interactive = false;
     }
+
+    // the id of the most recent token is used by the
+    // SentenceSVG to render the current token highlighted
+    // by the cursor in a different color
+    this.reactiveSentence.idOfMostRecentToken = 1;
 
     this.sentenceSVG = new SentenceSVG({
       svgID: this.svgID,
@@ -124,7 +131,7 @@ export default {
 
         // saves the id of the token that the user interacted with
         // most recently
-        this.idOfMostRecentToken = token.ID;
+        this.reactiveSentence.idOfMostRecentToken = token.ID;
 
         // tracks modification in this sentence (vuex store)
         this.$store.commit(
@@ -251,6 +258,48 @@ export default {
   },
   methods: {
     // -- Description:
+    // defines the highlighted upos as the next one
+    // (the one in the right)
+    setsNextHighlightedUPOS() {
+      // gets the nummber of tokens in the sentence
+      const numberOfTokens = Object.keys(this.reactiveSentence.treeJson).length;
+
+      if (this.reactiveSentence.idOfMostRecentToken >= numberOfTokens) {
+        // if the current highlighted token is the last,
+        // the next is the first one
+        this.reactiveSentence.idOfMostRecentToken = 1;
+      } else {
+        // if the current highlighted token is one in the middle,
+        // the next is the one in the right
+        this.reactiveSentence.idOfMostRecentToken++;
+      }
+
+      // updates the drawing to highlighted the marked UPOS
+      this.reactiveSentence.updateHighlighted();
+    },
+
+    // -- Description:
+    // defines the highlighted upos as the previous one
+    // (the one in the left)
+    setsPreviousHighlightedUPOS() {
+      // gets the nummber of tokens in the sentence
+      const numberOfTokens = Object.keys(this.reactiveSentence.treeJson).length;
+
+      if (this.reactiveSentence.idOfMostRecentToken <= 1) {
+        // if the current highlighted token is the first,
+        // the next is the last one
+        this.reactiveSentence.idOfMostRecentToken = numberOfTokens;
+      } else {
+        // if the current highlighted token is in the middle,
+        // the next is the one in the left
+        this.reactiveSentence.idOfMostRecentToken--;
+      }
+
+      // updates the drawing to highlighted the marked UPOS
+      this.reactiveSentence.updateHighlighted();
+    },
+
+    // -- Description:
     // Redoes the last change on the current tree. Gets triggered by
     // the defined shortcut.
     redoChangeByShortcut() {
@@ -291,11 +340,11 @@ export default {
     repeatPOS() {
       const treeJson = this.reactiveSentence.treeJson;
       const numberOfTokens = Object.keys(treeJson).length;
-      const newPOS = treeJson[this.idOfMostRecentToken].UPOS;
+      const newPOS = treeJson[this.reactiveSentence.idOfMostRecentToken].UPOS;
 
       // checks if the id of the token that the user interacted with
       // most recently is the last one in the sentence
-      if (this.idOfMostRecentToken >= numberOfTokens) {
+      if (this.reactiveSentence.idOfMostRecentToken >= numberOfTokens) {
         // defines the POS of the first token the same as the last token
         treeJson[1].UPOS = newPOS;
         this.sentenceBus.$emit("tree-update:token", {
@@ -305,10 +354,10 @@ export default {
       } else {
         // defines the POS of the token on the right the same as the last token
         // the user interacted with.
-        treeJson[1 + this.idOfMostRecentToken].UPOS = newPOS;
+        treeJson[1 + this.reactiveSentence.idOfMostRecentToken].UPOS = newPOS;
 
         this.sentenceBus.$emit("tree-update:token", {
-          token: treeJson[1 + this.idOfMostRecentToken],
+          token: treeJson[1 + this.reactiveSentence.idOfMostRecentToken],
           userId: this.userId,
         });
       }
