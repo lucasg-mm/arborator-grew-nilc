@@ -8,7 +8,7 @@
     <q-layout view="Lhh lpR fff" container class="bg-white">
       <q-header class="bg-primary">
         <q-toolbar>
-          <q-toolbar-title>CoNLL of TODO : sentenceId </q-toolbar-title>
+          <q-toolbar-title>CoNLL of the sentence</q-toolbar-title>
           <q-btn
             dense
             flat
@@ -178,4 +178,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.CodeMirror {
+  height: auto;
+}
+</style>
