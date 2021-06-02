@@ -67,7 +67,7 @@ export default {
           "shift+r": this.repeatPOS,
           "shift+s": this.saveTreeByShortcut,
           "shift+u": this.undoChangeByShortcut,
-          "shift+i": this.redoChangeByShortcut,
+          "shift+d": this.redoChangeByShortcut,
         };
       } else {
         return {};
