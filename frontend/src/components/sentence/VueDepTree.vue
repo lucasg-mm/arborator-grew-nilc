@@ -3,7 +3,7 @@
     <div
       :class="{ focused: hasFocus }"
       @click="manageFocus"
-      v-hotkey="keymap"
+      v-hotkey.prevent="keymap"
       class="sentencebox"
       style="min-width: max-content"
     >
@@ -70,6 +70,7 @@ export default {
           "shift+d": this.redoChangeByShortcut,
           "shift+n": this.setsNextHighlightedUPOS,
           "shift+p": this.setsPreviousHighlightedUPOS,
+          space: this.openUPOSWindow,
         };
       } else {
         return {};
@@ -257,6 +258,22 @@ export default {
     this.manageFocus();
   },
   methods: {
+    // -- Description:
+    // Opens the UPOS window of the highlighted UPOS.
+    openUPOSWindow() {
+      // gets the id of the highlighted upos
+      const idSelected = this.reactiveSentence.idOfMostRecentToken;
+
+      // gets the token of the highlighted upos
+      const token = this.reactiveSentence.treeJson[idSelected];
+
+      // gets the user's id
+      const userId = this.userId;
+
+      // opens the UPOS dialog window
+      this.sentenceBus.$emit("open:uposDialog", { token, userId }, true);
+    },
+
     // -- Description:
     // defines the highlighted upos as the next one
     // (the one in the right)

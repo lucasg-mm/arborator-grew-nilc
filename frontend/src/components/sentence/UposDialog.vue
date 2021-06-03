@@ -13,6 +13,7 @@
       </q-bar>
       <q-card-section style="height: 200px">
         <q-select
+          ref="select"
           id="catselect"
           filled
           v-model="token.UPOS"
@@ -72,16 +73,31 @@ export default {
     },
   },
   mounted() {
-    this.sentenceBus.$on("open:uposDialog", ({ token, userId }) => {
-      this.token = token;
-      this.userId = userId;
-      this.uposDialogOpened = true;
-    });
+    this.sentenceBus.$on(
+      "open:uposDialog",
+      ({ token, userId }, isByShortcut = false) => {
+        this.token = token;
+        this.userId = userId;
+        this.uposDialogOpened = true;
+
+        if (isByShortcut) {
+          this.showPopup();
+        }
+      }
+    );
   },
   beforeDestroy() {
     this.sentenceBus.$off("open:uposDialog");
   },
   methods: {
+    // -- DESCRIPTION:
+    // opens the popup to choose the Part of Speech tag.
+    showPopup() {
+      this.$nextTick(() => {
+        let selectComponent = this.$refs.select;
+        selectComponent.showPopup();
+      });
+    },
     onChangeUpos() {
       this.uposDialogOpened = false;
       this.sentenceBus.$emit("tree-update:token", {
