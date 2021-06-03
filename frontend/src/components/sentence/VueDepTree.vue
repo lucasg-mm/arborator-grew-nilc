@@ -2,7 +2,10 @@
   <div>
     <div
       :class="{ focused: hasFocus }"
-      @click="manageFocus"
+      @click="
+        manageFocus();
+        clearGroupedTokens($event);
+      "
       v-hotkey.prevent="keymap"
       class="sentencebox"
       style="min-width: max-content"
@@ -44,9 +47,6 @@ export default {
       history_index: -1,
       history_end: -1,
       history_saveIndex: -1,
-
-      // id of the most recent token that the user interacted with
-      idOfMostRecentToken: 1,
 
       // boolean indicating if the tree has the focus right now
       hasFocus: false,
@@ -91,6 +91,11 @@ export default {
     // SentenceSVG to render the current token highlighted
     // by the cursor in a different color
     this.reactiveSentence.idOfMostRecentToken = 1;
+
+    // array of ids of tokens grouped by the user
+    // a group can be formed in order to change the
+    // tags of the frouped tokens in a simultaneous way
+    this.reactiveSentence.groupedTokens = [];
 
     this.sentenceSVG = new SentenceSVG({
       svgID: this.svgID,
@@ -347,8 +352,23 @@ export default {
     manageFocus() {
       // focus this tree
       this.hasFocus = true;
+
       // unfocus every other tree
       this.$root.$emit("unfocus", this);
+    },
+
+    // -- Description:
+    // Clears the array of grouped items
+    // when the users clicks in the svg
+    // without pressing the modifier key
+    clearGroupedTokens(e) {
+      if (!e.ctrlKey) {
+        // clears the array of grouped tokens
+        this.reactiveSentence.groupedTokens = [];
+
+        // updates the drawing
+        this.reactiveSentence.updateHighlighted();
+      }
     },
 
     // -- Description:
@@ -608,10 +628,43 @@ export default {
           userId: this.userId,
         });
       } else {
-        this.sentenceBus.$emit(`open:${targetLabel.toLowerCase()}Dialog`, {
-          token: clickedToken,
-          userId: this.userId,
-        });
+        // when the user clicks in a part of speech tag, he has a choice
+        // 1 - he can do it while pressing a modifier key
+        // 2 - he can do it without pressing a modifier key
+        // the modifier key is pressed when the use wants to group
+        // tags of various tokens in order to change them all at once
+        // later
+
+        // get's a boolean indicating if the user pressed the modifier
+        const isModifierPressed = e.detail.event.ctrlKey;
+
+        if (isModifierPressed) {
+          // clicks without the modifier
+
+          // gets the id of the token clicked
+          const clickedTokenID = clickedToken.ID;
+
+          // only adds the token to the group if it already
+          // isn't a part of it
+          if (!this.reactiveSentence.groupedTokens.includes(clickedTokenID)) {
+            // redefines the most recent token as the one clicked
+            this.reactiveSentence.idOfMostRecentToken = clickedTokenID;
+
+            // add the token to the group
+            this.reactiveSentence.groupedTokens.push(clickedTokenID);
+
+            // highlights the new member of the group
+            this.reactiveSentence.updateHighlighted();
+          }
+        } else {
+          // clicks without the modifier
+
+          // opens the part of speech tag change window
+          this.sentenceBus.$emit(`open:${targetLabel.toLowerCase()}Dialog`, {
+            token: clickedToken,
+            userId: this.userId,
+          });
+        }
       }
     },
 
