@@ -144,7 +144,10 @@ export class SentenceSVG extends EventDispatcher {
 
   // -- DESCRIPTION:
   updateHighlighted(): void {
-    if (this.shownFeatures.includes("UPOS")) {
+    if (
+      this.shownFeatures.includes("UPOS") &&
+      this.reactiveSentence.prevIdOfMostRecentToken !== null
+    ) {
       const tokenSVG =
         this.tokenSVGs[this.reactiveSentence.prevIdOfMostRecentToken];
 
@@ -203,19 +206,6 @@ export class SentenceSVG extends EventDispatcher {
         runningX,
         offsetY
       );
-
-      // defines a different style for UPOS of the current token pointed by
-      // the cursor or the grouped tokens
-      if (
-        tokenIndex == this.reactiveSentence.idOfMostRecentToken ||
-        this.reactiveSentence.groupedTokens.includes(Number(tokenIndex))
-      ) {
-        if (this.shownFeatures.includes("UPOS")) {
-          tokenSVG.snapElements.UPOS.node.style.textDecoration = "underline";
-          tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
-          tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
-        }
-      }
 
       // changes the style of tokens when they are found by search
       if (

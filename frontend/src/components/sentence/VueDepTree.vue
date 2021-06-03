@@ -117,6 +117,7 @@ export default {
       interactive: interactive,
     });
     this.sentenceSVG.plugDiffTree(this.teacherReactiveSentence);
+    this.sentenceSVG.updateHighlighted();
 
     this.sentenceBus[this.userId] = this.sentenceSVG;
 
@@ -349,7 +350,7 @@ export default {
           this.reactiveSentence.idOfMostRecentToken++;
         }
 
-        // updates the drawing to highlighted the marked UPOS
+        // updates the drawing to highlight the marked UPOS
         this.sentenceSVG.updateHighlighted();
       }
     },
