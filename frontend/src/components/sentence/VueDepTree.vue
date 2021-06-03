@@ -117,7 +117,6 @@ export default {
       interactive: interactive,
     });
     this.sentenceSVG.plugDiffTree(this.teacherReactiveSentence);
-    this.sentenceSVG.updateHighlighted();
 
     this.sentenceBus[this.userId] = this.sentenceSVG;
 
