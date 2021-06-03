@@ -143,7 +143,11 @@ export class SentenceSVG extends EventDispatcher {
   }
 
   // -- DESCRIPTION:
+  // Updates the tree drawing, highlighting the part of speech
+  // tags that need to be highlighted.
   updateHighlighted(): void {
+    // turns POS of the previous most recent token back in its
+    // normal state
     if (
       this.shownFeatures.includes("UPOS") &&
       this.reactiveSentence.prevIdOfMostRecentToken !== null
@@ -156,6 +160,8 @@ export class SentenceSVG extends EventDispatcher {
       tokenSVG.snapElements.UPOS.node.style.fontSize = "11px";
     }
 
+    // turns POS of the previous gruped tokens back in its
+    // normal state
     for (const id of this.reactiveSentence.prevGroupedTokens) {
       // defines a different style for UPOS of the current token pointed by
       // the cursor or the grouped tokens
@@ -167,10 +173,10 @@ export class SentenceSVG extends EventDispatcher {
         tokenSVG.snapElements.UPOS.node.style.fontSize = "11px";
       }
     }
-
+    // turns POS of the gruped tokens in highlighted
+    // state
     for (const id of this.reactiveSentence.groupedTokens) {
-      // defines a different style for UPOS of the current token pointed by
-      // the cursor or the grouped tokens
+      // defines a different style for UPOS of the grouped tokens
       if (this.shownFeatures.includes("UPOS")) {
         const tokenSVG = this.tokenSVGs[id];
 
@@ -180,7 +186,11 @@ export class SentenceSVG extends EventDispatcher {
       }
     }
 
+    // turns POS of the most recent token in highlighted
+    // state
     if (this.shownFeatures.includes("UPOS")) {
+      // defines a different style for UPOS of the current token pointed by
+      // the cursor or the grouped tokens
       const tokenSVG =
         this.tokenSVGs[this.reactiveSentence.idOfMostRecentToken];
 
