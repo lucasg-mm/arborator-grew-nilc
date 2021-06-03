@@ -64,6 +64,7 @@ export default {
     keymap() {
       if (this.hasFocus) {
         return {
+          // ctrl+click: select many UPOS
           "shift+r": this.repeatPOS,
           "shift+s": this.saveTreeByShortcut,
           "shift+u": this.undoChangeByShortcut,
@@ -266,59 +267,105 @@ export default {
     // -- Description:
     // Opens the UPOS window of the highlighted UPOS.
     openUPOSWindow() {
-      // gets the id of the highlighted upos
-      const idSelected = this.reactiveSentence.idOfMostRecentToken;
-
-      // gets the token of the highlighted upos
-      const token = this.reactiveSentence.treeJson[idSelected];
-
       // gets the user's id
       const userId = this.userId;
 
-      // opens the UPOS dialog window
-      this.sentenceBus.$emit("open:uposDialog", { token, userId }, true);
+      // gets the number of grouped tokens
+      const numberOfGroupedTokens = this.reactiveSentence.groupedTokens.length;
+
+      // if the number of grouped items is zero or one, just changes the most
+      // recent token
+      if (numberOfGroupedTokens >= 0 && numberOfGroupedTokens <= 1) {
+        // gets the id of the highlighted upos
+        const idSelected = this.reactiveSentence.idOfMostRecentToken;
+
+        // gets the token of the highlighted upos
+        const token = this.reactiveSentence.treeJson[idSelected];
+
+        // opens the UPOS dialog window
+        this.sentenceBus.$emit("open:uposDialog", { token, userId }, true);
+      } else {
+        // if the number of grouped items more than one, changes every
+        // grouped token
+
+        // gets the array of IDs of grouped tokens
+        const idsGroupedTokens = this.reactiveSentence.groupedTokens;
+
+        // this array shall store every grouped token
+        const tokens = [];
+
+        // put every token in the array
+        for (const id of idsGroupedTokens) {
+          tokens.push(this.reactiveSentence.treeJson[id]);
+        }
+
+        // opens the UPOS dialog window
+        this.sentenceBus.$emit(
+          "open:multipleUposDialog",
+          { tokens, userId },
+          true
+        );
+      }
     },
 
     // -- Description:
     // defines the highlighted upos as the next one
     // (the one in the right)
     setsNextHighlightedUPOS() {
-      // gets the nummber of tokens in the sentence
-      const numberOfTokens = Object.keys(this.reactiveSentence.treeJson).length;
+      // gets the number of grouped tokens
+      const numberOfGroupedTokens = this.reactiveSentence.groupedTokens.length;
 
-      if (this.reactiveSentence.idOfMostRecentToken >= numberOfTokens) {
-        // if the current highlighted token is the last,
-        // the next is the first one
-        this.reactiveSentence.idOfMostRecentToken = 1;
-      } else {
-        // if the current highlighted token is one in the middle,
-        // the next is the one in the right
-        this.reactiveSentence.idOfMostRecentToken++;
+      // this shortcut only works ith the number of grouped
+      // items is either 0 or 1
+      if (numberOfGroupedTokens <= 1) {
+        // gets the nummber of tokens in the sentence
+        const numberOfTokens = Object.keys(
+          this.reactiveSentence.treeJson
+        ).length;
+
+        if (this.reactiveSentence.idOfMostRecentToken >= numberOfTokens) {
+          // if the current highlighted token is the last,
+          // the next is the first one
+          this.reactiveSentence.idOfMostRecentToken = 1;
+        } else {
+          // if the current highlighted token is one in the middle,
+          // the next is the one in the right
+          this.reactiveSentence.idOfMostRecentToken++;
+        }
+
+        // updates the drawing to highlighted the marked UPOS
+        this.reactiveSentence.updateHighlighted();
       }
-
-      // updates the drawing to highlighted the marked UPOS
-      this.reactiveSentence.updateHighlighted();
     },
 
     // -- Description:
     // defines the highlighted upos as the previous one
     // (the one in the left)
     setsPreviousHighlightedUPOS() {
-      // gets the nummber of tokens in the sentence
-      const numberOfTokens = Object.keys(this.reactiveSentence.treeJson).length;
+      // gets the number of grouped tokens
+      const numberOfGroupedTokens = this.reactiveSentence.groupedTokens.length;
 
-      if (this.reactiveSentence.idOfMostRecentToken <= 1) {
-        // if the current highlighted token is the first,
-        // the next is the last one
-        this.reactiveSentence.idOfMostRecentToken = numberOfTokens;
-      } else {
-        // if the current highlighted token is in the middle,
-        // the next is the one in the left
-        this.reactiveSentence.idOfMostRecentToken--;
+      // this shortcut only works ith the number of grouped
+      // items is either 0 or 1
+      if (numberOfGroupedTokens <= 1) {
+        // gets the number of tokens in the sentence
+        const numberOfTokens = Object.keys(
+          this.reactiveSentence.treeJson
+        ).length;
+
+        if (this.reactiveSentence.idOfMostRecentToken <= 1) {
+          // if the current highlighted token is the first,
+          // the next is the last one
+          this.reactiveSentence.idOfMostRecentToken = numberOfTokens;
+        } else {
+          // if the current highlighted token is in the middle,
+          // the next is the one in the left
+          this.reactiveSentence.idOfMostRecentToken--;
+        }
+
+        // updates the drawing to highlighted the marked UPOS
+        this.reactiveSentence.updateHighlighted();
       }
-
-      // updates the drawing to highlighted the marked UPOS
-      this.reactiveSentence.updateHighlighted();
     },
 
     // -- Description:
@@ -375,28 +422,35 @@ export default {
     // Repeats the Part of Speech for the token on the
     // right of the last one that the user interacted with
     repeatPOS() {
-      const treeJson = this.reactiveSentence.treeJson;
-      const numberOfTokens = Object.keys(treeJson).length;
-      const newPOS = treeJson[this.reactiveSentence.idOfMostRecentToken].UPOS;
+      // gets the number of grouped tokens
+      const numberOfGroupedTokens = this.reactiveSentence.groupedTokens.length;
 
-      // checks if the id of the token that the user interacted with
-      // most recently is the last one in the sentence
-      if (this.reactiveSentence.idOfMostRecentToken >= numberOfTokens) {
-        // defines the POS of the first token the same as the last token
-        treeJson[1].UPOS = newPOS;
-        this.sentenceBus.$emit("tree-update:token", {
-          token: treeJson[1],
-          userId: this.userId,
-        });
-      } else {
-        // defines the POS of the token on the right the same as the last token
-        // the user interacted with.
-        treeJson[1 + this.reactiveSentence.idOfMostRecentToken].UPOS = newPOS;
+      // this shortcut only works ith the number of grouped
+      // items is either 0 or 1
+      if (numberOfGroupedTokens <= 1) {
+        const treeJson = this.reactiveSentence.treeJson;
+        const numberOfTokens = Object.keys(treeJson).length;
+        const newPOS = treeJson[this.reactiveSentence.idOfMostRecentToken].UPOS;
 
-        this.sentenceBus.$emit("tree-update:token", {
-          token: treeJson[1 + this.reactiveSentence.idOfMostRecentToken],
-          userId: this.userId,
-        });
+        // checks if the id of the token that the user interacted with
+        // most recently is the last one in the sentence
+        if (this.reactiveSentence.idOfMostRecentToken >= numberOfTokens) {
+          // defines the POS of the first token the same as the last token
+          treeJson[1].UPOS = newPOS;
+          this.sentenceBus.$emit("tree-update:token", {
+            token: treeJson[1],
+            userId: this.userId,
+          });
+        } else {
+          // defines the POS of the token on the right the same as the last token
+          // the user interacted with.
+          treeJson[1 + this.reactiveSentence.idOfMostRecentToken].UPOS = newPOS;
+
+          this.sentenceBus.$emit("tree-update:token", {
+            token: treeJson[1 + this.reactiveSentence.idOfMostRecentToken],
+            userId: this.userId,
+          });
+        }
       }
     },
 

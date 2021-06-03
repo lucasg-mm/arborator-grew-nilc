@@ -326,6 +326,7 @@
     </q-card-section>
     <RelationDialog :sentenceBus="sentenceBus" />
     <UposDialog :sentenceBus="sentenceBus" />
+    <MultipleUposDialog :sentenceBus="sentenceBus" />
     <EraseDialog
       :sentenceBus="sentenceBus"
       @erase-annotation="eraseAnnotation"
@@ -364,6 +365,7 @@ import { ReactiveSentence } from "../../helpers/ReactiveSentence"; // for test o
 import VueDepTree from "./VueDepTree.vue";
 import RelationDialog from "./RelationDialog.vue";
 import UposDialog from "./UposDialog.vue";
+import MultipleUposDialog from "./MultipleUposDialog.vue";
 import EraseDialog from "./EraseDialog.vue";
 import FeaturesDialog from "./FeaturesDialog.vue";
 import MetaDialog from "./MetaDialog.vue";
@@ -380,6 +382,7 @@ export default {
     VueDepTree,
     RelationDialog,
     UposDialog,
+    MultipleUposDialog,
     FeaturesDialog,
     MetaDialog,
     ConlluDialog,
