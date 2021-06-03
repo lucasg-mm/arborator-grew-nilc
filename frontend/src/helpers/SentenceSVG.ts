@@ -142,6 +142,51 @@ export class SentenceSVG extends EventDispatcher {
     this.teacherTreeJson = teacherReactiveSentence?.treeJson;
   }
 
+  // -- DESCRIPTION:
+  updateHighlighted(): void {
+    if (this.shownFeatures.includes("UPOS")) {
+      const tokenSVG =
+        this.tokenSVGs[this.reactiveSentence.prevIdOfMostRecentToken];
+
+      tokenSVG.snapElements.UPOS.node.style.textDecoration = "none";
+      tokenSVG.snapElements.UPOS.node.style.fontWeight = "400";
+      tokenSVG.snapElements.UPOS.node.style.fontSize = "11px";
+    }
+
+    for (const id of this.reactiveSentence.prevGroupedTokens) {
+      // defines a different style for UPOS of the current token pointed by
+      // the cursor or the grouped tokens
+      if (this.shownFeatures.includes("UPOS")) {
+        const tokenSVG = this.tokenSVGs[id];
+
+        tokenSVG.snapElements.UPOS.node.style.textDecoration = "none";
+        tokenSVG.snapElements.UPOS.node.style.fontWeight = "400";
+        tokenSVG.snapElements.UPOS.node.style.fontSize = "11px";
+      }
+    }
+
+    for (const id of this.reactiveSentence.groupedTokens) {
+      // defines a different style for UPOS of the current token pointed by
+      // the cursor or the grouped tokens
+      if (this.shownFeatures.includes("UPOS")) {
+        const tokenSVG = this.tokenSVGs[id];
+
+        tokenSVG.snapElements.UPOS.node.style.textDecoration = "underline";
+        tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
+        tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
+      }
+    }
+
+    if (this.shownFeatures.includes("UPOS")) {
+      const tokenSVG =
+        this.tokenSVGs[this.reactiveSentence.idOfMostRecentToken];
+
+      tokenSVG.snapElements.UPOS.node.style.textDecoration = "underline";
+      tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
+      tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
+    }
+  }
+
   populateTokenSVGs(): void {
     let runningX = 0;
     let maxLevelY = Math.max(...this.levelsArray, 2); // 2 would be the minimum possible level size

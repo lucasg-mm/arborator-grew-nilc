@@ -93,10 +93,20 @@ export default {
     // by the cursor in a different color
     this.reactiveSentence.idOfMostRecentToken = 1;
 
+    // we should also store the previous most recent token
+    // to restore its original style after it's not the
+    // most recent anymore
+    this.reactiveSentence.prevIdOfMostRecentToken = null;
+
     // array of ids of tokens grouped by the user
     // a group can be formed in order to change the
-    // tags of the frouped tokens in a simultaneous way
+    // tags of the grouped tokens in a simultaneous way
     this.reactiveSentence.groupedTokens = [];
+
+    // we should also store the previous grouped tokens
+    // to restore their original style after they're not
+    // in the group anymore
+    this.reactiveSentence.prevGroupedTokens = [];
 
     this.sentenceSVG = new SentenceSVG({
       svgID: this.svgID,
@@ -138,6 +148,8 @@ export default {
 
         // saves the id of the token that the user interacted with
         // most recently
+        this.reactiveSentence.prevIdOfMostRecentToken =
+          this.reactiveSentence.idOfMostRecentToken;
         this.reactiveSentence.idOfMostRecentToken = token.ID;
 
         // tracks modification in this sentence (vuex store)
@@ -326,15 +338,19 @@ export default {
         if (this.reactiveSentence.idOfMostRecentToken >= numberOfTokens) {
           // if the current highlighted token is the last,
           // the next is the first one
+          this.reactiveSentence.prevIdOfMostRecentToken =
+            this.reactiveSentence.idOfMostRecentToken;
           this.reactiveSentence.idOfMostRecentToken = 1;
         } else {
           // if the current highlighted token is one in the middle,
           // the next is the one in the right
+          this.reactiveSentence.prevIdOfMostRecentToken =
+            this.reactiveSentence.idOfMostRecentToken;
           this.reactiveSentence.idOfMostRecentToken++;
         }
 
         // updates the drawing to highlighted the marked UPOS
-        this.reactiveSentence.updateHighlighted();
+        this.sentenceSVG.updateHighlighted();
       }
     },
 
@@ -356,15 +372,19 @@ export default {
         if (this.reactiveSentence.idOfMostRecentToken <= 1) {
           // if the current highlighted token is the first,
           // the next is the last one
+          this.reactiveSentence.prevIdOfMostRecentToken =
+            this.reactiveSentence.idOfMostRecentToken;
           this.reactiveSentence.idOfMostRecentToken = numberOfTokens;
         } else {
           // if the current highlighted token is in the middle,
           // the next is the one in the left
+          this.reactiveSentence.prevIdOfMostRecentToken =
+            this.reactiveSentence.idOfMostRecentToken;
           this.reactiveSentence.idOfMostRecentToken--;
         }
 
         // updates the drawing to highlighted the marked UPOS
-        this.reactiveSentence.updateHighlighted();
+        this.sentenceSVG.updateHighlighted();
       }
     },
 
@@ -411,10 +431,12 @@ export default {
     clearGroupedTokens(e) {
       if (!e.ctrlKey) {
         // clears the array of grouped tokens
+        this.reactiveSentence.prevGroupedTokens =
+          this.reactiveSentence.groupedTokens;
         this.reactiveSentence.groupedTokens = [];
 
         // updates the drawing
-        this.reactiveSentence.updateHighlighted();
+        this.sentenceSVG.updateHighlighted();
       }
     },
 
@@ -702,13 +724,15 @@ export default {
           // isn't a part of it
           if (!this.reactiveSentence.groupedTokens.includes(clickedTokenID)) {
             // redefines the most recent token as the one clicked
+            this.reactiveSentence.prevIdOfMostRecentToken =
+              this.reactiveSentence.idOfMostRecentToken;
             this.reactiveSentence.idOfMostRecentToken = clickedTokenID;
 
             // add the token to the group
             this.reactiveSentence.groupedTokens.push(clickedTokenID);
 
             // highlights the new member of the group
-            this.reactiveSentence.updateHighlighted();
+            this.sentenceSVG.updateHighlighted();
           }
         } else {
           // clicks without the modifier

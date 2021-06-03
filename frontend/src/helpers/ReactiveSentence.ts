@@ -47,7 +47,9 @@ export class ReactiveSentence extends EventDispatcher {
   // triggers an update because the highlighted UPOS
   // changed
   updateHighlighted(): void {
-    this._emitEvent();
+    const event = new CustomEvent("token-updated");
+
+    this.dispatchEvent(event);
   }
 
   getToken(ID: any) {
@@ -136,15 +138,7 @@ export class ReactiveSentence extends EventDispatcher {
   }
 
   _emitEvent(): void {
-    const event = new CustomEvent(
-      "token-updated"
-      // {
-      // detail: {
-      //   treeJson,
-      //   tokenJson,
-      // },
-      // }
-    );
+    const event = new CustomEvent("token-updated");
 
     this.dispatchEvent(event);
   }
