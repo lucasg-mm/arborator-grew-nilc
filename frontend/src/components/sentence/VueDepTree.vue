@@ -303,18 +303,10 @@ export default {
         // gets the array of IDs of grouped tokens
         const idsGroupedTokens = this.reactiveSentence.groupedTokens;
 
-        // this array shall store every grouped token
-        const tokens = [];
-
-        // put every token in the array
-        for (const id of idsGroupedTokens) {
-          tokens.push(this.reactiveSentence.treeJson[id]);
-        }
-
         // opens the UPOS dialog window
         this.sentenceBus.$emit(
           "open:multipleUposDialog",
-          { tokens, userId },
+          { idsGroupedTokens, userId, tree: this.reactiveSentence.treeJson },
           true
         );
       }

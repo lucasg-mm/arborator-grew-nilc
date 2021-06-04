@@ -64,8 +64,9 @@ export default {
     return {
       uposDialogOpened: false,
       chosenUPOS: "",
-      tokens: [],
+      idsGroupedTokens: [],
       userId: "",
+      tree: {},
     };
   },
   computed: {
@@ -76,10 +77,11 @@ export default {
   mounted() {
     this.sentenceBus.$on(
       "open:multipleUposDialog",
-      ({ tokens, userId }, isByShortcut = false) => {
-        this.tokens = tokens;
+      ({ idsGroupedTokens, userId, tree }, isByShortcut = false) => {
+        this.idsGroupedTokens = idsGroupedTokens;
         this.userId = userId;
         this.uposDialogOpened = true;
+        this.tree = tree;
 
         if (isByShortcut) {
           this.showPopup();
@@ -103,24 +105,24 @@ export default {
     // Changes the UPOS of the selected tokens.
     onChangeUpos() {
       this.uposDialogOpened = false;
-      for (const token of this.tokens) {
-        token.UPOS = this.chosenUPOS;
-        this.sentenceBus.$emit("tree-update:token", {
-          token: token,
-          userId: this.userId,
-        });
+      for (const id of this.idsGroupedTokens) {
+        this.tree[id].UPOS = this.chosenUPOS;
       }
+      this.sentenceBus.$emit("tree-update:tree", {
+        tree: this.tree,
+        userId: this.userId,
+      });
     },
     // -- DESCRIPTION:
     // Deletes the UPOS of the selected tokens.
     onDeleteUpos() {
-      for (const token of this.token) {
-        token.UPOS = "_";
-        this.sentenceBus.$emit("tree-update:token", {
-          token: token,
-          userId: this.userId,
-        });
+      for (const id of this.idsGroupedTokens) {
+        this.tree[id].UPOS = "_";
       }
+      this.sentenceBus.$emit("tree-update:tree", {
+        tree: token,
+        userId: this.userId,
+      });
     },
   },
 };
