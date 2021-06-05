@@ -28,19 +28,15 @@
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-header>
-      <q-page-container>
-        <q-page>
-          <codemirror
-            v-model="conllContent"
-            :options="cmOption"
-            class="CodeMirror"
-            @focus="codefocus"
-          >
-          </codemirror>
-          <!-- </codemirror> -->
-          <!-- @input="codechange($event)"  ($event)-->
-        </q-page>
-      </q-page-container>
+      <codemirror
+        ref="conlluEditor"
+        v-model="conllContent"
+        :options="cmOption"
+        class="CodeMirror"
+        style="height: 100%"
+        @focus="codefocus"
+      >
+      </codemirror>
       <q-footer>
         <q-toolbar inset>
           <!-- <q-toolbar-title>Footer</q-toolbar-title> --><q-space />
@@ -130,6 +126,11 @@ export default {
       this.conlluDialogOpened = true;
       this.currentConllContent = this.sentenceBus[this.userId].exportConll();
       this.conllContent = this.sentenceBus[this.userId].exportConll();
+      this.$nextTick(function () {
+        // DOM updated
+        console.log(this.$refs.conlluEditor);
+        this.$refs.conlluEditor.cminstance.setSize("100%", "100%");
+      });
     });
   },
   methods: {
