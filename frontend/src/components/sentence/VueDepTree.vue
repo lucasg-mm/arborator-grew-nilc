@@ -414,6 +414,9 @@ export default {
 
       // unfocus every other tree
       this.$root.$emit("unfocus", this);
+
+      // // centers first occurrence
+      // this.sentenceSVG.centerFirstOccurrence();
     },
 
     // -- Description:

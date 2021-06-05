@@ -51,7 +51,7 @@ export class SentenceSVG extends EventDispatcher {
   totalWidth: number = 0;
   totalHeight: number = 0;
   levelsArray: number[] = [];
-  firstOcurrance!: HTMLElement;
+  firstOccurrence!: HTMLElement;
 
   constructor(opts: SentenceSVGOptions) {
     super();
@@ -98,6 +98,16 @@ export class SentenceSVG extends EventDispatcher {
     this.drawTree();
   }
 
+  // centerFirstOccurrence() {
+  //   // scroll to the first occurrence of a query
+  //   if (typeof this.firstOccurrence !== "undefined") {
+  //     this.firstOccurrence.scrollIntoView({
+  //       block: "center",
+  //       inline: "center",
+  //     });
+  //   }
+  // }
+
   drawTree() {
     this.snapSentence.clear();
 
@@ -128,14 +138,6 @@ export class SentenceSVG extends EventDispatcher {
     if (this.teacherTreeJson) {
       this.showDiffs(this.teacherTreeJson);
     }
-
-    // scroll to the first ocurrence of a query
-    // if (typeof this.firstOcurrance !== "undefined") {
-    //   this.firstOcurrance.scrollIntoView({
-    //     block: "center",
-    //     inline: "center",
-    //   });
-    // }
   }
 
   plugDiffTree(teacherReactiveSentence: ReactiveSentence): void {
@@ -231,8 +233,8 @@ export class SentenceSVG extends EventDispatcher {
         if (this.shownFeatures.includes("FORM")) {
           tokenSVG.snapElements.FORM.node.style.fill = "green";
           tokenSVG.snapElements.FORM.node.style.fontWeight = "900";
-          if (typeof this.firstOcurrance === "undefined") {
-            this.firstOcurrance = tokenSVG.snapElements.FORM.node;
+          if (typeof this.firstOccurrence === "undefined") {
+            this.firstOccurrence = tokenSVG.snapElements.FORM.node;
           }
         }
         if (this.shownFeatures.includes("UPOS")) {
