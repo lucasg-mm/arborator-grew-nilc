@@ -178,8 +178,4 @@ export default {
 };
 </script>
 
-<style>
-.CodeMirror {
-  height: auto;
-}
-</style>
+<style></style>

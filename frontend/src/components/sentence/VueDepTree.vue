@@ -6,7 +6,7 @@
         manageFocus();
         clearGroupedTokens($event);
       "
-      v-hotkey.prevent="keymap"
+      v-hotkey="keymap"
       class="sentencebox"
       style="min-width: max-content"
     >
