@@ -130,12 +130,12 @@ export class SentenceSVG extends EventDispatcher {
     }
 
     // scroll to the first ocurrence of a query
-    if (typeof this.firstOcurrance !== "undefined") {
-      this.firstOcurrance.scrollIntoView({
-        block: "center",
-        inline: "center",
-      });
-    }
+    // if (typeof this.firstOcurrance !== "undefined") {
+    //   this.firstOcurrance.scrollIntoView({
+    //     block: "center",
+    //     inline: "center",
+    //   });
+    // }
   }
 
   plugDiffTree(teacherReactiveSentence: ReactiveSentence): void {
@@ -197,6 +197,11 @@ export class SentenceSVG extends EventDispatcher {
       tokenSVG.snapElements.UPOS.node.style.textDecoration = "underline";
       tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
       tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
+
+      tokenSVG.snapElements.UPOS.node.scrollIntoView({
+        block: "center",
+        inline: "center",
+      });
     }
   }
 
