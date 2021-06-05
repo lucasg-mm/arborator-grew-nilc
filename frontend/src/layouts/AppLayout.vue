@@ -101,12 +101,6 @@
               </q-avatar>
             </template>
           </q-select>
-          <q-btn
-            flat
-            round
-            @click="toggleDarkMode()"
-            :icon="$q.dark.isActive ? 'lightbulb' : 'brightness_2'"
-          ></q-btn>
           <q-btn-dropdown
             v-show="!store.getters['user/isLoggedIn']"
             color="secondary"
