@@ -198,6 +198,7 @@ export class SentenceSVG extends EventDispatcher {
       tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
       tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
 
+      // scrolls the most recent token into view
       tokenSVG.snapElements.UPOS.node.scrollIntoView({
         block: "center",
         inline: "center",
