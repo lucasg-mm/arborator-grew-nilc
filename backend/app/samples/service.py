@@ -101,8 +101,6 @@ class SampleExportService:
                     data.date_time = time.localtime(time.time())[:6]
                     data.compress_type = zipfile.ZIP_DEFLATED
                     filecontent += "\n"
-                    print("ayy!!", flush=True)
-                    print(filecontent, flush=True)
                     zf.writestr(data, filecontent)
         memory_file.seek(0)
         return memory_file

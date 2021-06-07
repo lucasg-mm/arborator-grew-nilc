@@ -60,6 +60,8 @@ export class SentenceSVG extends EventDispatcher {
     this.snapSentence = Snap(`#${this.svgID}`);
     this.treeJson = this.reactiveSentence.treeJson;
     this.metaJson = this.reactiveSentence.metaJson;
+    console.log(this.metaJson.text);
+
     // put FORM at the beginning of the shownFeatures array
     this.shownFeatures = this.shownFeatures.filter((item) => item !== "FORM");
     this.shownFeatures.unshift("FORM");

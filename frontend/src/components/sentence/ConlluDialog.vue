@@ -127,7 +127,9 @@ export default {
       this.userId = userId;
       this.conlluDialogOpened = true;
       this.currentConllContent = this.sentenceBus[this.userId].exportConll();
-      this.conllContent = this.sentenceBus[this.userId].exportConll();
+      this.conllContent = this.sentenceBus[this.userId]
+        .exportConll()
+        .concat("\n");
       this.$nextTick(function () {
         // updates the height
         this.$refs.conlluEditor.cminstance.setSize(null, "100%");

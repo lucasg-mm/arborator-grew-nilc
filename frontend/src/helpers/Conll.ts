@@ -79,11 +79,9 @@ export function conllToJson(sentenceConll: string): SentenceJson {
       .replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
     if (nodeline.charAt(0) == "#") {
       // metaJson
-      var [a, v] = nodeline
-        .substring(1)
-        .trim()
-        .split("=");
+      var [a, v] = nodeline.substring(1).trim().split("=");
       if (v != null) [a, v] = [a.trim(), v.trim()];
+
       metaJson[a] = v;
       return true;
     }
@@ -183,6 +181,10 @@ export function conllToJson(sentenceConll: string): SentenceJson {
     // } else{ sentence.push(word); }
   });
 
+  // eliminates  whitespace when it's necessary
+  if (sentence[sentence.length - 1] === " ") {
+    sentence.pop();
+  }
   metaJson["text"] = sentence.join("");
 
   const sentenceJson: SentenceJson = {
@@ -236,7 +238,7 @@ export function analyzeFeaturestring(
 ): FeatureJson {
   const featureJson: FeatureJson = {};
   if (featureString.indexOf(equalizerSign) > -1) {
-    featureString.split(separatorSign).forEach(function(
+    featureString.split(separatorSign).forEach(function (
       f // for each feature:
     ) {
       var fs = f.split(equalizerSign);

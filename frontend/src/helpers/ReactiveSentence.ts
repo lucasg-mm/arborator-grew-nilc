@@ -121,6 +121,7 @@ export class ReactiveSentence extends EventDispatcher {
 
     // // TODO handle new meta text
     this.metaJson.text = getSentenceTextFromJson(newtree);
+    console.log(this.metaJson.text);
 
     const event = new CustomEvent("tree-updated");
     this.dispatchEvent(event);
