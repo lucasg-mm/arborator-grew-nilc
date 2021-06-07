@@ -28,42 +28,24 @@
       </q-btn>
       <q-btn flat dense icon="close" v-close-popup />
     </q-bar>
-    <!-- <q-bar class="bg-primary text-white">
-        <q-space />
-        <div class="text-weight-bold">Results</div>
-        <q-space />
-        <q-btn flat dense icon="close" v-close-popup/>
-        </q-bar> -->
     <q-card-section>
       <div v-show="!loading" class="q-pa-md row q-gutter-md">
         <q-virtual-scroll
           :items="this.samplesFrozen.list"
-          style="height: 80vh; width: 90vw"
+          style="height: 90vh; width: 99vw"
           :virtual-scroll-slice-size="5"
           :virtual-scroll-item-size="200"
-          type="table"
         >
           <template v-slot="{ item, index }">
-            <tr :key="index">
-              <td>
-                <q-toggle
-                  v-model="samplesFrozen.selected[index]"
-                  checked-icon="check"
-                  unchecked-icon="clear"
-                />
-              </td>
-              <td>
-                <sentence-card
-                  :key="index"
-                  :id="item[1]"
-                  :sentence="searchresults[item[0]][item[1]]"
-                  :index="index"
-                  :sentenceId="item[1]"
-                  searchResult="searchResult"
-                  :isResult="true"
-                ></sentence-card>
-              </td>
-            </tr>
+            <sentence-card
+              :key="index"
+              :id="item[1]"
+              :sentence="searchresults[item[0]][item[1]]"
+              :index="index"
+              :sentenceId="item[1]"
+              searchResult="searchResult"
+              :isResult="true"
+            ></sentence-card>
           </template>
         </q-virtual-scroll>
       </div>
@@ -78,9 +60,6 @@
           />
         </div>
       </div>
-    </q-card-section>
-    <q-card-section>
-      <q-btn color="primary" @click="save" label="Save conll" no-caps />
     </q-card-section>
   </q-card>
 </template>
