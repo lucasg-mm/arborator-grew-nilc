@@ -193,11 +193,11 @@ export class SentenceSVG extends EventDispatcher {
       tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
       tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
 
-      // scrolls the most recent token into view
-      tokenSVG.snapElements.UPOS.node.scrollIntoView({
-        block: "center",
-        inline: "center",
-      });
+      // horizontally scrolls the most recent token into view
+      const el = tokenSVG.snapElements.UPOS.node;
+      const offsetLeft = el.getBBox().x - 400;
+      const container = getScrollTarget(el).children[0].children[1].children[0];
+      container.scrollLeft = offsetLeft;
     }
   }
 
