@@ -242,6 +242,8 @@ export class SentenceSVG extends EventDispatcher {
       tokenSVG.ylevel = this.levelsArray[tokenIndex];
       runningX += tokenSVG.width;
     }
+
+    this.updateHighlighted();
   }
 
   updateToken(tokenJson: TokenJson): void {
