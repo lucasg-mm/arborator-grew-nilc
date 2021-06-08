@@ -269,6 +269,7 @@ export default {
     });
 
     this.statusChangeHadler();
+    this.sentenceSVG.updateHighlighted();
   },
   activated() {
     // every time the component is activated,
@@ -375,7 +376,7 @@ export default {
           this.reactiveSentence.idOfMostRecentToken--;
         }
 
-        // updates the drawing to highlighted the marked UPOS
+        // updates the drawing to highlight the marked UPOS
         this.sentenceSVG.updateHighlighted();
       }
     },
@@ -424,7 +425,7 @@ export default {
     // when the users clicks in the svg
     // without pressing the modifier key
     clearGroupedTokens(e) {
-      if (!e.ctrlKey) {
+      if (!e.ctrlKey && this.reactiveSentence.groupedTokens.length !== 0) {
         // clears the array of grouped tokens
         this.reactiveSentence.prevGroupedTokens =
           this.reactiveSentence.groupedTokens;

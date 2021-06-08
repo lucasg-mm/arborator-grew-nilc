@@ -9,6 +9,8 @@ import {
 } from "./Conll";
 import { EventDispatcher } from "./EventDispatcher";
 import { ReactiveSentence } from "./ReactiveSentence";
+import { scroll } from "quasar";
+const { getScrollTarget, setHorizontalScrollPosition } = scroll;
 
 //////    CONSTANT DECLARATION    //////
 const SVG_CONFIG = {
@@ -60,7 +62,6 @@ export class SentenceSVG extends EventDispatcher {
     this.snapSentence = Snap(`#${this.svgID}`);
     this.treeJson = this.reactiveSentence.treeJson;
     this.metaJson = this.reactiveSentence.metaJson;
-    console.log(this.metaJson.text);
 
     // put FORM at the beginning of the shownFeatures array
     this.shownFeatures = this.shownFeatures.filter((item) => item !== "FORM");
@@ -99,16 +100,6 @@ export class SentenceSVG extends EventDispatcher {
     this.plugDiffTree(this.teacherReactiveSentence);
     this.drawTree();
   }
-
-  // centerFirstOccurrence() {
-  //   // scroll to the first occurrence of a query
-  //   if (typeof this.firstOccurrence !== "undefined") {
-  //     this.firstOccurrence.scrollIntoView({
-  //       block: "center",
-  //       inline: "center",
-  //     });
-  //   }
-  // }
 
   drawTree() {
     this.snapSentence.clear();
@@ -237,6 +228,7 @@ export class SentenceSVG extends EventDispatcher {
           tokenSVG.snapElements.FORM.node.style.fontWeight = "900";
           if (typeof this.firstOccurrence === "undefined") {
             this.firstOccurrence = tokenSVG.snapElements.FORM.node;
+            this.reactiveSentence.idOfMostRecentToken = tokenSVG.tokenJson.ID;
           }
         }
         if (this.shownFeatures.includes("UPOS")) {
@@ -250,8 +242,6 @@ export class SentenceSVG extends EventDispatcher {
       tokenSVG.ylevel = this.levelsArray[tokenIndex];
       runningX += tokenSVG.width;
     }
-
-    this.updateHighlighted();
   }
 
   updateToken(tokenJson: TokenJson): void {
