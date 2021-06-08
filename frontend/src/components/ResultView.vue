@@ -32,7 +32,7 @@
       <div v-show="!loading" class="q-pa-md row q-gutter-md">
         <q-virtual-scroll
           :items="this.samplesFrozen.list"
-          style="height: 90vh; width: 99vw"
+          style="height: 84vh; width: 100vw"
           :virtual-scroll-slice-size="5"
           :virtual-scroll-item-size="200"
         >
