@@ -246,7 +246,7 @@ class ProjectAccessManyResource(Resource):
             new_attrs = {
                 "user_id": user_id,
                 "access_level": access_level,
-                "project_id": project.id,
+                "project_id": projectName,
             }
             project_access = ProjectAccessService.get_by_user_id(
                 user_id, projectName)
