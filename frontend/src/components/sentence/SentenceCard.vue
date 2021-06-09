@@ -943,6 +943,8 @@ export default {
         )
         .then((response) => {
           if (response.status == 200) {
+            // live update fo the CoNLL-U's status
+            this.sentenceBus[openedTreeUser].metaJson.status = status;
             this.$store.commit("empty_pending_modification");
 
             // when saved, define the sentence as checked

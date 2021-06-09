@@ -194,12 +194,13 @@ export default {
 
           // just marks as undone things that are marked as done
           if (reactiveSentence.metaJson.is_done === "1") {
+            const status = "The user unchecked this sentence.";
             // defines the new meta (now with is_done defined to 0)
             const metaToReplace = {
               user_id: username,
               timestamp: Math.round(Date.now()),
               is_done: 0, // mark as done every time the user saves
-              status: "The user unchecked this sentence.",
+              status: status,
             };
 
             // gets the ConLL-U with updated meta
