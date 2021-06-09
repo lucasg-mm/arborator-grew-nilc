@@ -196,7 +196,15 @@ export class SentenceSVG extends EventDispatcher {
       // horizontally scrolls the most recent token into view
       const el = tokenSVG.snapElements.UPOS.node;
       const offsetLeft = el.getBBox().x - 400;
-      const container = getScrollTarget(el).children[0].children[1].children[0];
+
+      let container;
+      if (typeof getScrollTarget(el).children[0].children[1] === "undefined") {
+        // scrolls when the user is not logged in
+        container = getScrollTarget(el).children[0].children[0].children[0];
+      } else {
+        // scrolls when the user is logged in
+        container = getScrollTarget(el).children[0].children[1].children[0];
+      }
       container.scrollLeft = offsetLeft;
     }
   }
