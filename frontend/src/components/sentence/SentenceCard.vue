@@ -312,6 +312,7 @@
                 :conllSavedCounter="conllSavedCounter"
                 :hasPendingChanges="hasPendingChanges"
                 :matches="sentence.matches"
+                @setShownFeatures="setShownFeatures"
               ></VueDepTree>
             </q-card-section>
           </q-card>
@@ -402,6 +403,7 @@ export default {
   ],
   data() {
     return {
+      shownFeatures: [],
       sentenceBus: new Vue(), // Event/Object Bus that communicate between all components
       reactiveSentencesObj: {},
       tab: "",
@@ -563,6 +565,11 @@ export default {
     this.diffMode = !!this.$store.getters["config/diffMode"];
   },
   methods: {
+    // -- DESCRIPTION:
+    // Updates the shown features in the drawing.
+    setShownFeatures(shownFeatures) {
+      this.shownFeatures = shownFeatures;
+    },
     // -- DESCRIPTION:
     // Erase annotations of the sentence.
     eraseAnnotation(elementsToErase) {
@@ -930,8 +937,12 @@ export default {
       };
 
       // detects and triggers warnings
-      this.detectAndShowRootWarning();
-      this.detectAndShowNonProjectivityWarning();
+      if (this.shownFeatures.includes("TREE")) {
+        // but just do it if the tree is visible, because
+        // these warnings are all related to the tree
+        this.detectAndShowRootWarning();
+        this.detectAndShowNonProjectivityWarning();
+      }
 
       api
         .updateTree(

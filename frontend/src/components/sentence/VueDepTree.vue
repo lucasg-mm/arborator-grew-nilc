@@ -116,6 +116,8 @@ export default {
       teacherReactiveSentence: this.teacherReactiveSentence,
       interactive: interactive,
     });
+    // communicates the shown features to parent component
+    this.$emit("setShownFeatures", this.shownFeatures);
     this.sentenceSVG.plugDiffTree(this.teacherReactiveSentence);
 
     this.sentenceBus[this.userId] = this.sentenceSVG;
