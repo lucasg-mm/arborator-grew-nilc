@@ -896,11 +896,9 @@ export default {
       // or not
       let status;
       if (isChecking) {
-        status =
-          "The user checked this sentence by clicking the 'check' button.";
+        status = "The user checked this sentence.";
       } else {
-        status =
-          "The user checked this sentence by editing it and clicking the 'save' button.";
+        status = "The user saved this sentence.";
       }
 
       let metaToReplace = {
