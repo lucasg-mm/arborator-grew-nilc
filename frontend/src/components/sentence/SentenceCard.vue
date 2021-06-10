@@ -872,8 +872,45 @@ export default {
     },
 
     // -- DESCRIPTION:
+    // Detects if the sentence has multiple ROOTs
+    // - Returns:
+    //  true: if there are multiple ROOTs.
+    //  false: if there are not multiple ROOTs.
+    areThereMultipleRoots() {
+      let headsNumber = 0;
+      // counts the number of ROOTs
+      for (let token_id in this.reactiveSentencesObj[this.tab].treeJson) {
+        if (this.reactiveSentencesObj[this.tab].treeJson[token_id].HEAD === 0) {
+          headsNumber++;
+        }
+
+        if (headsNumber > 1) {
+          // if there is more than one root, returns true
+          return true;
+        }
+      }
+      // if there is more than one root, returns false
+      return false;
+    },
+
+    // -- DESCRIPTION:
+    // Detects if it needs to fire the multiple roots warning.
+    // Fires it, if it needs to.
+    async detectAndShowMultipleRootsWarning() {
+      if (this.areThereMultipleRoots()) {
+        // warning notification
+        this.$q.notify({
+          type: "warning",
+          timeout: 6000,
+          position: "bottom",
+          message: "There are multiple ROOTs in this sentence!",
+        });
+      }
+    },
+
+    // -- DESCRIPTION:
     // Returns a boolean telling if the passed
-    // value is null or NaN
+    // value is null or NaN.
     isNullOrNaN(value) {
       return isNaN(value) || value === null;
     },
@@ -942,6 +979,7 @@ export default {
         // these warnings are all related to the tree
         this.detectAndShowRootWarning();
         this.detectAndShowNonProjectivityWarning();
+        this.detectAndShowMultipleRootsWarning();
       }
 
       api
