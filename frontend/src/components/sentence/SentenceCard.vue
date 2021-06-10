@@ -781,8 +781,8 @@ export default {
     // -- DESCRIPTION:
     // Tells whether the sentence tree is projective or not.
     // -- RETURNS:
-    // true - if the sentence tree is projective.
-    // false - if the sentence tree iisn't projective.
+    // [true, token's form, token's id] - if the sentence tree is projective.
+    // [false] - if the sentence tree iisn't projective.
     isProjective() {
       // analyses every relation between every token
       for (let token_id in this.reactiveSentencesObj[this.tab].treeJson) {
@@ -909,6 +909,51 @@ export default {
     },
 
     // -- DESCRIPTION:
+    // Tells whether there are tokens without a HEAD in
+    // the drawing.
+    // -- RETURNS:
+    // [true, token's form (first occurrence), token's id (first occurrence)]
+    //    if there are.
+    // [false] - if there are not.
+    areThereNoHeadTokens() {
+      for (let token_id in this.reactiveSentencesObj[this.tab].treeJson) {
+        // gets the head value of the token with id token_id
+        let headValue =
+          this.reactiveSentencesObj[this.tab].treeJson[token_id].HEAD;
+
+        // checks if the head is NaN
+        // because a NaN head means the token does not have a head at all!
+        if (this.isNullOrNaN(headValue)) {
+          // returns an array with a boolean indicating
+          // if there are disconnected tokens
+          // the other element is the id of the disconnected token
+          return [
+            true,
+            this.reactiveSentencesObj[this.tab].treeJson[token_id].FORM,
+            token_id,
+          ];
+        }
+      }
+      return [false];
+    },
+
+    // -- DESCRIPTION:
+    // Detects if it needs to fire the multiple roots warning.
+    // Fires it, if it needs to.
+    async detectAndShowNoHeadWarning() {
+      let answer = this.areThereNoHeadTokens();
+      if (answer[0]) {
+        // warning notification
+        this.$q.notify({
+          type: "warning",
+          timeout: 6000,
+          position: "bottom",
+          message: `The token ${answer[1]} (${answer[2]}) does not have a HEAD!`,
+        });
+      }
+    },
+
+    // -- DESCRIPTION:
     // Returns a boolean telling if the passed
     // value is null or NaN.
     isNullOrNaN(value) {
@@ -980,6 +1025,7 @@ export default {
         this.detectAndShowRootWarning();
         this.detectAndShowNonProjectivityWarning();
         this.detectAndShowMultipleRootsWarning();
+        this.detectAndShowNoHeadWarning();
       }
 
       api
