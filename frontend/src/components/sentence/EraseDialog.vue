@@ -5,16 +5,14 @@
     <!-- :maximized="maximizedToggle" -->
     <q-card style="height: 260px">
       <q-bar class="bg-primary text-white">
-        <div class="text-weight-bold">
-          Erase annotation
-        </div>
+        <div class="text-weight-bold">Erase annotation</div>
         <q-space />
         <q-btn flat dense icon="close" v-close-popup />
       </q-bar>
       <q-card-section style="height: 160px">
         <q-checkbox v-model="relations" label="Relations" />
         <br />
-        <q-checkbox v-model="category" label="Category" />
+        <q-checkbox v-model="category" label="POS Tags" />
         <br />
         <q-checkbox v-model="features" label="Features" />
       </q-card-section>

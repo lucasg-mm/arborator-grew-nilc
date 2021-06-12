@@ -774,7 +774,7 @@ export default {
         timeout: 6000,
         position: "bottom",
         message:
-          "This sentence does not have a dependency relation involving the ROOT.",
+          "This sentence does not have a dependency relation involving the ROOT!",
       });
     },
 
@@ -866,7 +866,7 @@ export default {
             this.reactiveSentencesObj[this.tab].treeJson[isProjective[1]].FORM
           }" (${isProjective[1]}) ----> "${
             this.reactiveSentencesObj[this.tab].treeJson[isProjective[2]].FORM
-          }" (${isProjective[2]}) relation is non-projective.`,
+          }" (${isProjective[2]}) relation is non-projective!`,
         });
       }
     },
