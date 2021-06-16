@@ -1,9 +1,26 @@
 from datetime import datetime
 from os import path, makedirs
+from shutil import rmtree
 import pathlib
 
 # the constant below holds the path to the logs directory
 LOG_DIRECTORY = f"{pathlib.Path(__file__).parent.absolute()}/../logs"
+
+
+def delete_project_folder(project_name):
+    """
+    --DESCRIPTION:
+    Deletes the project folder inside the logs directory.
+
+    --PARAMETERS:
+    project_name: name of the project to which the folder
+    refers. 
+    """
+
+    # deletes the folder and everything inside it
+    rmtree(f"{LOG_DIRECTORY}/{project_name}")
+
+    return
 
 
 def get_file_directory(project_name, username):

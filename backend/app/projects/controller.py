@@ -7,6 +7,7 @@ from flask import abort, current_app, request
 from flask_accepts.decorators.decorators import accepts, responds
 from flask_login import current_user
 from flask_restx import Namespace, Resource, reqparse
+from app.utils.log_manager import delete_project_folder
 
 from .interface import ProjectExtendedInterface, ProjectInterface
 from .model import Project, ProjectAccess
@@ -142,6 +143,9 @@ class ProjectIdResource(Resource):
         """Delete a single project (by it's name)"""
         # deletes the project in the backend
         project_name = ProjectService.delete_by_name(projectName)
+
+        # deletes the logs
+        delete_project_folder(projectName)
 
         # deletes features, metafeatures and project accesses info
         ProjectFeatureService.delete_by_project_id(projectName)
