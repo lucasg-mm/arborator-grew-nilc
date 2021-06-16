@@ -3,7 +3,7 @@
     <div class="q-pa-md q-gutter-sm">
       <section class="sectionfscreen">
         <q-card flat class="fixed-center">
-          <q-card-section>
+          <q-card-section class="logo">
             <div class="text-center">
               <img
                 v-if="$q.dark.isActive"
@@ -17,12 +17,22 @@
                 src="../statics/svg/arborator.grew.svg"
                 class="brandinglogo"
               />
-              <div
-                class="text-center text-subtitle2"
-                :class="$q.dark.isActive ? 'text-grey-1' : 'text-blue-grey-8'"
+            </div>
+          </q-card-section>
+
+          <q-card-section class="new-features">
+            <div
+              class="text-center text-subtitle2"
+              :class="$q.dark.isActive ? 'text-grey-1' : 'text-blue-grey-8'"
+            >
+              {{ $t("homepage").version }}
+              <br />
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://docs.google.com/document/d/1wmFlDTVFYKFQfmIB-LbiBEm_kMJF1XSYBkZhe78K5Tk/edit?usp=sharing"
+                >Check out the new features!</a
               >
-                {{ $t("homepage").version }}
-              </div>
             </div>
           </q-card-section>
 
@@ -470,6 +480,7 @@ export default {
 
 .brandinglogo {
   height: 5vw;
+  margin-top: 100px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -482,5 +493,14 @@ export default {
 
 .sectionsize {
   min-height:80vh;
+}
+
+.new-features{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.logo{
+  padding-bottom: 0;
 }
 </style>
