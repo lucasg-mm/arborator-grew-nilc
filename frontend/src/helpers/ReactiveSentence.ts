@@ -16,6 +16,10 @@ export class ReactiveSentence extends EventDispatcher {
   treeJsonTemp: TreeJson = {};
   metaJson: MetaJson = {};
   sentenceConll: string = "";
+  prevIdOfMostRecentToken: number = 0;
+  idOfMostRecentToken: number = 0;
+  groupedTokens: [number] = [0];
+  prevGroupedTokens: [number] = [0];
 
   // holds the changes in the sentences before the
   // user hits the save button.
