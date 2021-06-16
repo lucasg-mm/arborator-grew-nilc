@@ -42,7 +42,7 @@ let load_project project_id =
          | sample_id ->
            let conll_corpus =
              try Conllx_corpus.load ~config:conllx_config (Filename.concat project_dir sample_id)
-             with Conllx_error js -> raise (Error (sprintf "Conllx_error: %s" (Yojson.Basic.pretty_to_string js))) in
+             with Conllx_error js -> raise (Error (sprintf "Conllx_error: %s" (Yojson.Basic.pretty_to_string js))) in  
            let sample =
              Array.fold_left
                (fun acc2 (sent_id, conllx)  ->

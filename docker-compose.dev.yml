@@ -29,7 +29,6 @@ services:
       dockerfile: Dockerfile.dev
       context: "./api"
     volumes:
-      - "/usr/app/local"
       - "./api:/usr/app"
     expose:
       - "3000"
