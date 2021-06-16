@@ -1,7 +1,6 @@
 from datetime import datetime
 import json
 import requests
-from app.utils.log_manager import write_login, write_logout
 from flask import request
 
 from flask import (
@@ -134,9 +133,6 @@ def login(provider_name) -> Response:
             session["logged_in"] = True  # TODO : can be removed ?????
             print("============", user)
 
-            # notes the login in a log file
-            write_login(user.username)
-
             # If there is no superadmin in DB, add admin privilege to this new user
             if not User.query.filter_by(super_admin=True).first():
                 print("firstsuper")
@@ -178,7 +174,7 @@ def logout():
     Handle requests to the /logout route
     Log an employee out through the logout link
     """
-    write_logout(current_user.username)
+
     logout_user()
 
     js = json.dumps({"logout": True}, default=str)

@@ -31,7 +31,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://docs.google.com/document/d/1wmFlDTVFYKFQfmIB-LbiBEm_kMJF1XSYBkZhe78K5Tk/edit?usp=sharing"
-                >Check out the new features!</a
+                >Check out the latest features!</a
               >
             </div>
           </q-card-section>
