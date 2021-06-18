@@ -52,6 +52,18 @@
                   $t("projectView").tooltipViewAdmin
                 }}</q-tooltip>
               </q-btn>
+              <q-btn
+                v-if="isSuperAdmin || isAdmin"
+                flat
+                round
+                :color="$q.dark.isActive ? 'primary' : ''"
+                icon="history"
+                @click="logsDial = true"
+              >
+                <q-tooltip :delay="300" content-class="text-white bg-primary">
+                  Download log files
+                </q-tooltip>
+              </q-btn>
             </div>
           </q-img>
         </q-card-section>
@@ -603,6 +615,8 @@
         v-on:uploaded:sample="getProjectSamples()"
       />
 
+      <LogsDialog :logsDial.sync="logsDial" @update:logsDial="updateLogsDial" />
+
       <q-dialog
         v-model="projectSettingsDial"
         transition-show="slide-up"
@@ -665,6 +679,7 @@ import TagInput from "../components/TagInput";
 import ProjectSettingsView from "../components/ProjectSettingsView.vue";
 import ConfirmAction from "../components/ConfirmAction.vue";
 import UploadDialog from "../components/project/UploadDialog.vue";
+import LogsDialog from "../components/project/LogsDialog.vue";
 import LexiconTable from "../components/LexiconTable";
 import GrewSearch from "../components/grewSearch/GrewSearch";
 import RelationTableMain from "../components/relationTable/RelationTableMain";
@@ -676,6 +691,7 @@ export default {
     ProjectSettingsView,
     ConfirmAction,
     UploadDialog,
+    LogsDialog,
     LexiconTable,
     GrewSearch,
     RelationTableMain,
@@ -686,6 +702,7 @@ export default {
       btnTopClass: this.$q.dark.isActive ? "white" : "blue-grey-8",
       assignDial: false,
       uploadDial: false,
+      logsDial: false,
       projectSettingsDial: false,
       simpleProjectInfoDialog: false,
       confirmActionDial: false,
@@ -851,6 +868,17 @@ export default {
       this.searchDialog = true;
   },
   methods: {
+    // --DESCRIPTION:
+    // Manages exibition of the download logs
+    // dialogue.
+    //
+    // --PARAMETERS:
+    // isShown: boolean indicating whether the
+    // dialogue is visible.
+    updateLogsDial(isShown) {
+      this.logsDial = isShown;
+    },
+
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;

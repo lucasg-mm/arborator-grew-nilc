@@ -69,6 +69,7 @@ module.exports = function (ctx) {
         "QAvatar",
         "QChip",
         "QTable",
+        "QDate",
         "QTr",
         "QTd",
         "QPopupEdit",

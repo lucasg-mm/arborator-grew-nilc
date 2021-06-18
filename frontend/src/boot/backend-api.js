@@ -86,6 +86,15 @@ export default {
   /// ---end deprecated ? ----
 
   // ---------------------------------------------------- //
+  // ---------------          Logs        --------------- //
+  // ---------------------------------------------------- //
+  downloadLogs(projectname, dateRange) {
+    return API.post(`/projects/${projectname}/logs/export`, dateRange, {
+      responseType: "arraybuffer",
+    });
+  },
+
+  // ---------------------------------------------------- //
   // ---------------        Samples       --------------- //
   // ---------------------------------------------------- //
   getProjectSamples(projectname) {
