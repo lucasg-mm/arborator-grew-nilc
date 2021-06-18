@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask_restx import Namespace, Resource
-from flask import Response, request
+from flask_restful import abort
+from flask import Response, request, jsonify
 from app.utils.log_manager import get_zipped_log_files
 from app.utils.validators import validate_date_format, validate_date_range
 
@@ -22,11 +23,11 @@ class ExportLogsResource(Resource):
 
         # validates the dates formats
         if not validate_date_format(initial_date) or not validate_date_format(final_date):
-            return "Invalid date format!", 400
+            abort(400, error_message="Invalid date format!")
 
         # validates the date range
         if not validate_date_range(initial_date, final_date):
-            return "Invalid time range!", 400
+            abort(400, error_message="Invalid date range!")
 
         # gets the .zip with the relevant log files
         logs_byte_buffer = get_zipped_log_files(
@@ -34,7 +35,7 @@ class ExportLogsResource(Resource):
 
         # validates the return value of 'logs_byte_buffer'
         if not logs_byte_buffer:
-            return "No log was found in the specified time range!", 404
+            abort(404, error_message="No log was found in the specified time range!")
 
         # sends the successful response
         resp = Response(

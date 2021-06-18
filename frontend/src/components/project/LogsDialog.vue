@@ -85,24 +85,31 @@ export default {
       this.logsDialModel = false;
     },
     // --DESCRIPTION:
-    // oi
+    // Downloads log files in the specified
+    // time range.
     downloadLogFiles() {
+      // builds the range data
       let dateRangeData;
       if (typeof this.model === "string") {
+        // case the range is just one day
         dateRangeData = {
           from: this.model,
           to: this.model,
         };
       } else {
+        // case the range is more than one day
         dateRangeData = {
           from: this.model.from,
           to: this.model.to,
         };
       }
 
+      // downloads the file using the api
       api
         .downloadLogs(this.$route.params.projectname, dateRangeData)
         .then((response) => {
+          // on success
+          // creates a blob with the byte buffer and downloads it
           const url = window.URL.createObjectURL(
             new Blob([response.data], { type: "application/zip" })
           );
@@ -118,8 +125,32 @@ export default {
           this.$q.notify({ message: `Files downloaded` });
           return [];
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(async (error) => {
+          // on failure
+          // decodes the error message string and show it to the user
+          if (error.response) {
+            try {
+              let decodedString = String.fromCharCode.apply(
+                null,
+                new Uint8Array(error.response.data)
+              );
+              let jsonResponse = JSON.parse(decodedString);
+              this.$q.notify({
+                message: jsonResponse["error_message"],
+                color: "negative",
+              });
+            } catch (readError) {
+              this.$q.notify({
+                message: "Something went wrong while downloading this file",
+                color: "negative",
+              });
+            }
+          } else {
+            this.$q.notify({
+              message: "Something went wrong while downloading this file",
+              color: "negative",
+            });
+          }
         });
     },
   },
