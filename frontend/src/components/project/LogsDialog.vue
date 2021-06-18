@@ -123,6 +123,7 @@ export default {
           link.click();
           document.body.removeChild(link);
           this.$q.notify({ message: `Files downloaded` });
+          this.closeDial();
           return [];
         })
         .catch(async (error) => {
