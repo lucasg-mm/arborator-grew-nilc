@@ -175,12 +175,6 @@ module.exports = function (ctx) {
           changeOrigin: false,
           secure: false,
         },
-        "/media": {
-          target: source,
-          ws: true,
-          changeOrigin: false,
-          secure: false,
-        },
       },
     },
 

@@ -32,14 +32,4 @@ module.exports = [
       headers: { host: prodSource },
     },
   },
-  {
-    path: "/media",
-    rule: {
-      target: source,
-      ws: true,
-      changeOrigin: false,
-      secure: false,
-      headers: { host: prodSource },
-    },
-  },
 ];
