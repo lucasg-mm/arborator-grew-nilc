@@ -7,7 +7,7 @@
     <q-card style="max-width: 100vw">
       <q-card-section class="justify-center">
         <div class="text-blue-grey-8">
-          Select the time range of the log files to be downloaded:
+          Select a time range to download the log files:
         </div>
         <div class="q-pa-md text-center">
           <q-date mask="DD-MM-YYYY" v-model="model" range />
@@ -117,6 +117,9 @@ export default {
           document.body.removeChild(link);
           this.$q.notify({ message: `Files downloaded` });
           return [];
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
   },

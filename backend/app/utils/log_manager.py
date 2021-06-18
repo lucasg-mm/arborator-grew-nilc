@@ -87,7 +87,8 @@ def get_zipped_log_files(project_name, initial_date, final_date):
         # writes the contents on the 'zip_as_bytes' buffer
         with ZipFile(zip_byte_buffer, "w") as zip_file:
             for path, file_name, user in log_file_paths:
-                zip_file.write(path, f"{user}\\{file_name}", ZIP_DEFLATED)
+                zip_file.write(path, f"{user}/{file_name}", ZIP_DEFLATED)
+        zip_byte_buffer.seek(0)
 
         # returns the byte buffer
         return zip_byte_buffer

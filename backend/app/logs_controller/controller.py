@@ -12,6 +12,7 @@ api = Namespace(
 @api.route("/<string:project_name>/logs/export")
 class ExportLogsResource(Resource):
     def post(self, project_name: str):
+
         # parse the client's request to JSON
         time_window = request.get_json(force=True)
 
