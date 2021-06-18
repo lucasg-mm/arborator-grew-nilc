@@ -24,6 +24,7 @@
           <q-btn
             @click="downloadLogFiles"
             class="logs-buttons"
+            :disabled="isDisabled"
             outline
             color="primary"
             type="submit"
@@ -54,6 +55,9 @@ export default {
       set(newValue) {
         this.$emit("update:logsDial", newValue);
       },
+    },
+    isDisabled() {
+      return this.model === null;
     },
   },
   mounted() {
