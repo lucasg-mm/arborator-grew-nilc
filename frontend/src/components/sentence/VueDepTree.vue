@@ -50,6 +50,11 @@ export default {
 
       // boolean indicating if the tree has the focus right now
       hasFocus: false,
+
+      // boolean indicating whether the single selection
+      // is activated (indicates if the user is selecting
+      // just one POS tag)
+      singleSelection: true,
     };
   },
   computed: {
@@ -291,7 +296,7 @@ export default {
 
       // if the number of grouped items is zero or one, just changes the most
       // recent token
-      if (numberOfGroupedTokens >= 0 && numberOfGroupedTokens <= 1) {
+      if (numberOfGroupedTokens === 0) {
         // gets the id of the highlighted upos
         const idSelected = this.reactiveSentence.idOfMostRecentToken;
 
@@ -301,16 +306,23 @@ export default {
         // opens the UPOS dialog window
         this.sentenceBus.$emit("open:uposDialog", { token, userId }, true);
       } else {
-        // if the number of grouped items more than one, changes every
-        // grouped token
+        // if there are grouped items, changes their UPOS (and the most recent token too)
 
         // gets the array of IDs of grouped tokens
         const idsGroupedTokens = this.reactiveSentence.groupedTokens;
 
+        // gets the id of the highlighted upos
+        const idOfMostRecentToken = this.reactiveSentence.idOfMostRecentToken;
+
         // opens the UPOS dialog window
         this.sentenceBus.$emit(
           "open:multipleUposDialog",
-          { idsGroupedTokens, userId, tree: this.reactiveSentence.treeJson },
+          {
+            idOfMostRecentToken,
+            idsGroupedTokens,
+            userId,
+            tree: this.reactiveSentence.treeJson,
+          },
           true
         );
       }
@@ -325,7 +337,7 @@ export default {
 
       // this shortcut only works ith the number of grouped
       // items is either 0 or 1
-      if (numberOfGroupedTokens <= 1) {
+      if (numberOfGroupedTokens === 0) {
         // gets the nummber of tokens in the sentence
         const numberOfTokens = Object.keys(
           this.reactiveSentence.treeJson
@@ -359,7 +371,7 @@ export default {
 
       // this shortcut only works ith the number of grouped
       // items is either 0 or 1
-      if (numberOfGroupedTokens <= 1) {
+      if (numberOfGroupedTokens === 0) {
         // gets the number of tokens in the sentence
         const numberOfTokens = Object.keys(
           this.reactiveSentence.treeJson
@@ -437,6 +449,9 @@ export default {
     // without pressing the modifier key
     clearGroupedTokens(e) {
       if (!e.ctrlKey && this.reactiveSentence.groupedTokens.length !== 0) {
+        // goes back to single selection mode
+        this.singleSelection = true;
+
         // clears the array of grouped tokens
         this.reactiveSentence.prevGroupedTokens =
           this.reactiveSentence.groupedTokens;
@@ -456,7 +471,7 @@ export default {
 
       // this shortcut only works ith the number of grouped
       // items is either 0 or 1
-      if (numberOfGroupedTokens <= 1) {
+      if (numberOfGroupedTokens === 0) {
         const treeJson = this.reactiveSentence.treeJson;
         const numberOfTokens = Object.keys(treeJson).length;
         const newPOS = treeJson[this.reactiveSentence.idOfMostRecentToken].UPOS;
@@ -729,18 +744,53 @@ export default {
 
           // only adds the token to the group if it already
           // isn't a part of it
-          if (!this.reactiveSentence.groupedTokens.includes(clickedTokenID)) {
+          if (
+            !this.reactiveSentence.groupedTokens.includes(clickedTokenID) &&
+            this.reactiveSentence.idOfMostRecentToken !== clickedTokenID
+          ) {
             // redefines the most recent token as the one clicked
             this.reactiveSentence.prevIdOfMostRecentToken =
               this.reactiveSentence.idOfMostRecentToken;
             this.reactiveSentence.idOfMostRecentToken = clickedTokenID;
 
-            // add the token to the group
-            this.reactiveSentence.groupedTokens.push(clickedTokenID);
+            // add the previous token to the group (if single selection is deactivated)
+            if (!this.singleSelection) {
+              this.reactiveSentence.groupedTokens.push(
+                this.reactiveSentence.prevIdOfMostRecentToken
+              );
+            }
 
-            // highlights the new member of the group
-            this.sentenceSVG.updateHighlighted();
+            // deactivates selection
+            this.singleSelection = false;
+          } else {
+            // if it's already a part of it...
+            if (this.reactiveSentence.groupedTokens.includes(clickedTokenID)) {
+              // remove it (if the user clicks in the tag again, it's removed from the
+              // set of selected)
+              const indexToBeRemoved =
+                this.reactiveSentence.groupedTokens.indexOf(clickedTokenID);
+              this.reactiveSentence.groupedTokens.splice(indexToBeRemoved, 1);
+              this.reactiveSentence.prevGroupedTokens = [clickedTokenID];
+            } else if (
+              this.reactiveSentence.idOfMostRecentToken === clickedTokenID &&
+              this.reactiveSentence.groupedTokens.length > 0
+            ) {
+              // if the user clicked again in the most recent token, redefines it
+              // as one of the ones in the set of grouped
+              this.reactiveSentence.prevIdOfMostRecentToken =
+                this.reactiveSentence.idOfMostRecentToken;
+              this.reactiveSentence.idOfMostRecentToken =
+                this.reactiveSentence.groupedTokens[0];
+              this.reactiveSentence.groupedTokens.splice(0, 1);
+            }
           }
+          // updates the drawing
+          this.sentenceSVG.updateHighlighted();
+          // console.log(">>DEPOIS:");
+          // console.log(">> this.reactiveSentence.idOfMostRecentToken");
+          // console.log(this.reactiveSentence.idOfMostRecentToken);
+          // console.log(">> this.reactiveSentence.groupedTokens");
+          // console.log(this.reactiveSentence.groupedTokens);
         } else {
           // clicks without the modifier
 

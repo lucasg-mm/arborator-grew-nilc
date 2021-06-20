@@ -65,6 +65,7 @@ export default {
       uposDialogOpened: false,
       chosenUPOS: "",
       idsGroupedTokens: [],
+      idOfMostRecentToken: null,
       userId: "",
       tree: {},
     };
@@ -77,7 +78,11 @@ export default {
   mounted() {
     this.sentenceBus.$on(
       "open:multipleUposDialog",
-      ({ idsGroupedTokens, userId, tree }, isByShortcut = false) => {
+      (
+        { idOfMostRecentToken, idsGroupedTokens, userId, tree },
+        isByShortcut = false
+      ) => {
+        this.idOfMostRecentToken = idOfMostRecentToken;
         this.idsGroupedTokens = idsGroupedTokens;
         this.userId = userId;
         this.uposDialogOpened = true;
@@ -108,6 +113,7 @@ export default {
       for (const id of this.idsGroupedTokens) {
         this.tree[id].UPOS = this.chosenUPOS;
       }
+      this.tree[this.idOfMostRecentToken].UPOS = this.chosenUPOS;
       this.sentenceBus.$emit("tree-update:tree", {
         tree: this.tree,
         userId: this.userId,
@@ -119,6 +125,7 @@ export default {
       for (const id of this.idsGroupedTokens) {
         this.tree[id].UPOS = "_";
       }
+      this.tree[this.idOfMostRecentToken].UPOS = "_";
       this.sentenceBus.$emit("tree-update:tree", {
         tree: token,
         userId: this.userId,
