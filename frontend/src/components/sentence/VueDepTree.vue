@@ -71,6 +71,7 @@ export default {
           "shift+d": this.redoChangeByShortcut,
           "shift+n": this.setsNextHighlightedUPOS,
           "shift+p": this.setsPreviousHighlightedUPOS,
+          "shift+c": this.checkTreeByShortcut,
           space: this.openUPOSWindow,
         };
       } else {
@@ -397,6 +398,14 @@ export default {
     undoChangeByShortcut() {
       // emits event to save
       this.$root.$emit("undo-by-shortcut");
+    },
+
+    // -- Description:
+    // Checks the current tree. Gets triggered by
+    // the defined shortcut.
+    checkTreeByShortcut() {
+      // emits event to check
+      this.$root.$emit("check-by-shortcut");
     },
 
     // -- Description:

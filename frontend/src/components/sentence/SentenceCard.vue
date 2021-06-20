@@ -527,6 +527,15 @@ export default {
     });
 
     // -- DESCRIPTION:
+    // Event for saving the current tree by the defined shortcut.
+    this.$root.$on("check-by-shortcut", () => {
+      // saves the changes using the shortcut, if it's possible!
+      if (this.tab !== "" && !this.isChecked && this.isLoggedIn) {
+        this.save("", true);
+      }
+    });
+
+    // -- DESCRIPTION:
     // Event for undoing the last change in the current tree.
     this.$root.$on("undo-by-shortcut", () => {
       // saves the changes using the shortcut, if it's possible!
