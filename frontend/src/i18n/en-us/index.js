@@ -21,7 +21,7 @@ export default {
 
   // first page (the index)
   homepage: {
-    version: "v1.1.0-NILC (16/06/2021)",
+    version: "v1.1.1-NILC (23/06/2021)",
     accessTreebankBtn: "Access Treebanks",
     slogan: "Treebank Annotation for Human Beings",
     features: [
