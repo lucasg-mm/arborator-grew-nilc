@@ -806,7 +806,7 @@ export default {
           // creates a set containing tokens which are successful
           const success = new Set();
 
-          // adds the dep and the head as in successful
+          // adds the dep and the head in the successful set
           success.add(token_id);
           success.add(
             this.reactiveSentencesObj[this.tab].treeJson[token_id].HEAD
@@ -830,17 +830,24 @@ export default {
 
             // goes up the tree and verifies if there is a connection with a
             // successful token
+
+            // creates a visited set to avoid infinite loops
+            const visited = new Set();
             while (
               !this.isNullOrNaN(visitedToken) &&
               visitedToken !== 0 &&
-              !success.has(visitedToken)
+              !success.has(visitedToken) &&
+              !visited.has(visitedToken)
             ) {
+              visited.add(visitedToken);
               visitedToken =
                 this.reactiveSentencesObj[this.tab].treeJson[visitedToken].HEAD;
             }
 
             if (
-              (this.isNullOrNaN(visitedToken) || visitedToken === 0) &&
+              (this.isNullOrNaN(visitedToken) ||
+                visitedToken === 0 ||
+                visited.has(visitedToken)) &&
               !success.has(visitedToken)
             ) {
               // there isn't a connection with a successful token
