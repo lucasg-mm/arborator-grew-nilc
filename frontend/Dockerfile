@@ -14,9 +14,4 @@ COPY ./ ./
 # builds everything
 RUN quasar build
 
-CMD ["quasar", "serve", "./dist/spa", "--port", "80", "--https", "--proxy", "prod-proxy.js"]
-
-# --------RUN PHASE--------
-# FROM nginx
-# EXPOSE 80
-# COPY --from=0 /usr/app/dist/spa /usr/share/nginx/html
+CMD ["quasar", "serve", "./dist/spa", "--port", "80", "--https", "--proxy", "prod-proxy.js", "--cert", "./keys/cert.pem", "--key", "./keys/arborator-grew.pem"]

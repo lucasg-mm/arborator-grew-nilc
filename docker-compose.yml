@@ -20,6 +20,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: "./frontend"
+    volumes:
+      - "./frontend/keys:/usr/app/keys"
     ports:
       - "80:80"
   api:
