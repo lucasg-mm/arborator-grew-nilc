@@ -34,9 +34,9 @@ mkdir $root_path/frontend/keys
 # >> generating self signed certificates <<
 
 # creates backend certificate
-openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/backend/keys/cert.pem -keyout $root_path/backend/keys/arborator-grew-dev.pem -days 365 < $root_path/project_management_script/cert_template.txt
-openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/backend/keys/cert.pem -keyout $root_path/backend/keys/arborator-grew.pem -days 365 < $root_path/project_management_script/cert_template.txt
+openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/backend/keys/cert.pem -keyout $root_path/backend/keys/arborator-grew-dev.pem -days 365 < $root_path/project_management_scripts/cert_template.txt
+openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/backend/keys/cert.pem -keyout $root_path/backend/keys/arborator-grew.pem -days 365 < $root_path/project_management_scripts/cert_template.txt
 
 # creates frontend certificate
-openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/frontend/keys/cert.pem -keyout $root_path/frontend/keys/arborator-grew-dev.pem -days 365 < $root_path/project_management_script/cert_template.txt
-openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/frontend/keys/cert.pem -keyout $root_path/frontend/keys/arborator-grew.pem -days 365 < $root_path/project_management_script/cert_template.txt
+openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/frontend/keys/cert.pem -keyout $root_path/frontend/keys/arborator-grew-dev.pem -days 365 < $root_path/project_management_scripts/cert_template.txt
+openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/frontend/keys/cert.pem -keyout $root_path/frontend/keys/arborator-grew.pem -days 365 < $root_path/project_management_scripts/cert_template.txt
