@@ -19,7 +19,11 @@
           v-model="project.projectName"
           label="Project name"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please type something',
+            (val) =>
+              /^\w*$/.test(val) || 'Only alphanumeric characters are valid',
+          ]"
         />
         <q-input
           id="descriptioninput"
