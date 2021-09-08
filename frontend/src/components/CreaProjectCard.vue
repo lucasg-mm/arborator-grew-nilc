@@ -22,7 +22,8 @@
           :rules="[
             (val) => (val && val.length > 0) || 'Please type something',
             (val) =>
-              /^\w*$/.test(val) || 'Only alphanumeric characters are valid',
+              !val.includes('?') ||
+              'Question marks are not allowed in the title!',
           ]"
         />
         <q-input
