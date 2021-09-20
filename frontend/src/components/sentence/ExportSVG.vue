@@ -108,7 +108,6 @@ export default {
       svg = svg.replace(/>/g, ">\n");
       svg = svg.replace(/(<svg.*>)/, "$1\n" + style);
 
-      console.log(svg);
       let canvas = document.createElement("canvas");
       let context = canvas.getContext("2d");
       canvas.width = sentenceSVG.totalWidth;
