@@ -60,11 +60,10 @@
   --wordDistance: 22;
 }
 
-.UPOSselected {
-  font: 11px DejaVu Sans;
-  fill: #dd137bff;
-  font-weight: bold;
-  text-align: center;
+.UPOS.UPOS-selected {
+  text-decoration: underline;
+  font-weight: 900;
+  font-size: 13px;
 }
 
 .DEPREL {

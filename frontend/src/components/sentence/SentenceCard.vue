@@ -175,6 +175,19 @@
                 <q-item-label>Get SVG of this tree</q-item-label>
               </q-item-section>
             </q-item>
+
+            <q-item clickable v-close-popup @click="exportPNG()">
+              <q-item-section avatar>
+                <q-avatar
+                  icon="ion-md-image"
+                  color="primary"
+                  text-color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Get PNG of this tree</q-item-label>
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-btn-dropdown>
         <q-btn
@@ -703,6 +716,17 @@ export default {
     exportSVG() {
       // todo: instead of this long string, read the actual css file and put it there.
       this.sentenceBus.$emit("export:SVG", { userId: this.tab });
+    },
+
+    /**
+     * Get the SVG by creating it using snap arborator plugin and then replacing the placeholder in the current DOM
+     * @todo instead of this long string, read the actual css file and put it there.
+     *
+     * @returns void
+     */
+    exportPNG() {
+      // todo: instead of this long string, read the actual css file and put it there.
+      this.sentenceBus.$emit("export:PNG", { userId: this.tab });
     },
     /**
      * Handle token click event to display the related dialog

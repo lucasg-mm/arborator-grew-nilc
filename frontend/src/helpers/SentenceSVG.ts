@@ -150,9 +150,8 @@ export class SentenceSVG extends EventDispatcher {
       const tokenSVG =
         this.tokenSVGs[this.reactiveSentence.prevIdOfMostRecentToken];
 
-      tokenSVG.snapElements.UPOS.node.style.textDecoration = "none";
-      tokenSVG.snapElements.UPOS.node.style.fontWeight = "400";
-      tokenSVG.snapElements.UPOS.node.style.fontSize = "11px";
+      const svgNode = tokenSVG.snapElements.UPOS.node;
+      svgNode.classList.remove("UPOS-selected");
     }
 
     // turns POS of the previous gruped tokens back in its
@@ -163,9 +162,8 @@ export class SentenceSVG extends EventDispatcher {
       if (this.shownFeatures.includes("UPOS")) {
         const tokenSVG = this.tokenSVGs[id];
 
-        tokenSVG.snapElements.UPOS.node.style.textDecoration = "none";
-        tokenSVG.snapElements.UPOS.node.style.fontWeight = "400";
-        tokenSVG.snapElements.UPOS.node.style.fontSize = "11px";
+        const svgNode = tokenSVG.snapElements.UPOS.node;
+        svgNode.classList.remove("UPOS-selected");
       }
     }
     // turns POS of the gruped tokens in highlighted
@@ -175,9 +173,8 @@ export class SentenceSVG extends EventDispatcher {
       if (this.shownFeatures.includes("UPOS")) {
         const tokenSVG = this.tokenSVGs[id];
 
-        tokenSVG.snapElements.UPOS.node.style.textDecoration = "underline";
-        tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
-        tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
+        const svgNode = tokenSVG.snapElements.UPOS.node;
+        svgNode.classList.add("UPOS-selected");
       }
     }
 
@@ -189,9 +186,8 @@ export class SentenceSVG extends EventDispatcher {
       const tokenSVG =
         this.tokenSVGs[this.reactiveSentence.idOfMostRecentToken];
 
-      tokenSVG.snapElements.UPOS.node.style.textDecoration = "underline";
-      tokenSVG.snapElements.UPOS.node.style.fontWeight = "900";
-      tokenSVG.snapElements.UPOS.node.style.fontSize = "13px";
+      const svgNode = tokenSVG.snapElements.UPOS.node;
+      svgNode.classList.add("UPOS-selected");
 
       // horizontally scrolls the most recent token into view
       const el = tokenSVG.snapElements.UPOS.node;

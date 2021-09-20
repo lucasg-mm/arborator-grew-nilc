@@ -1,7 +1,8 @@
-<template>
-</template>
+<template></template>
 
 <script>
+import canvg from "canvg";
+
 export default {
   props: ["sentenceBus"],
   data() {
@@ -14,11 +15,122 @@ export default {
       this.userId = userId;
       this.getSVG();
     });
+    this.sentenceBus.$on("export:PNG", ({ userId }) => {
+      this.userId = userId;
+      this.getPNG();
+    });
   },
   beforeDestroy() {
     this.sentenceBus.$off("export:SVG");
+    this.sentenceBus.$off("export:PNG");
   },
   methods: {
+    getPNG() {
+      // todo: instead of this long string, read the actual css file and put it there.
+      // var svg = this.graphInfo.conllGraph.snap.treedata.s.toString();
+      const sentenceSVG = this.sentenceBus[this.userId];
+      var svg = sentenceSVG.snapSentence.toString();
+      var style = `<style>
+      <![CDATA[
+        .curve {
+        stroke: black;
+        stroke-width: 1;
+        fill: none;
+      }
+      .dark .curve {
+        stroke: rgb(248, 244, 244);
+        stroke-width: 1;
+        fill: none;
+      }
+      .arrowhead {
+        fill: white;
+        stroke: black;
+        stroke-width: .8;
+      }
+      .FORM {
+        font-size: 14px;
+        fill:black;
+        text-align: center;
+      }
+      .dark .FORM {
+          fill:rgb(255, 255, 255);
+          text-align: center;
+        }
+      .LEMMA {
+        font: 15px DejaVu Sans;
+        fill: black;
+        font-family:sans-serif;
+        text-align: center;
+        font-style: italic;
+      }
+      .dark .LEMMA {
+        font: 15px DejaVu Sans;
+        fill: rgb(238, 232, 232);
+        font-family:sans-serif;
+        text-align: center;
+        font-style: italic;
+      }
+      .MISC-Gloss {
+        font: 15px DejaVu Sans;
+        fill: rgb(124, 96, 86);
+        font-family:sans-serif;
+        text-align: center;
+        font-style: italic;
+      }
+      .UPOS {
+        font: 14px DejaVu Sans;
+        fill: rgb(80, 29, 125);
+        text-align: center;
+      }
+      .DEPREL {
+        font: 14px Arial;
+        fill: #501d7d;
+        font-style: oblique;
+        font-family:sans-serif;
+        cursor:pointer;
+        --funcCurveDist:3; /* distance between the function name and the curves highest point */
+      }
+      .dark .DEPREL {
+        font: 14px Arial;
+        fill: #aab3ff;
+        font-style: oblique;
+        font-family:sans-serif;
+        cursor:pointer;
+        --funcCurveDist:3; /* distance between the function name and the curves highest point */
+      }
+          ]]>
+      </style> `;
+
+      svg = svg.replace(
+        /<desc>Created with Snap<\/desc>/g,
+        "<desc>Created with Snap on Arborator</desc>"
+      );
+      svg = svg.replace(/>/g, ">\n");
+      svg = svg.replace(/(<svg.*>)/, "$1\n" + style);
+
+      console.log(svg);
+      let canvas = document.createElement("canvas");
+      let context = canvas.getContext("2d");
+      canvas.width = sentenceSVG.totalWidth;
+      canvas.height = sentenceSVG.totalHeight;
+
+      let v = canvg.fromString(context, svg);
+      v.start();
+
+      let imgData = canvas.toDataURL("image/png", 1);
+      this.download(imgData, sentenceSVG.svgID);
+      this.$q.notify({ message: `Files downloaded` });
+    },
+
+    download(uri, name) {
+      var link = document.createElement("a");
+      link.download = name;
+      link.href = uri;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+
     /**
      * Get the SVG by creating it using snap arborator plugin and then replacing the placeholder in the current DOM
      * @todo instead of this long string, read the actual css file and put it there.
@@ -28,10 +140,10 @@ export default {
     getSVG() {
       // todo: instead of this long string, read the actual css file and put it there.
       // var svg = this.graphInfo.conllGraph.snap.treedata.s.toString();
-      const sentenceSVG = this.sentenceBus[this.userId]
+      const sentenceSVG = this.sentenceBus[this.userId];
       var svg = sentenceSVG.snapSentence.toString();
-      var style = `<style> 
-<![CDATA[  
+      var style = `<style>
+<![CDATA[
    .curve {
 	stroke: black;
 	stroke-width: 1;
@@ -40,7 +152,7 @@ export default {
 .dark .curve {
 	stroke: rgb(248, 244, 244);
 	stroke-width: 1;
-	fill: none;	
+	fill: none;
 }
 .arrowhead {
 	fill: white;
@@ -50,7 +162,7 @@ export default {
 .FORM {
 	fill:black;
 	text-align: center;
-} 
+}
 .dark .FORM {
 		fill:rgb(255, 255, 255);
 		text-align: center;
@@ -61,32 +173,33 @@ export default {
 	font-family:sans-serif;
 	text-align: center;
 	font-style: italic;
-} 
+}
 .dark .LEMMA {
 	font: 15px DejaVu Sans;
 	fill: rgb(238, 232, 232);
 	font-family:sans-serif;
 	text-align: center;
 	font-style: italic;
-} 
+}
 .MISC-Gloss {
 	font: 15px DejaVu Sans;
 	fill: rgb(124, 96, 86);
 	font-family:sans-serif;
 	text-align: center;
 	font-style: italic;
-} 
+}
 .UPOS {
 	font: 11px DejaVu Sans;
 	fill: rgb(80, 29, 125);
 	text-align: center;
-} 
+	font-weight: normal !important;
+	text-decoration: none !important;
+}
 .UPOSselected {
 	font: 11px DejaVu Sans;
 	fill: #dd137bff;
-	font-weight: bold;
 	text-align: center;
-} 
+}
 .DEPREL {
 	font: 12px Arial;
 	fill: #501d7d;
@@ -94,7 +207,7 @@ export default {
 	font-family:sans-serif;
 	cursor:pointer;
 	--funcCurveDist:3; /* distance between the function name and the curves highest point */
-} 
+}
 .dark .DEPREL {
 	font: 12px Arial;
 	fill: #aab3ff;
@@ -103,7 +216,7 @@ export default {
 	cursor:pointer;
 	--funcCurveDist:3; /* distance between the function name and the curves highest point */
 }
-    ]]>  
+    ]]>
 </style> `;
 
       svg = svg.replace(
@@ -112,6 +225,7 @@ export default {
       );
       svg = svg.replace(/>/g, ">\n");
       svg = svg.replace(/(<svg.*>)/, "$1\n" + style);
+
       const url = window.URL.createObjectURL(
         new Blob([svg], { type: "image/svg+xml" })
       );
@@ -148,5 +262,4 @@ export default {
   },
 };
 </script>
-<style>
-</style>
+<style></style>
