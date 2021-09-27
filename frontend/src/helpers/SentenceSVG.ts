@@ -53,15 +53,17 @@ export class SentenceSVG extends EventDispatcher {
   totalWidth: number = 0;
   totalHeight: number = 0;
   levelsArray: number[] = [];
+  spaceBetween: number = 0;
   firstOccurrence!: HTMLElement;
 
-  constructor(opts: SentenceSVGOptions) {
+  constructor(opts: SentenceSVGOptions, spaceBetween: number) {
     super();
     Object.assign(this, opts);
     //// base properties
     this.snapSentence = Snap(`#${this.svgID}`);
     this.treeJson = this.reactiveSentence.treeJson;
     this.metaJson = this.reactiveSentence.metaJson;
+    this.spaceBetween = spaceBetween;
 
     // put FORM at the beginning of the shownFeatures array
     this.shownFeatures = this.shownFeatures.filter((item) => item !== "FORM");
@@ -249,7 +251,7 @@ export class SentenceSVG extends EventDispatcher {
       }
 
       tokenSVG.ylevel = this.levelsArray[tokenIndex];
-      runningX += tokenSVG.width;
+      runningX += tokenSVG.width - this.spaceBetween;
     }
 
     this.updateHighlighted();

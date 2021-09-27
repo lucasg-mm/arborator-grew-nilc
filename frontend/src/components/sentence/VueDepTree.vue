@@ -27,6 +27,7 @@ export default {
     "sentenceBus",
     "userId",
     "conllSavedCounter",
+    "spaceBetween",
     "reactiveSentence",
     "teacherReactiveSentence",
     "cardId",
@@ -34,6 +35,10 @@ export default {
     "matches",
   ],
   watch: {
+    spaceBetween(value) {
+      this.sentenceSVG.spaceBetween = value;
+      this.sentenceSVG.drawTree();
+    },
     conllSavedCounter() {
       this.sentenceSVG.drawTree();
     },
@@ -114,14 +119,17 @@ export default {
     // in the group anymore
     this.reactiveSentence.prevGroupedTokens = [];
 
-    this.sentenceSVG = new SentenceSVG({
-      svgID: this.svgID,
-      reactiveSentence: this.reactiveSentence,
-      usermatches: this.matches[this.userId],
-      shownFeatures: this.shownFeatures,
-      teacherReactiveSentence: this.teacherReactiveSentence,
-      interactive: interactive,
-    });
+    this.sentenceSVG = new SentenceSVG(
+      {
+        svgID: this.svgID,
+        reactiveSentence: this.reactiveSentence,
+        usermatches: this.matches[this.userId],
+        shownFeatures: this.shownFeatures,
+        teacherReactiveSentence: this.teacherReactiveSentence,
+        interactive: interactive,
+      },
+      this.spaceBetween
+    );
     // communicates the shown features to parent component
     this.$emit("setShownFeatures", this.shownFeatures);
     this.sentenceSVG.plugDiffTree(this.teacherReactiveSentence);

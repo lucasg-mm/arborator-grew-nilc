@@ -27,6 +27,32 @@
         </template>
         <q-space />
         <q-btn
+          flat
+          round
+          dense
+          icon="remove"
+          @click="decreaseSpace"
+          :disable="spaceBetween === 30"
+        >
+          <q-tooltip v-if="spaceBetween !== 30"
+            >Decrease space between tokens</q-tooltip
+          >
+        </q-btn>
+
+        <q-btn
+          flat
+          round
+          dense
+          icon="add"
+          @click="increaseSpace"
+          :disable="spaceBetween === 0"
+        >
+          <q-tooltip v-if="spaceBetween !== 0"
+            >Increase space between tokens</q-tooltip
+          >
+        </q-btn>
+
+        <q-btn
           v-if="
             isLoggedIn &&
             exerciseLevel <= 3 &&
@@ -325,6 +351,7 @@
                 :conllSavedCounter="conllSavedCounter"
                 :hasPendingChanges="hasPendingChanges"
                 :matches="sentence.matches"
+                :spaceBetween="spaceBetween"
                 @setShownFeatures="setShownFeatures"
               ></VueDepTree>
             </q-card-section>
@@ -416,6 +443,7 @@ export default {
   ],
   data() {
     return {
+      spaceBetween: 0,
       shownFeatures: [],
       sentenceBus: new Vue(), // Event/Object Bus that communicate between all components
       reactiveSentencesObj: {},
@@ -587,6 +615,12 @@ export default {
     this.diffMode = !!this.$store.getters["config/diffMode"];
   },
   methods: {
+    decreaseSpace() {
+      this.spaceBetween = 30;
+    },
+    increaseSpace() {
+      this.spaceBetween = 0;
+    },
     // -- DESCRIPTION:
     // Updates the shown features in the drawing.
     setShownFeatures(shownFeatures) {
