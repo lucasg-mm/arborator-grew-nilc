@@ -13,7 +13,7 @@ export default {
   settings: "Settings",
   admin: "Admin",
   fullscreen: "Fullscreen",
-  footer: ["Made with", "in", "at", "and at"], // reaaallllll basic one, not good enough but still buggy using span and html parse
+  footer: ["Made with", "in", "at", "and improved at"], // reaaallllll basic one, not good enough but still buggy using span and html parse
   navhome: "Home",
   navprojects: "Projects",
   navsettings: "Settings",
@@ -21,7 +21,7 @@ export default {
 
   // first page (the index)
   homepage: {
-    version: "v1.1.4-NILC (22/09/2021)",
+    version: "v1.1.4-NILC (22/10/2021)",
     accessTreebankBtn: "Access Treebanks",
     slogan: "Treebank Annotation for Human Beings",
     features: [
