@@ -1,6 +1,8 @@
 from datetime import datetime
+import os
 import json
 import requests
+from dotenv import load_dotenv
 from flask import request
 
 from flask import (
@@ -33,6 +35,7 @@ from ..user.model import User
 
 
 authomatic = Authomatic(CONFIG, Config.SECRET_KEY, report_errors=True)
+load_dotenv(dotenv_path="../../.flaskenv", verbose=True)
 
 
 def parse_user(provider_name, user):
@@ -54,13 +57,51 @@ def parse_user(provider_name, user):
         results_parsed["family_name"] = user.last_name
         results_parsed["picture_url"] = user.picture
 
+    elif provider_name == "facebook":
+        access_token = user.data.get("access_token")
+        data = get_username(access_token, "facebook")
+        results_parsed["id"] = data["id"]
+        results_parsed["username"] = data["email"].split("@")[0] + "_fb"
+        results_parsed["email"] = data["email"]
+        results_parsed["first_name"] = data["first_name"]
+        results_parsed["family_name"] = data["last_name"]
+        results_parsed["picture_url"] = data["picture"]["data"]["url"]
+
+    elif provider_name == "windows_live":
+        access_token = user.data.get("access_token")
+        user_id = user.data.get("user_id")
+        data = get_username(access_token, "windows_live", user_id=user_id)
+        print(f"OLHA BEM::::::: {data}", flush=True)
+        results_parsed["id"] = data["id"]
+        results_parsed["username"] = data["userPrincipalName"].split("@")[0]
+        results_parsed["email"] = data["userPrincipalName"]
+        results_parsed["first_name"] = data["givenName"]
+        results_parsed["family_name"] = data["surname"]
+        results_parsed["picture_url"] = ""
+
     return results_parsed
 
 
-def get_username(access_token, provider_name):
+def get_username(access_token, provider_name, user_id=""):
     if provider_name == "github":
         headers = {"Authorization": "bearer " + access_token}
         response = requests.get("https://api.github.com/user", headers=headers)
+        data = response.json()
+        return data
+    elif provider_name == "facebook":
+        input_token = f"{os.getenv('FACEBOOK_KEY')}|{os.getenv('FACEBOOK_SECRET')}"
+        response = requests.get(
+            f"https://graph.facebook.com/debug_token?input_token={access_token}&access_token={input_token}")
+        data = response.json()
+        user_id = data.get("data").get("user_id")
+        response = requests.get(
+            f"https://graph.facebook.com/{user_id}?fields=id,first_name,last_name,email,picture&access_token={access_token}")
+        data = response.json()
+        return data
+    elif provider_name == "windows_live":
+        headers = {"Authorization": "Bearer " + access_token}
+        response = requests.get(
+            "https://graph.microsoft.com/v1.0/me", headers=headers)
         data = response.json()
         return data
     else:

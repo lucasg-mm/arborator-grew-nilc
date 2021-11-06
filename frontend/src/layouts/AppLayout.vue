@@ -135,6 +135,38 @@
                   <q-item-label>GitHub</q-item-label>
                 </q-item-section>
               </q-item>
+              <q-item
+                clickable
+                v-close-popup
+                @click="tologin(currentUrl + '/login/facebook')"
+              >
+                <q-item-section avatar>
+                  <q-icon name="fab fa-facebook" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>Facebook</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                v-close-popup
+                @click="tologin(currentUrl + '/login/windows_live')"
+              >
+                <q-item-section avatar>
+                  <q-icon name="fab fa-microsoft" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>Outlook</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup>
+                <q-item-section avatar>
+                  <q-icon name="fab fa-yahoo" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>Yahoo!</q-item-label>
+                </q-item-section>
+              </q-item>
             </q-list>
           </q-btn-dropdown>
           <q-btn

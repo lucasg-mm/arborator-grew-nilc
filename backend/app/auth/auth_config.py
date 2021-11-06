@@ -17,5 +17,19 @@ CONFIG = {
         "consumer_key": os.getenv("GITHUB_KEY"),
         "consumer_secret": os.getenv("GITHUB_SECRET"),
         "scope": ["user"]
+    },
+    "facebook": {
+        # Facebook's credentials
+        "class_": oauth2.Facebook,
+        "consumer_key": os.getenv("FACEBOOK_KEY"),
+        "consumer_secret": os.getenv("FACEBOOK_SECRET"),
+        "scope": ["email", "public_profile"]
+    },
+    "windows_live": {
+        # Microsoft's credentials
+        "class_": oauth2.WindowsLive,
+        "consumer_key": os.getenv("MICROSOFT_KEY"),
+        "consumer_secret": os.getenv("MICROSOFT_SECRET"),
+        "scope": ["https://graph.microsoft.com/User.Read"]
     }
 }
