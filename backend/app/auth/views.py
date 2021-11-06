@@ -71,7 +71,6 @@ def parse_user(provider_name, user):
         access_token = user.data.get("access_token")
         user_id = user.data.get("user_id")
         data = get_username(access_token, "windows_live", user_id=user_id)
-        print(f"OLHA BEM::::::: {data}", flush=True)
         results_parsed["id"] = data["id"]
         results_parsed["username"] = data["userPrincipalName"].split("@")[0]
         results_parsed["email"] = data["userPrincipalName"]
