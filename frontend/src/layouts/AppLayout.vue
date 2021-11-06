@@ -156,7 +156,7 @@
                   <q-icon name="fab fa-microsoft" />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>Outlook</q-item-label>
+                  <q-item-label>Microsoft</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
