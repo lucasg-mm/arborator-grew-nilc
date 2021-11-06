@@ -159,14 +159,6 @@
                   <q-item-label>Outlook</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section avatar>
-                  <q-icon name="fab fa-yahoo" />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label>Yahoo!</q-item-label>
-                </q-item-section>
-              </q-item>
             </q-list>
           </q-btn-dropdown>
           <q-btn

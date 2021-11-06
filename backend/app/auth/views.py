@@ -61,7 +61,7 @@ def parse_user(provider_name, user):
         access_token = user.data.get("access_token")
         data = get_username(access_token, "facebook")
         results_parsed["id"] = data["id"]
-        results_parsed["username"] = data["email"].split("@")[0] + "_fb"
+        results_parsed["username"] = data["email"].split("@")[0]
         results_parsed["email"] = data["email"]
         results_parsed["first_name"] = data["first_name"]
         results_parsed["family_name"] = data["last_name"]
