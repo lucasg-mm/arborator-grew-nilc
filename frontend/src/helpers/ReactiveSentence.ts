@@ -181,6 +181,25 @@ export class ReactiveSentence extends EventDispatcher {
 
     return jsonToConll(sentenceJsonToExport);
   }
+
+  updateMeta(newMeta: MetaJson): void {
+    // gets other key-value pairs
+    for (const [metaName, metaValue] of Object.entries(this.metaJson)) {
+      if (!Object.keys(newMeta).includes(metaName)) {
+        newMeta[metaName] = metaValue;
+      }
+    }
+
+    // updates properties
+    this.metaJson = newMeta;
+
+    // updates conllu
+    const sent = {
+      treeJson: this.treeJson,
+      metaJson: this.metaJson,
+    };
+    this.sentenceConll = jsonToConll(sent);
+  }
 }
 
 // Object.assign(ReactiveSentence.prototype, EventDispatcher.prototype);

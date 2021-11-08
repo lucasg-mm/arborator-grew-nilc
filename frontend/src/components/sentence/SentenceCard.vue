@@ -272,9 +272,18 @@
         <!-- v-for="(tree, user) in filteredConlls" -->
         <q-tab
           :class="{
-            'checked-tab': isChecked && !canSave && isLoggedIn,
-            'not-checked-tab': !isChecked && !canSave && isLoggedIn,
-            'can-save-tab': canSave,
+            'checked-tab':
+              isChecked &&
+              !canSave &&
+              isLoggedIn &&
+              !(isMarked && currUser === user),
+            'not-checked-tab':
+              !isChecked &&
+              !canSave &&
+              isLoggedIn &&
+              !(isMarked && currUser === user),
+            'can-save-tab': canSave && !(isMarked && currUser === user),
+            'marked-tab': isMarked && currUser === user,
           }"
           v-for="(tree, user) in orderedConlls"
           :key="user"
@@ -333,8 +342,8 @@
               icon="error"
               v-if="isLoggedIn && isTabFromUser"
               :disable="tab == ''"
-              label="Signalize Attention"
-              class="signalize-button"
+              :label="isMarked ? 'Unmark attention' : 'Mark attention'"
+              class="mark-button"
               @click="toggleAttention()"
             >
             </q-btn>
@@ -464,6 +473,7 @@ export default {
       EMMETT: "emmett.strickland",
       graphInfo: { conllGraph: null, dirty: false, redo: false, user: "" },
       alerts: {
+        markSuccess: { color: "positive", message: "Marked!" },
         saveSuccess: { color: "positive", message: "Saved!" },
         saveFail: {
           color: "negative",
@@ -482,6 +492,7 @@ export default {
       canSave: false,
       hasPendingChanges: {},
       isChecked: false,
+      isMarked: false,
     };
   },
 
@@ -496,6 +507,9 @@ export default {
     ]),
     showDiffTeacher() {
       return this.exerciseMode && this.exerciseLevel <= 2;
+    },
+    currUser() {
+      return this.$store.getters["user/getUserInfos"].username;
     },
     isTabFromUser() {
       return this.$store.getters["user/getUserInfos"].username === this.tab;
@@ -572,6 +586,16 @@ export default {
       this.isChecked = false;
     }
 
+    if (
+      this.userId in this.reactiveSentencesObj &&
+      "is_marked" in this.reactiveSentencesObj[this.userId].metaJson &&
+      this.reactiveSentencesObj[this.userId].metaJson.is_marked === "1"
+    ) {
+      this.isMarked = true;
+    } else {
+      this.isMarked = false;
+    }
+
     // -- DESCRIPTION:
     // Event for saving the current tree by the defined shortcut.
     this.$root.$on("save-by-shortcut", () => {
@@ -629,6 +653,13 @@ export default {
     this.diffMode = !!this.$store.getters["config/diffMode"];
   },
   methods: {
+    // updates sentence's metadata
+    updateMeta(user, newMeta) {
+      this.reactiveSentencesObj[user].updateMeta(newMeta);
+      this.sentenceData.conlls[user] =
+        this.reactiveSentencesObj[user].sentenceConll;
+    },
+
     toggleAttention() {
       // gets the name of the user toggling the attention
       const user = this.$store.getters["user/getUserInfos"].username;
@@ -637,7 +668,7 @@ export default {
       const newMeta = {
         user_id: user,
         timestamp: Math.round(Date.now()),
-        attention_signal: "1",
+        is_marked: this.isMarked ? "0" : "1",
       };
 
       // gets the new CoNLL-U
@@ -645,7 +676,7 @@ export default {
         this.reactiveSentencesObj[user].exportNonReactiveConll(newMeta);
 
       // action done by the user
-      const action = "Marked";
+      const action = this.isMarked ? "Unmarked" : "Marked";
 
       // new data to save
       const data = {
@@ -666,12 +697,17 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             // updates trees (well, just its metadata)
-            this.sentenceData.conlls[user] = newConll;
-            this.reactiveSentencesObj[user].sentenceConll = newConll;
-            this.showNotif("top", "saveSuccess");
+            this.updateMeta(user, newMeta);
+
+            // changes boolean variable storing the mark
+            this.isMarked = !this.isMarked;
+
+            // shows success message
+            this.showNotif("top", "markSuccess");
           }
         })
         .catch((error) => {
+          // show error message
           this.$store.dispatch("notifyError", { error: error });
         });
     },
@@ -1319,6 +1355,10 @@ export default {
   background: #90ee90 !important;
 }
 
+.marked-tab {
+  background: #9fb7ff !important;
+}
+
 .not-checked-tab {
   background: #ffcccb !important;
 }
@@ -1340,7 +1380,7 @@ export default {
   color: purple;
 }
 
-.signalize-button {
+.mark-button {
   color: #000099;
 }
 
