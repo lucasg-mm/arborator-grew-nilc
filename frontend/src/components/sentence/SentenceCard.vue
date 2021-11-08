@@ -26,6 +26,7 @@
           </q-input>
         </template>
         <q-space />
+
         <q-btn
           flat
           round
@@ -327,6 +328,16 @@
               @click="openEraseDial()"
             >
             </q-btn>
+            <q-btn
+              outline
+              icon="error"
+              v-if="isLoggedIn && isTabFromUser"
+              :disable="tab == ''"
+              label="Sinalize Attention"
+              class="sinalize-button"
+              @click="toggleAttention()"
+            >
+            </q-btn>
           </q-btn-group>
           <q-card flat>
             <q-card-section
@@ -486,6 +497,9 @@ export default {
     showDiffTeacher() {
       return this.exerciseMode && this.exerciseLevel <= 2;
     },
+    isTabFromUser() {
+      return this.$store.getters["user/getUserInfos"].username === this.tab;
+    },
     /**
      * Never used ?!
      * Check if the graph is dirty (I.E. modified but not saved) or open to see if it's supposed to be possible to save
@@ -615,6 +629,10 @@ export default {
     this.diffMode = !!this.$store.getters["config/diffMode"];
   },
   methods: {
+    toggleAttention() {
+      console.log("My loneliness is killing me inside");
+      console.log(this.reactiveSentencesObj);
+    },
     decreaseSpace() {
       this.spaceBetween = 30;
     },
@@ -1275,6 +1293,10 @@ export default {
 
 .erase-button {
   color: purple;
+}
+
+.sinalize-button {
+  color: #000099;
 }
 
 .scrollable {
