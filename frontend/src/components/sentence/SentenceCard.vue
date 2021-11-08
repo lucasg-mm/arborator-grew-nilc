@@ -333,8 +333,8 @@
               icon="error"
               v-if="isLoggedIn && isTabFromUser"
               :disable="tab == ''"
-              label="Sinalize Attention"
-              class="sinalize-button"
+              label="Signalize Attention"
+              class="signalize-button"
               @click="toggleAttention()"
             >
             </q-btn>
@@ -630,8 +630,50 @@ export default {
   },
   methods: {
     toggleAttention() {
-      console.log("My loneliness is killing me inside");
-      console.log(this.reactiveSentencesObj);
+      // gets the name of the user toggling the attention
+      const user = this.$store.getters["user/getUserInfos"].username;
+
+      // new meta
+      const newMeta = {
+        user_id: user,
+        timestamp: Math.round(Date.now()),
+        attention_signal: "1",
+      };
+
+      // gets the new CoNLL-U
+      const newConll =
+        this.reactiveSentencesObj[user].exportNonReactiveConll(newMeta);
+
+      // action done by the user
+      const action = "Marked";
+
+      // new data to save
+      const data = {
+        sent_id: this.sentenceId,
+        conll: newConll,
+        user_id: user,
+        changes: [`${action} attention in the sentence.`],
+        project_name: this.$route.params.projectname,
+      };
+
+      // saves new metadata
+      api
+        .updateTree(
+          this.$route.params.projectname,
+          this.$props.sentence.sample_name,
+          data
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            // updates trees (well, just its metadata)
+            this.sentenceData.conlls[user] = newConll;
+            this.reactiveSentencesObj[user].sentenceConll = newConll;
+            this.showNotif("top", "saveSuccess");
+          }
+        })
+        .catch((error) => {
+          this.$store.dispatch("notifyError", { error: error });
+        });
     },
     decreaseSpace() {
       this.spaceBetween = 30;
@@ -1145,6 +1187,9 @@ export default {
               this.sentenceData.conlls[changedConllUser] = exportedConll;
               this.reactiveSentencesObj[changedConllUser].sentenceConll =
                 exportedConll;
+              this.reactiveSentencesObj[
+                changedConllUser
+              ].updateNonReactiveTree();
             } else {
               // user still don't have a tree for this sentence, creating it.
               Vue.set(
@@ -1295,7 +1340,7 @@ export default {
   color: purple;
 }
 
-.sinalize-button {
+.signalize-button {
   color: #000099;
 }
 

@@ -13,6 +13,7 @@ import { TreeJson, MetaJson } from "./Conll";
 
 export class ReactiveSentence extends EventDispatcher {
   treeJson: TreeJson = {};
+  nonReactiveTreeJson: TreeJson = {};
   treeJsonTemp: TreeJson = {};
   metaJson: MetaJson = {};
   sentenceConll: string = "";
@@ -29,6 +30,10 @@ export class ReactiveSentence extends EventDispatcher {
     super();
   }
 
+  updateNonReactiveTree(): void {
+    this.nonReactiveTreeJson = JSON.parse(JSON.stringify(this.treeJson));
+  }
+
   fromConll(sentenceConll: string) {
     this.sentenceConll = sentenceConll;
 
@@ -36,6 +41,7 @@ export class ReactiveSentence extends EventDispatcher {
     Object.assign(this.treeJson, sentenceJson.treeJson);
     Object.assign(this.metaJson, sentenceJson.metaJson);
     this.treeJsonTemp = JSON.parse(JSON.stringify(this.treeJson));
+    this.updateNonReactiveTree();
     this._emitEvent();
   }
 
@@ -156,6 +162,21 @@ export class ReactiveSentence extends EventDispatcher {
     const sentenceJsonToExport = {
       treeJson: this.treeJson,
       metaJson: newMetaJson,
+    };
+
+    return jsonToConll(sentenceJsonToExport);
+  }
+
+  exportNonReactiveConll(newMeta: MetaJson): string {
+    for (const [metaName, metaValue] of Object.entries(this.metaJson)) {
+      if (!Object.keys(newMeta).includes(metaName)) {
+        newMeta[metaName] = metaValue;
+      }
+    }
+
+    const sentenceJsonToExport = {
+      treeJson: this.nonReactiveTreeJson,
+      metaJson: newMeta,
     };
 
     return jsonToConll(sentenceJsonToExport);
