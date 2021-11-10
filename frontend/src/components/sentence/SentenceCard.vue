@@ -336,7 +336,9 @@
               icon="error"
               v-if="isLoggedIn && isTabFromUser"
               :disable="tab == ''"
-              :label="isMarked(userId) ? 'Unmark attention' : 'Mark attention'"
+              :label="
+                isMarked(userId) ? 'Unmark for Review' : 'Mark for Review'
+              "
               class="mark-button"
               @click="toggleAttention()"
             >
