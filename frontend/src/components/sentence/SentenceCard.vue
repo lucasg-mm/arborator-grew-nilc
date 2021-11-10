@@ -273,17 +273,11 @@
         <q-tab
           :class="{
             'checked-tab':
-              isChecked &&
-              !canSave &&
-              isLoggedIn &&
-              !(isMarked && currUser === user),
+              isChecked && !canSave && isLoggedIn && !isMarked(user),
             'not-checked-tab':
-              !isChecked &&
-              !canSave &&
-              isLoggedIn &&
-              !(isMarked && currUser === user),
-            'can-save-tab': canSave && !(isMarked && currUser === user),
-            'marked-tab': isMarked && currUser === user,
+              !isChecked && !canSave && isLoggedIn && !isMarked(user),
+            'can-save-tab': canSave && !isMarked(user),
+            'marked-tab': isMarked(user),
           }"
           v-for="(tree, user) in orderedConlls"
           :key="user"
@@ -342,7 +336,7 @@
               icon="error"
               v-if="isLoggedIn && isTabFromUser"
               :disable="tab == ''"
-              :label="isMarked ? 'Unmark attention' : 'Mark attention'"
+              :label="isMarked(userId) ? 'Unmark attention' : 'Mark attention'"
               class="mark-button"
               @click="toggleAttention()"
             >
@@ -492,7 +486,6 @@ export default {
       canSave: false,
       hasPendingChanges: {},
       isChecked: false,
-      isMarked: false,
     };
   },
 
@@ -586,16 +579,6 @@ export default {
       this.isChecked = false;
     }
 
-    if (
-      this.userId in this.reactiveSentencesObj &&
-      "is_marked" in this.reactiveSentencesObj[this.userId].metaJson &&
-      this.reactiveSentencesObj[this.userId].metaJson.is_marked === "1"
-    ) {
-      this.isMarked = true;
-    } else {
-      this.isMarked = false;
-    }
-
     // -- DESCRIPTION:
     // Event for saving the current tree by the defined shortcut.
     this.$root.$on("save-by-shortcut", () => {
@@ -653,6 +636,14 @@ export default {
     this.diffMode = !!this.$store.getters["config/diffMode"];
   },
   methods: {
+    isMarked(user) {
+      return (
+        user in this.reactiveSentencesObj &&
+        "is_marked" in this.reactiveSentencesObj[user].metaJson &&
+        this.reactiveSentencesObj[user].metaJson.is_marked === "1"
+      );
+    },
+
     // updates sentence's metadata
     updateMeta(user, newMeta) {
       this.reactiveSentencesObj[user].updateMeta(newMeta);
@@ -668,7 +659,7 @@ export default {
       const newMeta = {
         user_id: user,
         timestamp: Math.round(Date.now()),
-        is_marked: this.isMarked ? "0" : "1",
+        is_marked: this.isMarked(user) ? "0" : "1",
       };
 
       // gets the new CoNLL-U
@@ -676,7 +667,7 @@ export default {
         this.reactiveSentencesObj[user].exportNonReactiveConll(newMeta);
 
       // action done by the user
-      const action = this.isMarked ? "Unmarked" : "Marked";
+      const action = this.isMarked(user) ? "Unmarked" : "Marked";
 
       // new data to save
       const data = {
@@ -698,9 +689,6 @@ export default {
           if (response.status == 200) {
             // updates trees (well, just its metadata)
             this.updateMeta(user, newMeta);
-
-            // changes boolean variable storing the mark
-            this.isMarked = !this.isMarked;
 
             // shows success message
             this.showNotif("top", "markSuccess");
