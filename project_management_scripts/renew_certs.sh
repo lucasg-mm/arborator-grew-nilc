@@ -8,7 +8,7 @@
 root_path="$(dirname $(dirname $(realpath $0)))"
 
 # stops containers
-/usr/local/bin/docker-compose down
+/usr/local/bin/docker-compose -f $root_path/docker-compose.yml down
 
 # renews backend certificate
 openssl req -x509 -newkey rsa:4096 -nodes -out $root_path/backend/keys/cert.pem -keyout $root_path/backend/keys/arborator-grew-dev.pem -days 365 < $root_path/project_management_scripts/cert_template.txt
