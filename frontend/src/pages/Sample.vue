@@ -1,10 +1,14 @@
 <template>
   <q-page :class="$q.dark.isActive ? 'bg-dark' : 'bg-grey-1'">
-    <div v-show="!loading" class="q-pa-md row q-gutter-md">
+    <div
+      style="max-height: 70vh"
+      v-show="!loading"
+      class="q-pa-md row q-gutter-md"
+    >
       <q-virtual-scroll
         ref="virtualListRef"
         :items="sentencesFrozen.list"
-        style="max-height: 95vh; width: 99vw"
+        style="max-height: 85vh; width: 99vw"
         :virtual-scroll-slice-size="7"
         :virtual-scroll-item-size="200"
       >

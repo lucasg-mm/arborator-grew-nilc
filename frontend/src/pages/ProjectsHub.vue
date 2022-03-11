@@ -279,7 +279,7 @@ export default {
         });
     },
     searchProject(pattern) {
-      var filteredProjects = this.projects.filter(function(project) {
+      var filteredProjects = this.projects.filter(function (project) {
         if (
           project.project_name.toLowerCase().includes(pattern.toLowerCase())
         ) {
