@@ -47,13 +47,43 @@
         )
       "
     >
-      <GrewSearch :sentenceCount="sentenceCount" />
-      <RelationTableMain />
+      <GrewSearch
+        :sentenceCount="sentenceCount"
+        v-if="this.$store.getters['config/showAllTrees'] || this.isAdmin"
+      />
+      <RelationTableMain
+        v-if="this.$store.getters['config/showAllTrees'] || this.isAdmin"
+      />
       <q-page-sticky
         position="bottom-right"
         :offset="[18, 158]"
         style="z-index: 999"
-        v-if="$store.getters['user/isLoggedIn']"
+        v-if="
+          $store.getters['user/isLoggedIn'] &&
+          (this.$store.getters['config/showAllTrees'] || this.isAdmin)
+        "
+      >
+        <q-btn
+          size="20px"
+          round
+          color="primary"
+          icon="autorenew"
+          class="text-red"
+          @click="uncheckAllSentences"
+        >
+          <q-tooltip content-class="bg-primary" content-style="font-size: 16px">
+            Uncheck every sentence
+          </q-tooltip>
+        </q-btn>
+      </q-page-sticky>
+      <q-page-sticky
+        position="bottom-right"
+        :offset="[18, 18]"
+        style="z-index: 999"
+        v-if="
+          $store.getters['user/isLoggedIn'] &&
+          !(this.$store.getters['config/showAllTrees'] || this.isAdmin)
+        "
       >
         <q-btn
           size="20px"
@@ -274,6 +304,7 @@ export default {
         .getSampleTrees(this.projectname, this.samplename)
         .then((response) => {
           this.sentences = response.data.sample_trees;
+          console.log(this.sentences);
           this.exerciseLevel = response.data.exercise_level;
           this.freezesentences();
           this.$forceUpdate();

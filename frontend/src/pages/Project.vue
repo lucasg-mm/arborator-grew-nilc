@@ -596,8 +596,13 @@
           )
         "
       >
-        <GrewSearch :sentenceCount="0" />
-        <RelationTableMain />
+        <GrewSearch
+          :sentenceCount="0"
+          v-if="this.$store.getters['config/showAllTrees'] || this.isAdmin"
+        />
+        <RelationTableMain
+          v-if="this.$store.getters['config/showAllTrees'] || this.isAdmin"
+        />
       </template>
       <!-- :sentenceCount=.number_sentences" -->
 

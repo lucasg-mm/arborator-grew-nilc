@@ -68,23 +68,24 @@ class SampleTreesResource(Resource):
                 sample_trees = restrict_trees(sample_trees, restricted_users)
 
         else:
-            if project.show_all_trees or project.visibility == 2:
+            if project.show_all_trees:
                 sample_trees = samples2trees(grew_sample_trees, sampleName)
             else:
-                validator = 1
-                # validator = project_service.is_validator(
-                #     project.id, sampleName, current_user.id)
-                if validator:
-                    sample_trees = samples2trees(
-                        grew_sample_trees,
-                        sampleName,
-                    )
+                sample_trees = extract_trees_from_sample(
+                    grew_sample_trees, sampleName)
+                sample_trees = add_base_tree(sample_trees)
+                username = "anonymous"
+                if current_user.is_authenticated:
+                    username = current_user.username
+                    if project_access <= 1:
+                        sample_trees = add_user_tree(sample_trees, username)
+                        for sent_id, sent_users in sample_trees.items():
+                            sample_trees[sent_id]["conlls"] = {
+                                username: sample_trees[sent_id]["conlls"][username]
+                            }
                 else:
-                    sample_trees = samples2trees_with_restrictions(
-                        grew_sample_trees,
-                        sampleName,
-                        current_user,
-                    )
+                    sample_trees = {}
+
         data = {"sample_trees": sample_trees, "exercise_level": exercise_level}
         return data
 

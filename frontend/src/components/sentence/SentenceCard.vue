@@ -81,7 +81,10 @@
         </q-btn>
 
         <q-btn
-          v-if="$store.getters['config/isTeacher']"
+          v-if="
+            $store.getters['config/isTeacher'] ||
+            (!this.$store.getters['config/showAllTrees'] && this.isAdmin)
+          "
           flat
           round
           dense
@@ -293,8 +296,8 @@
           @click="handleTabChange"
           ><q-tooltip v-if="hasPendingChanges[user]"
             >The tree has some pendings modifications not saved</q-tooltip
-          ></q-tab
-        >
+          >
+        </q-tab>
       </q-tabs>
       <q-separator />
       <q-tab-panels
@@ -503,6 +506,9 @@ export default {
     showDiffTeacher() {
       return this.exerciseMode && this.exerciseLevel <= 2;
     },
+    showAll() {
+      return this.$store.getters["config/showAllTrees"];
+    },
     currUser() {
       return this.$store.getters["user/getUserInfos"].username;
     },
@@ -536,6 +542,9 @@ export default {
         );
       } else {
         return this.sentenceData.conlls;
+        // return Object.filter(this.sentenceData.conlls, ([user, conll]) =>
+        //   this.shouldShowTab(user)
+        // );
       }
     },
     orderedConlls() {
@@ -638,6 +647,12 @@ export default {
     this.diffMode = !!this.$store.getters["config/diffMode"];
   },
   methods: {
+    shouldShowTab(username) {
+      return (
+        this.$store.getters["user/getUserInfos"].username === username ||
+        this.showAll
+      );
+    },
     isMarked(user) {
       return (
         user in this.reactiveSentencesObj &&

@@ -67,6 +67,8 @@ export default {
     this.searchDialog = this.showTable;
   },
   computed: {
+    ...mapGetters("config", ["isAdmin"]),
+
     breakpoint() {
       return this.window.width <= 400;
     },
