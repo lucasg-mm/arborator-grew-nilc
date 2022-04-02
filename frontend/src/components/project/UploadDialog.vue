@@ -48,25 +48,6 @@
       </q-card-section>
 
       <q-card-section>
-        <template v-if="!$store.getters['config/exerciseMode']">
-          <!-- v-model="robot.active" -->
-          <q-toggle
-            v-model="robot.active"
-            checked-icon="check"
-            color="warning"
-            label="Choose a custom import name?"
-            unchecked-icon="clear"
-          />
-          <q-input
-            v-show="robot.active"
-            v-model="robot.name"
-            label="Custom Name for non real user import"
-          />
-        </template>
-        <!-- TODO : add proper styling for the following paragraph -->
-      </q-card-section>
-
-      <q-card-section>
         <!-- <input type="file" id="input-conllu" multiple /> -->
         <q-file
           v-model="uploadSample.attachment.file"
@@ -101,32 +82,6 @@
             />
           </template>
         </q-file>
-        <template v-if="uploadSample.attachment.file">
-          <!-- <p>
-              For each of the following user_id, choose a name that will replace
-              it. If one single sentence for two differents user_id get rename
-              with the same user_id, the most recent tree will be taken
-            </p> -->
-
-          <table>
-            <tr>
-              <th>previous name</th>
-              <th>new name</th>
-            </tr>
-            <tr v-for="(userId, index) of usersIds" :key="index">
-              <td>
-                <label :for="`f${index}`">{{ userId.old }} :</label>
-              </td>
-              <td>
-                <input
-                  :id="`f${index}`"
-                  v-model="userId.new"
-                  :placeholder="userId.old"
-                />
-              </td>
-            </tr>
-          </table>
-        </template>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -237,6 +192,7 @@ export default {
         this.$store.getters["user/getUserInfos"].username
       );
       form.append("usersIdsConvertor", JSON.stringify(this.usersIds));
+      console.log(JSON.stringify(this.usersIds));
       api
         .uploadSample(this.$route.params.projectname, form)
         .then((response) => {

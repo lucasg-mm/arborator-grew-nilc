@@ -361,7 +361,7 @@ def convert_users_ids(path_file, users_ids_convertor):
 
     for tree in trees:
         tree_current_user_id = tree.sentencefeatures.get("user_id", "default")
-        tree.sentencefeatures["user_id"] = users_ids_convertor[tree_current_user_id]
+        tree.sentencefeatures["user_id"] = "initial_tree"
 
     trees2conllFile(trees, path_file)
     return

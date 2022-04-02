@@ -192,7 +192,7 @@ export default {
     toggleDiffModeCaption: "if true, the project has diff mode properties",
     chooseUserDiff: "Diff user",
     chooseUserDiffCaption:
-      "user that will be use as reference for the comparaison",
+      "user that will be used as reference for the comparaison",
     toggleOpenProject: "Open project",
     toggleOpenProjectCaption: "If true, anyone can edit samples",
     defaultUserTreePanel: "Default User Tree",

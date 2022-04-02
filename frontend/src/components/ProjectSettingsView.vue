@@ -183,7 +183,7 @@
                 v-model="diffUserId"
                 :options="projectTreesFrom"
               />
-                <!-- checked-icon="check"
+              <!-- checked-icon="check"
                 unchecked-icon="clear" -->
             </q-item-section>
           </q-item>
@@ -420,8 +420,6 @@
     </q-dialog>
   </q-card>
 </template>
-
-
 
 <script>
 import { mapGetters } from "vuex";

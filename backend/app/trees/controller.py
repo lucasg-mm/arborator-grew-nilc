@@ -78,11 +78,29 @@ class SampleTreesResource(Resource):
                 if current_user.is_authenticated:
                     username = current_user.username
                     if project_access <= 1:
-                        sample_trees = add_user_tree(sample_trees, username)
                         for sent_id, sent_users in sample_trees.items():
-                            sample_trees[sent_id]["conlls"] = {
-                                username: sample_trees[sent_id]["conlls"][username]
-                            }
+                            DEFAULT_TREE = "initial_tree"
+                            BASE = "base_tree"
+                            if DEFAULT_TREE in sample_trees[sent_id]["conlls"]:
+                                if username in sample_trees[sent_id]["conlls"]:
+                                    sample_trees[sent_id]["conlls"] = {
+                                        DEFAULT_TREE: sample_trees[sent_id]["conlls"][DEFAULT_TREE],
+                                        username: sample_trees[sent_id]["conlls"][username]
+                                    }
+                                else:
+                                    sample_trees[sent_id]["conlls"] = {
+                                        DEFAULT_TREE: sample_trees[sent_id]["conlls"][DEFAULT_TREE],
+                                    }
+                            else:
+                                if username in sample_trees[sent_id]["conlls"]:
+                                    sample_trees[sent_id]["conlls"] = {
+                                        BASE: sample_trees[sent_id]["conlls"][BASE],
+                                        username: sample_trees[sent_id]["conlls"][username]
+                                    }
+                                else:
+                                    sample_trees[sent_id]["conlls"] = {
+                                        BASE: sample_trees[sent_id]["conlls"][BASE],
+                                    }
                 else:
                     sample_trees = {}
 

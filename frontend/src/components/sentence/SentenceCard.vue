@@ -573,6 +573,9 @@ export default {
     },
   },
   mounted() {
+    console.log(this.isAdmin);
+    console.log($store.getters["config/isTeacher"]);
+
     // open a tab if it's search
     if (this.isResult) {
       this.tab = Object.keys(this.filteredConlls)[0];

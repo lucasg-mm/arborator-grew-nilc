@@ -9,9 +9,8 @@ class BlobImageField(fields.Field):
 
         if value is None or value == b"":
             raise "Invalid value"
-        
-    
-    def _serialize(self, value : bytes, attr, obj, **kwargs):
+
+    def _serialize(self, value: bytes, attr, obj, **kwargs):
         if value is None:
             return None
 
@@ -47,7 +46,7 @@ class ProjectExtendedSchema(ProjectSchema):
 
 # KK TODO : Ths should be unified with  `ProjectSchema`. However, at the moment,
 # ... we have still some unwanted mixing in the typing convention in the frontend.
-# ... at term, we should have only snake_case in the python backend, only camelCase 
+# ... at term, we should have only snake_case in the python backend, only camelCase
 # ... on the JS frontend and the Schema should be the bridge between both.
 class ProjectSchemaCamel(Schema):
     projectId = fields.Integer(attribute="id")
