@@ -182,6 +182,17 @@ class ProjectAccessService:
             return []
 
     @staticmethod
+    def get_all(project_id: str) -> List[str]:
+        '''optimized version dedicated to homepage. reduces the database calls but makes the code less pretty'''
+        project_access_list: List[ProjectAccess] = ProjectAccess.query.filter_by(project_id=project_id).all()
+        admins, guests = [], []
+        push_admin, push_guest = admins.append, guests.append
+        for project_access in project_access_list: 
+            if project_access.access_level==1: push_guest(project_access.user_id)
+            elif project_access.access_level==2: push_admin(project_access.user_id)
+        return admins, guests
+
+    @staticmethod
     def get_users_role(project_id: str) -> Dict[str, List[str]]:
         admins = ProjectAccessService.get_admins(project_id)
         guests = ProjectAccessService.get_guests(project_id)

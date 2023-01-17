@@ -1,5 +1,5 @@
 # base image
-FROM python:3
+FROM python:3.7
 
 # defines a working directory
 WORKDIR /usr/app
