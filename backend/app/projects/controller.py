@@ -58,6 +58,7 @@ class ProjectResource(Resource):
             print(f"project access services in {time.perf_counter() - tpaccserv:0.4f} seconds")
             tacclast = time.perf_counter()
 
+            tloopgrewprojects = time.perf_counter()
             for p in grew_projects:
                 if p["name"] == project.project_name:
                     dumped_project["number_sentences"] = p["number_sentences"]
